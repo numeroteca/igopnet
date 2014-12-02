@@ -82,8 +82,8 @@ function igopnet_init_meta_boxes() {
 
 function igopnet_metaboxes( $meta_boxes ) {
 	$prefix = '_ig_'; // Prefix for all fields
-	$meta_boxes['test_metabox'] = array(
-		'id' => 'test_metabox',
+	$meta_boxes[] = array(
+		'id' => 'igopnet_organization_basic',
 		'title' => __( 'Basic information' ),
 		'pages' => array('organization'), // post type
 		'context' => 'normal',
@@ -138,42 +138,54 @@ function igopnet_metaboxes( $meta_boxes ) {
 					),
 				),
 			),
+		),
+	);
+	
+	//Websites related information
+	$meta_boxes[] = array(
+		'id' => 'igopnet_website_info',
+		'title' => __( 'Websites related information' ),
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
 			array(
 				'id' => $prefix . 'url_info',
 				'type' => 'group',
-				'description' => __( 'Extra info about website','igopnet' ),
+				'description' => __( 'Info about websites','igopnet' ),
 				'options' => array(
 					'group_title' => __( 'Website data', 'igopnet' ),
 					'add_button' => __( 'Add more data', 'montera34' ),
 					'remove_button' => __( 'Remove data', 'montera34' ),
 				),
- 				'fields' => array(
+				'fields' => array(
 					array(
 						'name' => 'Date',
- 						'id'   => 'url_data_date',
- 						'desc' => __( 'Select date when date where obtained' ),
+						'id'   => 'url_data_date', //TODO only one value gets stored in database
+						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
 						'date_format' => 'j/M/Y',
 					),
 					array(
 						'name' => 'URL',
- 						'id'   => 'url',
+						'id'   => 'url',
 						'type' => 'text_url',
 						'protocols' => array( 'http', 'https' )
 					),
 					array(
 						'name' => 'Google Page Rank',
- 						'id'   => 'google_page_rank',
+						'id'   => 'google_page_rank',
 						'type' => 'text_small',
 					),
 					array(
 						'name' => 'Alexa Page Rank',
- 						'id'   => 'alexa_page_rank',
+						'id'   => 'alexa_page_rank',
 						'type' => 'text_medium',
 					),
 					array(
 						'name' => 'Alexa Inlinks',
- 						'id'   => 'alexa_inlinks',
+						'id'   => 'alexa_inlinks',
 						'type' => 'text_medium',
 					),
 				),
