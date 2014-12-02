@@ -82,6 +82,8 @@ function igopnet_init_meta_boxes() {
 
 function igopnet_metaboxes( $meta_boxes ) {
 	$prefix = '_ig_'; // Prefix for all fields
+	
+	//Basic information
 	$meta_boxes[] = array(
 		'id' => 'igopnet_organization_basic',
 		'title' => __( 'Basic information' ),
@@ -93,8 +95,32 @@ function igopnet_metaboxes( $meta_boxes ) {
 			array(
 				'name' => __( 'Main Web' ),
 				'desc' => __( 'Web of organization. Ex: http://juventudsinfuturo.net' ),
-				'id' => $prefix . 'name',
+				'id' => $prefix . 'main_url',
 				'type' => 'text_url'
+			),
+			array(
+				'name' => 'Fecha de inicio',
+				'desc' => 'Si se desconoce la fecha exacta, indicar 1 de enero de ese año',
+				'id' => $prefix . 'origin_date',
+				'type' => 'text_date_timestamp',
+				'date_format' => 'j/M/Y',
+			),
+			array(
+				'name' => 'Fecha de fin',
+				'desc' => 'Si se desconoce la fecha exacta, indicar 1 de enero de ese año',
+				'id' => $prefix . 'end_date',
+				'type' => 'text_date_timestamp',
+				'date_format' => 'j/M/Y',
+			),
+			array(
+				'name' => 'Activa',
+				'desc' => '',
+				'id' => $prefix . 'active',
+				'type' => 'radio_inline',
+				'options' => array(
+				    array('name' => 'yes', 'value' => 'yes'),
+				    array('name' => 'no', 'value' => 'no'),
+				)
 			),
 			array(
 				'name' => __( 'Description' ),
@@ -141,7 +167,74 @@ function igopnet_metaboxes( $meta_boxes ) {
 		),
 	);
 	
-	//Websites related information
+	//Social networkng sites
+	$meta_boxes[] = array(
+		'id' => 'igopnet_social_networking_sites',
+		'title' => __( 'Social Networks' ),
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'name' => __( 'Facebook URL' ),
+				'desc' => __( 'Ex: juventudsinfuturo' ),
+				'id' => $prefix . 'facebook_site',
+				'type' => 'text_url'
+			),
+			array(
+				'name' => __( 'Facebook likes' ),
+				'desc' => __( 'Include the number, without thousand separator. Ex: 15235' ),
+				'id' => $prefix . 'facebook_likes',
+				'type' => 'text_medium',
+			),
+			array(
+				'name' => __( 'Youtube account' ),
+				'desc' => __( 'Ex: https://www.youtube.com/user/' ),
+				'id' => $prefix . 'youtube_account',
+				'type' => 'text_medium',
+			),
+			array(
+				'name' => __( 'Twitter main account' ),
+				'desc' => __( 'Do not incluse the "@". Ex: juventudsin' ),
+				'id' => $prefix . 'twitter_account',
+				'type' => 'text_medium',
+			),
+			array(
+				'name' => __( 'When Twittter accont started' ),
+				'desc' => __( '' ),
+				'id' => $prefix . 'twitter_origin',
+				'type' => 'text_date_timestamp',
+				'date_format' => 'j/M/Y',
+			),
+			array(
+				'id' => $prefix . 'other_twitter_accounts',
+				'type' => 'group',
+				'description' => __( 'Secondary Twitter Accounts','igopnet' ),
+				'options' => array(
+					'add_button' => __( 'Add Another Twitter account', 'montera34' ),
+					'remove_button' => __( 'Remove Twitter account', 'montera34' ),
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Secondary Twitter account',
+ 						'id'   => 'url',
+ 						'desc' => __( 'Do not incluse the "@". Ex: juventudsin' ),
+						'type' => 'text_medium',
+					),
+					array(
+						'name' => __( 'When Twittter accont started' ),
+						'desc' => __( '' ),
+						'id' => $prefix . 'twitter_origin',
+						'type' => 'text_date_timestamp',
+						'date_format' => 'j/M/Y',
+					),
+				),
+			),
+		),
+	);
+
+	//Websites related information in time
 	$meta_boxes[] = array(
 		'id' => 'igopnet_website_info',
 		'title' => __( 'Websites related information' ),
@@ -192,6 +285,49 @@ function igopnet_metaboxes( $meta_boxes ) {
 			),
 		),
 	);
+
+	//Twitter information in time
+	$meta_boxes[] = array(
+		'id' => 'igopnet_twitter_info',
+		'title' => __( 'Twitter in time information' ),
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'id' => $prefix . 'twitter_info',
+				'type' => 'group',
+				'description' => __( 'Info about websites','igopnet' ),
+				'options' => array(
+					'group_title' => __( 'Twitter data', 'igopnet' ),
+					'add_button' => __( 'Add more data', 'montera34' ),
+					'remove_button' => __( 'Remove data', 'montera34' ),
+				),
+				'fields' => array(
+					array(
+						'name' => 'Date',
+						'id'   => 'url_data_date', //TODO only one value gets stored in database
+						'desc' => __( 'Select date when date where obtained' ),
+						'type' => 'text_date_timestamp',
+						'date_format' => 'j/M/Y',
+					),
+					array(
+						'name' => 'Twitter account',
+						'id'   => 'twitter',
+						'type' => 'text_small',
+						'protocols' => array( 'http', 'https' )
+					),
+					array(
+						'name' => 'Followers',
+						'id'   => 'twitter_followers',
+						'type' => 'text_small',
+					),
+				),
+			),
+		),
+	);
+	
   return $meta_boxes;
 }
 
