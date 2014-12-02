@@ -59,6 +59,18 @@ function build_taxonomies() {
 		'label' => __( 'Validation' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-validation' ) ) );
+	register_taxonomy( 'org-city', 'organization', array(
+		'label' => __( 'City' ),
+		'hierarchical' => true,
+		'rewrite' => array( 'slug' => 'org-city' ) ) );
+	register_taxonomy( 'org-region', 'organization', array(
+		'label' => __( 'Region' ),
+		'hierarchical' => true,
+		'rewrite' => array( 'slug' => 'org-region' ) ) );
+	register_taxonomy( 'org-country', 'organization', array(
+		'label' => __( 'Country' ),
+		'hierarchical' => true,
+		'rewrite' => array( 'slug' => 'org-country' ) ) );
 }
 
 // Initialize the metabox class
