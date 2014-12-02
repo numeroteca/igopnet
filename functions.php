@@ -167,7 +167,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 		),
 	);
 	
-	//Social networkng sites
+	//Social networking sites information
 	$meta_boxes[] = array(
 		'id' => 'igopnet_social_networking_sites',
 		'title' => __( 'Social Networks' ),
@@ -195,13 +195,19 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'type' => 'text_medium',
 			),
 			array(
+				'name' => 'Site technologies',
+				'desc' => 'Main site techonologies. Ex: "Analytics: Google Analytics Blog: WordPress CMS: WordPress Font script: Google Font API JavaScript framework: jQuery Mobile framework: jQuery Mobile Web server: Nginx"',
+				'id' => $prefix . 'data_date',
+				'type' => 'textarea',
+			),
+			array(
 				'name' => __( 'Twitter main account' ),
 				'desc' => __( 'Do not incluse the "@". Ex: juventudsin' ),
 				'id' => $prefix . 'twitter_account',
 				'type' => 'text_medium',
 			),
 			array(
-				'name' => __( 'When Twittter accont started' ),
+				'name' => __( 'When Twittter account started' ),
 				'desc' => __( '' ),
 				'id' => $prefix . 'twitter_origin',
 				'type' => 'text_date_timestamp',
@@ -323,6 +329,43 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'id'   => 'twitter_followers',
 						'type' => 'text_small',
 					),
+				),
+			),
+		),
+	);
+	
+	//Source of information
+	$meta_boxes[] = array(
+		'id' => 'igopnet_organization_information_source',
+		'title' => __( 'Source of information' ),
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'name' => 'Codificador',
+				'desc' => __( '' ),
+				'id' => $prefix . 'coder',
+				'type' => 'text_medium'
+			),
+			array(
+				'name' => 'Fecha de incorporación de los datos',
+				'desc' => '',
+				'id' => $prefix . 'data_date',
+				'type' => 'text_date_timestamp',
+				'date_format' => 'j/M/Y',
+			),
+			array(
+				'name' => 'Fuente de los datos',
+				'desc' => __( '-' ),
+				'id' => $prefix . 'info_source',
+				'type' => 'wysiwyg',
+				'options' => array(
+					'wpautop' => true,
+					'textarea_rows' => get_option('default_post_edit_rows',2),
+					'teeny' => false, // output the minimal editor config used in Press This
+					'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
 				),
 			),
 		),
