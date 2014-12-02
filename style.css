@@ -1,0 +1,103 @@
+/*
+Theme Name: Igopnet theme. Child of Twenty Eleven
+Theme URI: 
+Author: Pablo Rey Mazón
+Author URI: http://montera34.com
+Description: Theme based in Twenty Eleven by WordPress people.
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: dark, light, white, black, gray, one-column, two-columns, left-sidebar, right-sidebar, fixed-width, flexible-width, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-image-header, featured-images, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
+Text Domain: igopnet
+Template: igopnet
+*/
+
+/* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
+-------------------------------------------------------------- */
+@import url("../twentyeleven/style.css");
+
+#access a {
+padding: 0px 13px;
+}
+
+#access div {
+margin: 0 12px;
+}
+
+/* translation list */
+#language_list {
+position: absolute;
+top: 0em;
+right: 37%;
+}
+.nav:after {
+    clear: both;
+}
+.nav:after {
+    clear: both;
+}
+.nav:before, .nav:after {
+    display: table;
+    content: " ";
+}
+.nav:before, .nav:after {
+    display: table;
+    content: " ";
+}
+.nav {
+    padding-left: 0px;
+    margin-bottom: 0px;
+    list-style: none outside none;
+}
+#language_list li {
+    background-color: #EEE;
+    margin: 0px 3px;
+    font-size: 85%;
+    float: left;
+}
+nav-pills > li {
+    float: left;
+}
+.nav > li {
+    position: relative;
+    display: block;
+}
+#language_list li.active a {
+    background-color: #1294FF;
+    border-radius: 0px;
+}
+#language_list li a {
+    padding: 4px;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #FFF;
+    background-color: #428BCA;
+}
+.nav-pills > li > a {
+    border-radius: 5px;
+}
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+/* translation list  ends*/
+
+#site-title, #site-description  {
+text-indent: -9999px;
+}
+#branding hgroup {
+height: 0;
+}
+
+#branding #searchform  {
+background-color: #FFF;
+}
+
+.singular .entry-header .entry-meta {
+position: relative;
+}
+
+#page #comments {display:none;}
+#access .menu-main-menu-container, #access .menu-main-menu-catalan-container, #access i .menu-main-menu-spanish-container{
+	margin-left: 10px;
+}
