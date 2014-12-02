@@ -166,6 +166,67 @@ function igopnet_metaboxes( $meta_boxes ) {
 			),
 		),
 	);
+
+	//Temas principales
+	$main_themes = array(
+		      'Derechos políticos y a minorías' => 'Derechos políticos y a minorías',
+		      'Economía y finanzas' => 'Economía y finanzas',
+		      'Juventud' => 'Juventud',
+		      'Derecho de autodeterminación' => 'Derecho de autodeterminación',
+		      'Defensa al Estado de Bienestar' => 'Defensa al Estado de Bienestar',
+		      'Derechos digitales' => 'Derechos digitales',
+		      'Ecología y medio ambiente' => 'Ecología y medio ambiente',
+		      'todas las anteriores ' => 'todas las anteriores ',
+		      'ninguna de las anteriores ' => 'ninguna de las anteriores ',
+   			 );
+	$meta_boxes[] = array(
+		'id' => 'igopnet_main_themes',
+		'title' => 'Temas principales',
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'name' => 'Tema principal 1',
+				'desc' => __( '' ),
+				'id' => $prefix . 'theme_1',
+				'type'    => 'select',
+				'options' => $main_themes,
+			),
+			array(
+				'name' => 'Tema principal 2',
+				'desc' => __( '' ),
+				'id' => $prefix . 'theme_2',
+				'type'    => 'select',
+				'options' => $main_themes,
+			),
+			array(
+				'name' => 'Tema principal 3',
+				'desc' => __( '' ),
+				'id' => $prefix . 'theme_3',
+				'type'    => 'select',
+				'options' => $main_themes,
+			),
+			array(
+				'id' => $prefix . 'other_themes',
+				'type' => 'group',
+				'description' => 'Temas no incluidos en las anteriores',
+				'options' => array(
+					'add_button' => 'Añade otro tema',
+					'remove_button' => 'Borra otro tema',
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Otra tema',
+ 						'id'   => 'theme',
+ 						'desc' => __( '' ),
+						'type' => 'text',
+					),
+				),
+			),
+		),
+	);
 	
 	//Demandas principales
 	$main_demands = array(
@@ -210,7 +271,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 		      'ninguna de las anteriores ' => 'ninguna de las anteriores ',
    			 );
 	$meta_boxes[] = array(
-		'id' => 'igopnet_main_theme',
+		'id' => 'igopnet_main_demands',
 		'title' => 'Demandas principales',
 		'pages' => array('organization'), // post type
 		'context' => 'normal',
@@ -320,7 +381,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'type' => 'text_medium',
 					),
 					array(
-						'name' => __( 'When Twittter accont started' ),
+						'name' => __( 'When Twittter account started' ),
 						'desc' => __( '' ),
 						'id' => $prefix . 'twitter_origin',
 						'type' => 'text_date_timestamp',
