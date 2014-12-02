@@ -3,6 +3,11 @@
 add_action( 'init', 'create_post_type', 0 );
 // Custom Taxonomies
 add_action( 'init', 'build_taxonomies', 0 );
+//Initializes Custom Meta Boxes
+add_action( 'init', 'igopnet_init_meta_boxes', 9999 );
+// Extra meta boxes in editor
+add_filter( 'cmb_meta_boxes', 'igopnet_metaboxes' );
+
 
 //Creates Custom Post Types
 function create_post_type() {
@@ -36,19 +41,134 @@ function create_post_type() {
 function build_taxonomies() {
 	register_taxonomy( 'org-ecosystem', 'organization', array(
 		'label' => __( 'Ecosystem' ),
+		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-ecosystem' ) ) );
 	register_taxonomy( 'org-type', 'organization', array(
 		'label' => __( 'Type' ),
+		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-type' ) ) );
 	register_taxonomy( 'org-scope', 'organization', array(
 		'label' => __( 'Scope' ),
+		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-scope' ) ) );
 	register_taxonomy( 'org-whom', 'organization', array(
 		'label' => __( 'A quién' ),
+		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-whom' ) ) );
 	register_taxonomy( 'org-validation', 'organization', array(
 		'label' => __( 'Validation' ),
+		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-validation' ) ) );
+}
+
+// Initialize the metabox class
+function igopnet_init_meta_boxes() {
+    if ( !class_exists( 'cmb_Meta_Box' ) ) {
+        require_once( 'lib/metabox/init.php' );
+    }
+}
+
+function igopnet_metaboxes( $meta_boxes ) {
+	$prefix = '_ig_'; // Prefix for all fields
+	$meta_boxes['test_metabox'] = array(
+		'id' => 'test_metabox',
+		'title' => __( 'Basic information' ),
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'name' => __( 'Main Web' ),
+				'desc' => __( 'Web of organization. Ex: http://juventudsinfuturo.net' ),
+				'id' => $prefix . 'name',
+				'type' => 'text_url'
+			),
+			array(
+				'name' => __( 'Description' ),
+				'desc' => __( '-' ),
+				'id' => $prefix . 'description',
+				'type' => 'wysiwyg',
+				'options' => array(
+					'wpautop' => true,
+					'textarea_rows' => get_option('default_post_edit_rows',4),
+					'teeny' => false, // output the minimal editor config used in Press This
+					'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+				),
+			),
+			array(
+				'name' => __( 'Notes' ),
+				'desc' => __( '-' ),
+				'id' => $prefix . 'notes',
+				'type' => 'wysiwyg',
+				'options' => array(
+					'wpautop' => true,
+					'textarea_rows' => get_option('default_post_edit_rows',4),
+					'teeny' => false, // output the minimal editor config used in Press This
+					'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+				),
+			),
+			array(
+				'id' => $prefix . 'other_url',
+				'type' => 'group',
+				'description' => __( 'Secondary websites','igopnet' ),
+				'options' => array(
+					'add_button' => __( 'Add Another URL', 'montera34' ),
+					'remove_button' => __( 'Remove URL', 'montera34' ),
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Secondary website',
+ 						'id'   => 'url',
+ 						'desc' => __( 'Ex: http://juventudsinfuturo.net' ),
+						'type' => 'text_url',
+						'protocols' => array( 'http', 'https' )
+					),
+				),
+			),
+			array(
+				'id' => $prefix . 'url_info',
+				'type' => 'group',
+				'description' => __( 'Extra info about website','igopnet' ),
+				'options' => array(
+					'group_title' => __( 'Website data', 'igopnet' ),
+					'add_button' => __( 'Add more data', 'montera34' ),
+					'remove_button' => __( 'Remove data', 'montera34' ),
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Date',
+ 						'id'   => 'url_data_date',
+ 						'desc' => __( 'Select date when date where obtained' ),
+						'type' => 'text_date_timestamp',
+						'date_format' => 'j/M/Y',
+					),
+					array(
+						'name' => 'URL',
+ 						'id'   => 'url',
+						'type' => 'text_url',
+						'protocols' => array( 'http', 'https' )
+					),
+					array(
+						'name' => 'Google Page Rank',
+ 						'id'   => 'google_page_rank',
+						'type' => 'text_small',
+					),
+					array(
+						'name' => 'Alexa Page Rank',
+ 						'id'   => 'alexa_page_rank',
+						'type' => 'text_medium',
+					),
+					array(
+						'name' => 'Alexa Inlinks',
+ 						'id'   => 'alexa_inlinks',
+						'type' => 'text_medium',
+					),
+				),
+			),
+		),
+	);
+  return $meta_boxes;
 }
 
 //Lists the active languages
