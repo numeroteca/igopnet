@@ -167,6 +167,97 @@ function igopnet_metaboxes( $meta_boxes ) {
 		),
 	);
 	
+	//Demandas principales
+	$main_demands = array(
+		      'comercio justo' => 'comercio justo',
+		      'consumo de proximidad' => 'consumo de proximidad',
+		      'Defensa a la cultura' => 'Defensa a la cultura',
+		      'Defensa a sanidad pública de calidad'     => 'Defensa a sanidad pública de calidad',
+		      'Demanda de la tasa tobin' => 'Demanda de la  tasa tobin',
+		      'Derecho a decidir' => 'Derecho a decidir',
+		      'Derecho a Vivienda Digna' => 'Derecho a Vivienda Digna',
+		      'Derechos a minorías LGBT' => 'Derechos a minorías LGBT',
+		      'Disminución de emisiones' => 'Disminución de emisiones',
+		      'Educación pública de calidad' => 'Educación pública de calidad',
+		      'Eliminación de las Sociedades de Inversión de Capital Variable (SICAV)' => 'Eliminación de las Sociedades de Inversión de Capital Variable (SICAV)',
+		      'Emancipación juvenil' => 'Emancipación juvenil',
+		      'Igualdad de derechos de inmigrantes' => 'Igualdad de derechos de inmigrantes',
+		      'Igualdad de género' => 'Igualdad de género',
+		      'Impuestos progresivos ( o a grandes fortunas)' => 'Impuestos progresivos ( o a grandes fortunas)',
+		      'Independencia de España' => 'Independencia de España',
+		      'Independencia del poder judicial' => 'Independencia del poder judicial',
+		      'libertad de información' => 'libertad de información',
+		      'Más y mejores mecanismos de participación' => 'Más y mejores mecanismos de participación',
+		      'mayor control a los bancos' => 'mayor control a los bancos',
+		      'Memoria Histórica' => 'Memoria Histórica',
+		      'No mas exilio económico' => 'No mas exilio económico',
+		      'No más precariedad laboral' => 'No más precariedad laboral',
+		      'No recortes a estado de bienestar' => 'No recortes a estado de bienestar',
+		      'Por un Internet libre y abierto' => 'Por un Internet libre y abierto',
+		      'Promoción y uso de energía renovables' => 'Promoción y uso de energía renovables',
+		      'Que el rescate lo paguen los bancos' => 'Que el rescate lo paguen los bancos',
+		      'Reducción de emisiones' => 'Reducción de emisiones',
+		      'Reducción edad de jubilación' => 'Reducción edad de jubilación',
+		      'Renta mínima universal' => 'Renta mínima universal',
+		      'Respeto libertad de expresión' => 'Respeto libertad de expresión',
+		      'Responsabilidad patrimonial a banqueros' => 'Responsabilidad patrimonial a banqueros',
+		      'Responsabilidad política' => 'Responsabilidad política',
+		      'Sistema electoral más proporcional' => 'Sistema electoral más proporcional',
+		      'Stop privatizaciones' => 'Stop privatizaciones',
+		      'Transparencia política' => 'Transparencia política',
+		      'transporte público gratuito' => 'transporte público gratuito',
+		      'todas las anteriores ' => 'todas las anteriores ',
+		      'ninguna de las anteriores ' => 'ninguna de las anteriores ',
+   			 );
+	$meta_boxes[] = array(
+		'id' => 'igopnet_main_theme',
+		'title' => 'Demandas principales',
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'name' => 'Demanda principal 1',
+				'desc' => __( '' ),
+				'id' => $prefix . 'demand_1',
+				'type'    => 'select',
+				'options' => $main_demands,
+			),
+			array(
+				'name' => 'Demanda principal 2',
+				'desc' => __( '' ),
+				'id' => $prefix . 'demand_2',
+				'type'    => 'select',
+				'options' => $main_demands,
+			),
+			array(
+				'name' => 'Demanda principal 3',
+				'desc' => __( '' ),
+				'id' => $prefix . 'demand_3',
+				'type'    => 'select',
+				'options' => $main_demands,
+			),
+			array(
+				'id' => $prefix . 'other_demands',
+				'type' => 'group',
+				'description' => 'Demanda no incluidas en las anteriores',
+				'options' => array(
+					'add_button' => 'Añade otra demanda',
+					'remove_button' => 'Borra esta demanda',
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Otra demanda',
+ 						'id'   => 'demand',
+ 						'desc' => __( '' ),
+						'type' => 'text',
+					),
+				),
+			),
+		),
+	);
+	
 	//Social networking sites information
 	$meta_boxes[] = array(
 		'id' => 'igopnet_social_networking_sites',
