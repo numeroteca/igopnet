@@ -35,6 +35,7 @@ $prefix = '_ig_';
 		$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
 		$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
 		$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
+		$data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 		
 		echo "<dt>Main Web</dt><dd>".get_post_meta( $post_id, $prefix.'main_url', true ). "</dd>";
 		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>";
@@ -80,9 +81,9 @@ $prefix = '_ig_';
 		echo "</dd>";
 		echo "<dt>Site technologies</dt><dd>".get_post_meta( $post_id, $prefix.'site_technologies', true ). "</dd>";
 		
-		echo "<h2>Informaci&oacute;n sobre sitios web</h2>";
-		echo "<dt>Otras webs</dt><dd>";
 		echo "
+		<h2>Informaci&oacute;n sobre sitios web</h2>
+		<dt>Otras webs</dt><dd>
 		<table >
 			<thead>
 				<tr>
@@ -112,9 +113,8 @@ $prefix = '_ig_';
   	</table>"
   	;
   	
-  	echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>";
-		echo "<dt>Cuentas de Twitter</dt><dd>";
-		echo "
+  	echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>
+		<dt>Cuentas de Twitter</dt><dd>
 		<table >
 			<thead>
 				<tr>
@@ -132,7 +132,6 @@ $prefix = '_ig_';
 					<td>".date( 'd/m/Y',$value['date'])."</td>
 					<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
 					<td>".$value['followers']."</td>
-					
 				</tr>
 			";
 			}
@@ -140,6 +139,12 @@ $prefix = '_ig_';
 			</tbody>
   	</table>"
   	;
+  	
+		echo "<h2>Fuente de informaci&oacute;n</h2>";
+		echo "<dt>Codificador</dt><dd>".get_post_meta( $post_id, $prefix . 'coder', true ). "</dd>";
+		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $data_date ). "</dd>";
+		echo "<dt>Fuente de los datos</dt><dd>".get_post_meta( $post_id, $prefix . 'info_source', true ). "</dd>";
+		echo "<dt>Validaci&oacute;n</dt><dd>".get_post_meta( $post_id, $prefix . 'validation', true ). "</dd>";
 		?>
 		
 		<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
