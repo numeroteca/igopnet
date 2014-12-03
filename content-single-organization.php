@@ -34,6 +34,7 @@ $prefix = '_ig_';
 		$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 		$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
 		$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
+		$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 		
 		echo "<dt>Main Web</dt><dd>".get_post_meta( $post_id, $prefix.'main_url', true ). "</dd>";
 		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>";
@@ -85,11 +86,11 @@ $prefix = '_ig_';
 		<table >
 			<thead>
 				<tr>
+					<th>Fecha</th>
 					<th>URL</th>
 					<th>Google Page Rank</th>
 					<th>Alexa Page Rank</th>
 					<th>Alexa Inlinks</th>
-					<th>Date</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -98,11 +99,40 @@ $prefix = '_ig_';
 		foreach ($url_info as $key => $value) {
 			echo "
 				<tr>
+					<td>".date( 'd/m/Y',$value['date'])."</td>
 					<td><a href='".$value['url']."'>".$value['url']."</a></td>
 					<td>".$value['google_page_rank']."</td>
 					<td>".$value['alexa_page_rank']."</td>
 					<td>".$value['alexa_inlinks']."</td>
-					<td>".date( 'd/m/Y',$value['url_data_date'])."</td>
+				</tr>
+			";
+			}
+		echo "
+			</tbody>
+  	</table>"
+  	;
+  	
+  	echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>";
+		echo "<dt>Cuentas de Twitter</dt><dd>";
+		echo "
+		<table >
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Twitter</th>
+					<th>Seguidores</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			";
+		foreach ($twitter_info as $key => $value) {
+			echo "
+				<tr>
+					<td>".date( 'd/m/Y',$value['date'])."</td>
+					<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
+					<td>".$value['followers']."</td>
+					
 				</tr>
 			";
 			}

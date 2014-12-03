@@ -413,7 +413,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'fields' => array(
 					array(
 						'name' => 'Date',
-						'id'   => 'url_data_date',
+						'id'   => 'date',
 						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
 						'date_format' => 'j/m/Y',
@@ -464,21 +464,21 @@ function igopnet_metaboxes( $meta_boxes ) {
 				),
 				'fields' => array(
 					array(
-						'name' => 'Date',
-						'id'   => 'url_data_date', //TODO only one value gets stored in database
+						'name' => 'Fecha',
+						'id'   => 'date',
 						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
 						'date_format' => 'j/m/Y',
 					),
 					array(
-						'name' => 'Twitter account',
-						'id'   => 'twitter',
+						'name' => 'Cueta de Twitter',
+						'id'   => 'user',
+						'desc' => 'No incluyas "@". Ex: juventudsin',
 						'type' => 'text_small',
-						'protocols' => array( 'http', 'https' )
 					),
 					array(
 						'name' => 'Followers',
-						'id'   => 'twitter_followers',
+						'id'   => 'followers',
 						'type' => 'text_small',
 					),
 				),
