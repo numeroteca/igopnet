@@ -22,15 +22,63 @@ $prefix = '_ig_';
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
-		<?php the_content(); 
+		<?php
+		$origin_date = get_post_meta( $post_id, $prefix.'origin_date', true );
+		$end_date = get_post_meta( $post_id, $prefix.'end_date', true );
+		$other_urls = get_post_meta( $post_id, $prefix.'other_url', true );
+		$other_themes = get_post_meta( $post_id, $prefix.'other_themes', true );
+		$other_demands = get_post_meta( $post_id, $prefix.'other_demands', true );
+		$facebook_site = get_post_meta( $post_id, $prefix.'facebook_site', true );
+		$youtube_account = get_post_meta( $post_id, $prefix.'youtube_account', true );
+		$twitter_account = get_post_meta( $post_id, $prefix.'twitter_account', true );
+		$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
+		$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
+		
 		echo "<dt>Main Web</dt><dd>".get_post_meta( $post_id, $prefix.'main_url', true ). "</dd>";
-		echo "<dt>Fecha de inicio</dt><dd>".get_post_meta( $post_id, $prefix.'origin_date', true ). "</dd>";
-		echo "<dt>Fecha de fin</dt><dd>".get_post_meta( $post_id, $prefix.'end_date', true ). "</dd>";
+		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>";
+		echo "<dt>Fecha de fin</dt><dd>" .date( 'm/Y', $end_date ). "</dd>";
 		echo "<dt>Activa</dt><dd>".get_post_meta( $post_id, $prefix.'active', true ). "</dd>";
 		echo "<dt>Descripci&oacute;n</dt><dd>".get_post_meta( $post_id, $prefix.'description', true ). "</dd>";
 		echo "<dt>Notas</dt><dd>".get_post_meta( $post_id, $prefix.'notes', true ). "</dd>";
-		//echo "<dt>Otras webs</dt><dd>".get_post_meta( $post_id, $prefix.'other_url', true ). "</dd>"; TODO
+		echo "<dt>Otras webs</dt><dd>";
+	 	foreach ($other_urls as $key => $value) {
+	 		echo "<a href='".$value['url']."'>".$value['url']."</a><br/>";
+	 	}
+		echo "</dd>";
+		
+		echo "<h2>Temas principales</h2>";
+		echo "<dt>Tema principal 1</dt><dd>".get_post_meta( $post_id, $prefix.'theme_1', true ). "</dd>";
+		echo "<dt>Tema principal 2</dt><dd>".get_post_meta( $post_id, $prefix.'theme_2', true ). "</dd>";
+		echo "<dt>Tema principal 3</dt><dd>".get_post_meta( $post_id, $prefix.'theme_3', true ). "</dd>";
+		echo "<dt>Otros temas</dt><dd>";
+		foreach ($other_themes as $key => $value) {
+	 		echo $value['theme']."<br/>";
+	 	}
+		echo "</dd>";
+		
+		echo "<h2>Demandas principales</h2>";
+		echo "<dt>Demanda principal 1</dt><dd>".get_post_meta( $post_id, $prefix.'demand_1', true ). "</dd>";
+		echo "<dt>Demanda principal 2</dt><dd>".get_post_meta( $post_id, $prefix.'demand_2', true ). "</dd>";
+		echo "<dt>Demanda principal 3</dt><dd>".get_post_meta( $post_id, $prefix.'demand_3', true ). "</dd>";
+		echo "<dt>Otras demandas</dt><dd>";
+		foreach ($other_demands as $key => $value) {
+	 		echo $value['demand']."<br/>";
+	 	}
+		echo "</dd>";
+		
+		echo "<h2>Redes sociales en internet</h2>";
+		echo "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>";
+		echo "<dt>Facebook likes</dt><dd>".get_post_meta( $post_id, $prefix.'facebook_likes', true ). "</dd>";
+		echo "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>";
+		echo "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a> comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>";
+		echo "<dt>Otras cuentas de Twitter</dt><dd>";
+		foreach ($other_twitter_accounts as $key => $value) {
+	 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a> comenz&oacute; en ".date( 'd/m/Y', $value['twitter_origin'] )."<br/>";
+	 	}
+		echo "</dd>";
+		echo "<dt>Site technologies</dt><dd>".get_post_meta( $post_id, $prefix.'site_technologies', true ). "</dd>";
 		?>
+		
 		<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
 	</div><!-- .entry-content -->
 

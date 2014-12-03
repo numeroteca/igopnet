@@ -332,7 +332,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'name' => __( 'Facebook URL' ),
 				'desc' => __( 'Ex: juventudsinfuturo' ),
 				'id' => $prefix . 'facebook_site',
-				'type' => 'text_url'
+				'type' => 'text_medium'
 			),
 			array(
 				'name' => __( 'Facebook likes' ),
@@ -349,7 +349,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 			array(
 				'name' => 'Site technologies',
 				'desc' => 'Main site techonologies. Ex: "Analytics: Google Analytics Blog: WordPress CMS: WordPress Font script: Google Font API JavaScript framework: jQuery Mobile framework: jQuery Mobile Web server: Nginx"',
-				'id' => $prefix . 'data_date',
+				'id' => $prefix . 'site_technologies',
 				'type' => 'textarea',
 			),
 			array(
@@ -363,7 +363,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'desc' => __( '' ),
 				'id' => $prefix . 'twitter_origin',
 				'type' => 'text_date_timestamp',
-				'date_format' => 'j/M/Y',
+				'date_format' => 'j/m/Y',
 			),
 			array(
 				'id' => $prefix . 'other_twitter_accounts',
@@ -376,14 +376,14 @@ function igopnet_metaboxes( $meta_boxes ) {
  				'fields' => array(
 					array(
 						'name' => 'Secondary Twitter account',
- 						'id'   => 'url',
+ 						'id'   => 'user',
  						'desc' => __( 'Do not incluse the "@". Ex: juventudsin' ),
 						'type' => 'text_medium',
 					),
 					array(
 						'name' => __( 'When Twittter account started' ),
 						'desc' => __( '' ),
-						'id' => $prefix . 'twitter_origin',
+						'id' => 'twitter_origin',
 						'type' => 'text_date_timestamp',
 						'date_format' => 'j/M/Y',
 					),
