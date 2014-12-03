@@ -81,13 +81,35 @@ $prefix = '_ig_';
 		
 		echo "<h2>Informaci&oacute;n sobre sitios web</h2>";
 		echo "<dt>Otras webs</dt><dd>";
-	 	foreach ($url_info as $key => $value) {
-	 		echo "<a href='".$value['url']."'>".$value['url']."</a>; 
-	 		Google Page Rank: ".$value['google_page_rank']."; 
-	 		Alexa Page Rank: ".$value['alexa_page_rank']."; 
-	 		Alexa Inlinks: ".$value['alexa_inlinks']."; 
-	 		Date: ".date( 'd/m/Y',$value['url_data_date'])."<br/>";
-	 	}
+		echo "
+		<table >
+			<thead>
+				<tr>
+					<th>URL</th>
+					<th>Google Page Rank</th>
+					<th>Alexa Page Rank</th>
+					<th>Alexa Inlinks</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			";
+		foreach ($url_info as $key => $value) {
+			echo "
+				<tr>
+					<td><a href='".$value['url']."'>".$value['url']."</a></td>
+					<td>".$value['google_page_rank']."</td>
+					<td>".$value['alexa_page_rank']."</td>
+					<td>".$value['alexa_inlinks']."</td>
+					<td>".date( 'd/m/Y',$value['url_data_date'])."</td>
+				</tr>
+			";
+			}
+		echo "
+			</tbody>
+  	</table>"
+  	;
 		?>
 		
 		<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
