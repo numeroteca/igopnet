@@ -55,7 +55,7 @@ function build_taxonomies() {
 		'label' => __( 'A quién' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-whom' ) ) );
-	register_taxonomy( 'org-validation', 'organization', array(
+	register_taxonomy( 'org-validation', 'organization', array(//TODO validation as taxonomy or custom post type?
 		'label' => __( 'Validation' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-validation' ) ) );
@@ -103,14 +103,14 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'desc' => 'Si se desconoce la fecha exacta, indicar 1 de enero de ese año',
 				'id' => $prefix . 'origin_date',
 				'type' => 'text_date_timestamp',
-				'date_format' => 'j/M/Y',
+				'date_format' => 'j/m/Y',
 			),
 			array(
 				'name' => 'Fecha de fin',
 				'desc' => 'Si se desconoce la fecha exacta, indicar 1 de enero de ese año',
 				'id' => $prefix . 'end_date',
 				'type' => 'text_date_timestamp',
-				'date_format' => 'j/M/Y',
+				'date_format' => 'j/m/Y',
 			),
 			array(
 				'name' => 'Activa',
@@ -456,7 +456,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 			array(
 				'id' => $prefix . 'twitter_info',
 				'type' => 'group',
-				'description' => __( 'Info about websites','igopnet' ),
+				'description' => __( 'Info about Twitter accounts','igopnet' ),
 				'options' => array(
 					'group_title' => __( 'Twitter data', 'igopnet' ),
 					'add_button' => __( 'Add more data', 'montera34' ),
@@ -519,6 +519,16 @@ function igopnet_metaboxes( $meta_boxes ) {
 					'teeny' => false, // output the minimal editor config used in Press This
 					'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
 				),
+			),
+			array(
+				'name' => 'Validación',
+				'desc' => '',
+				'id' => $prefix . 'validation',
+				'type' => 'radio_inline',
+				'options' => array(
+				    array('name' => 'yes', 'value' => 'yes'),
+				    array('name' => 'no', 'value' => 'no'),
+				)
 			),
 		),
 	);
