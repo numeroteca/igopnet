@@ -33,6 +33,7 @@ $prefix = '_ig_';
 		$twitter_account = get_post_meta( $post_id, $prefix.'twitter_account', true );
 		$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 		$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
+		$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
 		
 		echo "<dt>Main Web</dt><dd>".get_post_meta( $post_id, $prefix.'main_url', true ). "</dd>";
 		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>";
@@ -77,6 +78,16 @@ $prefix = '_ig_';
 	 	}
 		echo "</dd>";
 		echo "<dt>Site technologies</dt><dd>".get_post_meta( $post_id, $prefix.'site_technologies', true ). "</dd>";
+		
+		echo "<h2>Informaci&oacute;n sobre sitios web</h2>";
+		echo "<dt>Otras webs</dt><dd>";
+	 	foreach ($url_info as $key => $value) {
+	 		echo "<a href='".$value['url']."'>".$value['url']."</a>; 
+	 		Google Page Rank: ".$value['google_page_rank']."; 
+	 		Alexa Page Rank: ".$value['alexa_page_rank']."; 
+	 		Alexa Inlinks: ".$value['alexa_inlinks']."; 
+	 		Date: ".date( 'd/m/Y',$value['url_data_date'])."<br/>";
+	 	}
 		?>
 		
 		<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>

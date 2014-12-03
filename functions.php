@@ -385,7 +385,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'desc' => __( '' ),
 						'id' => 'twitter_origin',
 						'type' => 'text_date_timestamp',
-						'date_format' => 'j/M/Y',
+						'date_format' => 'j/m/Y',
 					),
 				),
 			),
@@ -413,10 +413,10 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'fields' => array(
 					array(
 						'name' => 'Date',
-						'id'   => 'url_data_date', //TODO only one value gets stored in database
+						'id'   => 'url_data_date',
 						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
-						'date_format' => 'j/M/Y',
+						'date_format' => 'j/m/Y',
 					),
 					array(
 						'name' => 'URL',
@@ -468,7 +468,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'id'   => 'url_data_date', //TODO only one value gets stored in database
 						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
-						'date_format' => 'j/M/Y',
+						'date_format' => 'j/m/Y',
 					),
 					array(
 						'name' => 'Twitter account',
@@ -506,7 +506,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'desc' => '',
 				'id' => $prefix . 'data_date',
 				'type' => 'text_date_timestamp',
-				'date_format' => 'j/M/Y',
+				'date_format' => 'j/m/Y',
 			),
 			array(
 				'name' => 'Fuente de los datos',
