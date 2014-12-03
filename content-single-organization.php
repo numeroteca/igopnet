@@ -8,11 +8,12 @@
  */
 $post_id = $post->ID;
 $prefix = '_ig_';
+$tit = get_the_title();
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
-		<h1 class="entry-title"><?php the_title(); ?></h1>
+		<h1 class="entry-title"><?php echo $tit; ?></h1>
 
 		<?php if ( 'post' == get_post_type() ) : ?>
 		<div class="entry-meta">
@@ -37,7 +38,15 @@ $prefix = '_ig_';
 		$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 		$data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 		
-		echo "<dt>Main Web</dt><dd>".get_post_meta( $post_id, $prefix.'main_url', true ). "</dd>";
+		echo "<h2>Informaci&oacute;n b&aacute;sica</h2>";
+		echo "<dt>Nombre</dt><dd>".$tit. "</dd>";
+		echo "<dt>Web principal</dt><dd>".get_post_meta( $post_id, $prefix.'main_url', true ). "</dd>";
+		echo "<dt>Ecosistema</dt><dd>".get_the_term_list( $post_id, 'org-ecosystem', ' ', ', ', '' ). "</dd>";
+		echo "<dt>Tipo</dt><dd>".get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ). "</dd>";
+		echo "<dt>Alcance</dt><dd>".get_the_term_list( $post_id, 'org-scope', ' ', ', ', '' ). "</dd>";
+		echo "<dt>A qui&eacute;n</dt><dd>".get_the_term_list( $post_id, 'org-whom', ' ', ', ', '' ). "</dd>";
+		echo "<dt>Ciudad</dt><dd>".get_the_term_list( $post_id, 'org-city', ' ', ', ', '' ). "</dd>";
+		echo "<dt>Regi&oacute;n</dt><dd>".get_the_term_list( $post_id, 'org-region', ' ', ', ', '' ). "</dd>";
 		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>";
 		echo "<dt>Fecha de fin</dt><dd>" .date( 'm/Y', $end_date ). "</dd>";
 		echo "<dt>Activa</dt><dd>".get_post_meta( $post_id, $prefix.'active', true ). "</dd>";

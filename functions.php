@@ -55,10 +55,10 @@ function build_taxonomies() {
 		'label' => __( 'A quién' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-whom' ) ) );
-	register_taxonomy( 'org-validation', 'organization', array(//TODO validation as taxonomy or custom post type?
+/*	register_taxonomy( 'org-validation', 'organization', array(//TODO validation as taxonomy or custom post type?
 		'label' => __( 'Validation' ),
 		'hierarchical' => true,
-		'rewrite' => array( 'slug' => 'org-validation' ) ) );
+		'rewrite' => array( 'slug' => 'org-validation' ) ) );*/
 	register_taxonomy( 'org-city', 'organization', array(
 		'label' => __( 'City' ),
 		'hierarchical' => true,
