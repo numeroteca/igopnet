@@ -24,6 +24,7 @@ $tit = get_the_title();
 
 	<div class="entry-content">
 		<?php
+		$main_url = get_post_meta( $post_id, $prefix.'main_url', true );
 		$origin_date = get_post_meta( $post_id, $prefix.'origin_date', true );
 		$end_date = get_post_meta( $post_id, $prefix.'end_date', true );
 		$other_urls = get_post_meta( $post_id, $prefix.'other_url', true );
@@ -40,7 +41,7 @@ $tit = get_the_title();
 		
 		echo "<h2>Informaci&oacute;n b&aacute;sica</h2>";
 		echo "<dt>Nombre</dt><dd>".$tit. "</dd>";
-		echo "<dt>Web principal</dt><dd>".get_post_meta( $post_id, $prefix.'main_url', true ). "</dd>";
+		echo "<dt>Web principal</dt><dd><a href='".$main_url."'>".$main_url."</a></dd>";
 		echo "<dt>Ecosistema</dt><dd>".get_the_term_list( $post_id, 'org-ecosystem', ' ', ', ', '' ). "</dd>";
 		echo "<dt>Tipo</dt><dd>".get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ). "</dd>";
 		echo "<dt>Alcance</dt><dd>".get_the_term_list( $post_id, 'org-scope', ' ', ', ', '' ). "</dd>";
