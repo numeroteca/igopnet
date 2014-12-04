@@ -90,7 +90,9 @@ height: 0;
 }
 
 #branding #searchform  {
-background-color: #FFF;
+	background-color: #FFF;
+	top:10px;
+	right:1em;
 }
 
 .singular .entry-header .entry-meta {

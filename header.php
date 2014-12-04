@@ -93,11 +93,13 @@
 					// The header image
 					// Check if this is a post or page, if it has a thumbnail, and if it's a big one
 					if ( is_singular() && has_post_thumbnail( $post->ID ) &&
-							( /* $src, $width, $height */ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), array( $header_image_width, $header_image_width ) ) ) &&
-							$image[1] >= $header_image_width ) :
+							($image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), array( $header_image_width, $header_image_width ) ) ) &&
+							$image[1] >= $header_image_width ) {
 						// Houston, we have a new header image!
 						echo get_the_post_thumbnail( $post->ID, 'post-thumbnail' );
-					else :
+					} elseif (is_page('directory') || (get_post_type() == 'organization')){//if it is directory page
+						echo "<img src='".get_stylesheet_directory_uri()."/img/banner-directory.png' alt='Directorio Movimientos tecnopolitica' title='Directorio Movimientos tecnopolitica' width='1000' height='50' />";
+					} else {
 						// Compatibility with versions of WordPress prior to 3.4.
 						if ( function_exists( 'get_custom_header' ) ) {
 							$header_image_width  = get_custom_header()->width;
@@ -108,7 +110,7 @@
 						}
 						?>
 					<img src="<?php header_image(); ?>" width="<?php echo $header_image_width; ?>" height="<?php echo $header_image_height; ?>" alt="" />
-				<?php endif; // end check for featured image or standard header ?>
+				<?php } // end check for featured image or standard header ?>
 			</a>
 			<?php endif; // end check for removed header image ?>
 
