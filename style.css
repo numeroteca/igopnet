@@ -101,3 +101,8 @@ position: relative;
 #access .menu-main-menu-container, #access .menu-main-menu-catalan-container, #access i .menu-main-menu-spanish-container{
 	margin-left: 10px;
 }
+
+/* Directory */
+#directory-list .entry-header, #directory-list .entry-content  {
+	width:100%;
+}

@@ -8,7 +8,7 @@
  */
 ?>
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	<article id="directory-list" <?php post_class(); ?>>
 		<header class="entry-header">
 			<?php if ( ! is_page_template( 'page-templates/front-page.php' ) ) : ?>
 			<?php the_post_thumbnail(); ?>
@@ -67,7 +67,7 @@
 					<tr <?php post_class(''); ?> id="post-<?php the_ID(); ?>">
 						<td> <a href="<?php the_permalink() ?>" rel="bookmark" title="Go to <?php the_title_attribute(); ?> page">
 							<strong><?php the_title(); ?></strong></a> 
-							<?php if ( is_user_logged_in() ) { ?><div class="btn btn-xs btn-default"> <?php edit_post_link(__('Edit This')); ?></div> <?php } ?>
+							<?php if ( is_user_logged_in() ) { ?><?php edit_post_link(__('Edit')); ?><?php } ?>
 						</td>
 						<td>
 							<?php echo get_the_term_list( $post_id, 'org-scope', ' ', ', ', '' ); ?>
@@ -94,6 +94,6 @@
 		</div><!-- .entry-content -->
 		
 		<footer class="entry-meta">
-			<?php edit_post_link( __( 'Edit', 'twentytwelve' ), '<span class="edit-link">', '</span>' ); ?>
+			<?php // edit_post_link( __( 'Edit', 'twentytwelve' ), '<span class="edit-link">', '</span>' ); ?>
 		</footer><!-- .entry-meta -->
 	</article><!-- #post -->
