@@ -4,8 +4,13 @@
 			<div id="content">
 
 				<?php while ( have_posts() ) : the_post(); ?>
-
-					<?php get_template_part( 'content', 'page' ); ?>
+					
+					<?php
+						if (is_page() == 'directory') {
+							get_template_part( 'content','directory' );
+						} else {
+							get_template_part( 'content', 'page' );
+						} ?>
 
 					<?php comments_template( '', true ); ?>
 
