@@ -82,7 +82,7 @@
 							<?php echo get_the_term_list( $post_id, 'org-region', ' ', ', ', '' ); ?>
 						</td>
 						<td>
-							<?php echo "<a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>"; ?>
+							<?php echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : '' ;?>
 						</td>
 					</tr>
 				</div>

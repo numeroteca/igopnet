@@ -48,8 +48,8 @@ $tit = get_the_title();
 		echo "<dt>A qui&eacute;n</dt><dd>".get_the_term_list( $post_id, 'org-whom', ' ', ', ', '' ). "</dd>";
 		echo "<dt>Ciudad</dt><dd>".get_the_term_list( $post_id, 'org-city', ' ', ', ', '' ). "</dd>";
 		echo "<dt>Regi&oacute;n</dt><dd>".get_the_term_list( $post_id, 'org-region', ' ', ', ', '' ). "</dd>";
-		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>";
-		echo "<dt>Fecha de fin</dt><dd>" .date( 'm/Y', $end_date ). "</dd>";
+		echo !($origin_date=='') ? "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>" : "";
+		echo !($end_date=='') ? "<dt>Fecha de fin</dt><dd>" .date( 'm/Y', $end_date ). "</dd>" : "";
 		echo "<dt>Activa</dt><dd>".get_post_meta( $post_id, $prefix.'active', true ). "</dd>";
 		echo "<dt>Descripci&oacute;n</dt><dd>".get_post_meta( $post_id, $prefix.'description', true ). "</dd>";
 		echo "<dt>Notas</dt><dd>".get_post_meta( $post_id, $prefix.'notes', true ). "</dd>";
@@ -83,7 +83,7 @@ $tit = get_the_title();
 		echo "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>";
 		echo "<dt>Facebook likes</dt><dd>".get_post_meta( $post_id, $prefix.'facebook_likes', true ). "</dd>";
 		echo "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>";
-		echo "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a> comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>";
+		echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a> comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
 		echo "<dt>Otras cuentas de Twitter</dt><dd>";
 		foreach ($other_twitter_accounts as $key => $value) {
 	 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a> comenz&oacute; en ".date( 'd/m/Y', $value['twitter_origin'] )."<br/>";
@@ -152,7 +152,7 @@ $tit = get_the_title();
   	
 		echo "<h2>Fuente de informaci&oacute;n</h2>";
 		echo "<dt>Codificador</dt><dd>".get_post_meta( $post_id, $prefix . 'coder', true ). "</dd>";
-		echo "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $data_date ). "</dd>";
+		echo !($data_date=='') ? "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $data_date ). "</dd>" : "";
 		echo "<dt>Fuente de los datos</dt><dd>".get_post_meta( $post_id, $prefix . 'info_source', true ). "</dd>";
 		echo "<dt>Validaci&oacute;n</dt><dd>".get_post_meta( $post_id, $prefix . 'validation', true ). "</dd>";
 		?>
