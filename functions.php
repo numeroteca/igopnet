@@ -151,8 +151,8 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'type' => 'group',
 				'description' => __( 'Secondary websites','igopnet' ),
 				'options' => array(
-					'add_button' => __( 'Add Another URL', 'montera34' ),
-					'remove_button' => __( 'Remove URL', 'montera34' ),
+					'add_button' => __( 'Add Another URL', 'igopnet' ),
+					'remove_button' => __( 'Remove URL', 'igopnet' ),
 				),
  				'fields' => array(
 					array(
@@ -335,12 +335,6 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'type' => 'text_medium'
 			),
 			array(
-				'name' => __( 'Facebook likes' ),
-				'desc' => __( 'Include the number, without thousand separator. Ex: 15235' ),
-				'id' => $prefix . 'facebook_likes',
-				'type' => 'text_medium',
-			),
-			array(
 				'name' => __( 'Youtube account' ),
 				'desc' => __( 'Ex: https://www.youtube.com/user/' ),
 				'id' => $prefix . 'youtube_account',
@@ -370,8 +364,8 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'type' => 'group',
 				'description' => __( 'Secondary Twitter Accounts','igopnet' ),
 				'options' => array(
-					'add_button' => __( 'Add Another Twitter account', 'montera34' ),
-					'remove_button' => __( 'Remove Twitter account', 'montera34' ),
+					'add_button' => __( 'Add Another Twitter account', 'igopnet' ),
+					'remove_button' => __( 'Remove Twitter account', 'igopnet' ),
 				),
  				'fields' => array(
 					array(
@@ -407,8 +401,8 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'description' => __( 'Info about websites','igopnet' ),
 				'options' => array(
 					'group_title' => __( 'Website data', 'igopnet' ),
-					'add_button' => __( 'Add more data', 'montera34' ),
-					'remove_button' => __( 'Remove data', 'montera34' ),
+					'add_button' => __( 'Add more data', 'igopnet' ),
+					'remove_button' => __( 'Remove data', 'igopnet' ),
 				),
 				'fields' => array(
 					array(
@@ -459,8 +453,8 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'description' => __( 'Info about Twitter accounts','igopnet' ),
 				'options' => array(
 					'group_title' => __( 'Twitter data', 'igopnet' ),
-					'add_button' => __( 'Add more data', 'montera34' ),
-					'remove_button' => __( 'Remove data', 'montera34' ),
+					'add_button' => __( 'Add more data', 'igopnet' ),
+					'remove_button' => __( 'Remove data', 'igopnet' ),
 				),
 				'fields' => array(
 					array(
@@ -471,7 +465,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'date_format' => 'j/m/Y',
 					),
 					array(
-						'name' => 'Cueta de Twitter',
+						'name' => 'Cuenta de Twitter',
 						'id'   => 'user',
 						'desc' => 'No incluyas "@". Ex: juventudsin',
 						'type' => 'text_small',
@@ -479,6 +473,48 @@ function igopnet_metaboxes( $meta_boxes ) {
 					array(
 						'name' => 'Followers',
 						'id'   => 'followers',
+						'type' => 'text_small',
+					),
+				),
+			),
+		),
+	);
+	
+	//Facebook information in time
+	$meta_boxes[] = array(
+		'id' => 'igopnet_facebook_info',
+		'title' => __( 'Facebook in time information' ),
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'id' => $prefix . 'facebook_info',
+				'type' => 'group',
+				'description' => __( 'Info about Facebook','igopnet' ),
+				'options' => array(
+					'group_title' => __( 'Facebook data', 'igopnet' ),
+					'add_button' => __( 'Add more data', 'igopnet' ),
+					'remove_button' => __( 'Remove data', 'igopnet' ),
+				),
+				'fields' => array(
+					array(
+						'name' => 'Fecha',
+						'id'   => 'date',
+						'desc' => __( 'Select date when date where obtained' ),
+						'type' => 'text_date_timestamp',
+						'date_format' => 'j/m/Y',
+					),
+					array(
+						'name' => 'Cuenta de Facebook',
+						'id'   => 'user',
+						'desc' => 'Ex: juventudsin',
+						'type' => 'text_small',
+					),
+					array(
+						'name' => 'Likes',
+						'id'   => 'likes',
 						'type' => 'text_small',
 					),
 				),
