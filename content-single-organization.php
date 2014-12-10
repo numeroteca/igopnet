@@ -37,6 +37,7 @@ $tit = get_the_title();
 		$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
 		$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
 		$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
+		$facebook_info = get_post_meta( $post_id, $prefix.'facebook_info', true );
 		$data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 		
 		echo "<h2>Informaci&oacute;n b&aacute;sica</h2>";
@@ -81,7 +82,6 @@ $tit = get_the_title();
 		
 		echo "<h2>Redes sociales en internet</h2>";
 		echo "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>";
-		echo "<dt>Facebook likes</dt><dd>".get_post_meta( $post_id, $prefix.'facebook_likes', true ). "</dd>";
 		echo "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>";
 		echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a> comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
 		echo "<dt>Otras cuentas de Twitter</dt><dd>";
@@ -93,8 +93,7 @@ $tit = get_the_title();
 		
 		echo "
 		<h2>Informaci&oacute;n sobre sitios web</h2>
-		<dt>Otras webs</dt><dd>
-		<table >
+		<table>
 			<thead>
 				<tr>
 					<th>Fecha</th>
@@ -124,8 +123,7 @@ $tit = get_the_title();
   	;
   	
   	echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>
-		<dt>Cuentas de Twitter</dt><dd>
-		<table >
+		<table>
 			<thead>
 				<tr>
 					<th>Fecha</th>
@@ -142,6 +140,32 @@ $tit = get_the_title();
 					<td>".date( 'd/m/Y',$value['date'])."</td>
 					<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
 					<td>".$value['followers']."</td>
+				</tr>
+			";
+			}
+		echo "
+			</tbody>
+  	</table>"
+  	;
+  	
+  	echo "<h2>Informaci&oacute;n sobre Facebook</h2>
+		<table >
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Facebook</th>
+					<th>Likes</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			";
+		foreach ($facebook_info as $key => $value) {
+			echo "
+				<tr>
+					<td>".date( 'd/m/Y',$value['date'])."</td>
+					<td><a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a></td>
+					<td>".$value['likes']."</td>
 				</tr>
 			";
 			}
