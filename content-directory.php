@@ -38,6 +38,7 @@
 					<th>Ciudad</th>
 					<th>Regi&oacute;n</th>
 					<th>Twitter</th>
+					<th>Twitter Followers</th>
 				</tr>
 			</thead>
 				<tbody>
@@ -83,6 +84,9 @@
 						</td>
 						<td>
 							<?php echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : '' ;?>
+						</td>
+						<td>
+							<?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : "";?>
 						</td>
 					</tr>
 				</div>
