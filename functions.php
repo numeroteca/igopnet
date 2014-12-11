@@ -318,7 +318,89 @@ function igopnet_metaboxes( $meta_boxes ) {
 			),
 		),
 	);
-	
+
+	//Acciones de reivindicación más frecuentes
+	$main_actions = array(
+		      'Acampadas' => 'Acampadas',
+		      'Amenazas' => 'Amenazas',
+		      'Asesoría legal' => 'Asesoría legal',
+		      'Ataques DDoS'     => 'Ataques DDoS',
+		      'Asambleas' => 'Asambleas',
+		      'bloqueos' => 'bloqueos',
+		      'boicots' => 'boicots',
+		      'denunciar abusos al interes público' => 'denunciar abusos al interes público',
+		      'Obtener financiación' => 'Obtener financiación',
+		      'promover el voto para ellos o terceras agrupaciones que apoyen' => 'promover el voto para ellos o terceras agrupaciones que apoyen',
+		      'disuadir que se vote por ciertas agrupaciones' => 'disuadir que se vote por ciertas agrupaciones',
+		      'encierros' => 'encierros',
+		      'Escraches' => 'Escraches',
+		      'flash mobs' => 'flash mobs',
+		      'filtraciones de informacion de interés público' => 'filtraciones de informacion de interés público',
+		      'obtener firmas de apoyo a acciones' => 'obtener firmas de apoyo a acciones',
+		      'Grupos de trabajo' => 'Grupos de trabajo',
+		      'hackeo' => 'hackeo',
+		      'Huelgas' => 'Huelgas',
+		      'lobby (cabildeo directo)' => 'lobby (cabildeo directo)',
+		      'Ocupaciones' => ',Ocupaciones',
+		      'Organizar manifestaciones' => 'Organizar manifestaciones',
+		      'Participar en manifestaciones' => 'Participar en manifestaciones',
+		      'quedadas' => 'quedadas',
+		      'retenciones' => 'retenciones',
+		      'Vandalismo' => 'Vandalismo',
+		      'detener acciones judiciales (ej:parar desaucios)' => 'detener acciones judiciales (ej:parar desaucios)', //TODO erase ej
+		      'campañas solidarias' => 'campañas solidarias',
+		      'reclutar simpatizantes' => 'reclutar simpatizantes',
+		      'todas las anteriores' => 'todas las anteriores',
+   			 );
+	$meta_boxes[] = array(
+		'id' => 'igopnet_main_activities',
+		'title' => 'Acciones de reinvindicación más frecuentes',
+		'pages' => array('organization'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'name' => 'Acciones de reinvindicación más frecuentes 1',
+				'desc' => __( '' ),
+				'id' => $prefix . 'action_1',
+				'type'    => 'select',
+				'options' => $main_actions,
+			),
+			array(
+				'name' => 'Acciones de reinvindicación más frecuentes 2',
+				'desc' => __( '' ),
+				'id' => $prefix . 'action_2',
+				'type'    => 'select',
+				'options' => $main_actions,
+			),
+			array(
+				'name' => 'Acciones de reinvindicación más frecuentes 3',
+				'desc' => __( '' ),
+				'id' => $prefix . 'action_3',
+				'type'    => 'select',
+				'options' => $main_actions,
+			),
+			array(
+				'id' => $prefix . 'other_actions',
+				'type' => 'group',
+				'description' => 'Acciones de reinvindicación mas frecuentes no incluidas en las anteriores',
+				'options' => array(
+					'add_button' => 'Añade otra',
+					'remove_button' => 'Borra esta',
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Otra acción',
+ 						'id'   => 'action',
+ 						'desc' => __( '' ),
+						'type' => 'text',
+					),
+				),
+			),
+		),
+	);
+
 	//Social networking sites information
 	$meta_boxes[] = array(
 		'id' => 'igopnet_social_networking_sites',
