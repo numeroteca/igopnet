@@ -33,12 +33,14 @@
 			<thead>
 				<tr>
 					<th>Nombre</th>
-					<th>Alcance</th>
+					<th>URL</th>
+					<!--<th>Alcance</th>-->
 					<th>Tipo</th>
-					<th>Ciudad</th>
+					<!--<th>Ciudad</th>-->
 					<th>Regi&oacute;n</th>
 					<th>Twitter</th>
 					<th>Twitter Followers</th>
+					<th>Ecosistema</th>
 				</tr>
 			</thead>
 				<tbody>
@@ -71,22 +73,31 @@
 							<?php if ( is_user_logged_in() ) { ?><?php edit_post_link(__('Edit')); ?><?php } ?>
 						</td>
 						<td>
-							<?php echo get_the_term_list( $post_id, 'org-scope', ' ', ', ', '' ); ?>
+							<?php
+								$remove_this = array("http://","https://","www.");
+								$mainurl_stripped = str_replace($remove_this, "", $main_url);
+								echo "<a href='".$main_url."'>".$mainurl_stripped."</a>"; ?>
 						</td>
+						<!--<td>
+							<?php echo get_the_term_list( $post_id, 'org-scope', ' ', ', ', '' ); ?>
+						</td>-->
 						<td>
 							<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?>
 						</td>
-						<td>
+						<!--<td>
 							<?php echo get_the_term_list( $post_id, 'org-city', ' ', ', ', '' ); ?>
-						</td>
+						</td>-->
 						<td>
 							<?php echo get_the_term_list( $post_id, 'org-region', ' ', ', ', '' ); ?>
 						</td>
 						<td>
-							<?php echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : '' ;?>
+							<?php echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : '' ; ?>
 						</td>
 						<td>
-							<?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : "";?>
+							<?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
+						</td>
+						<td>
+							<?php echo get_the_term_list( $post_id, 'org-ecosystem', ' ', ', ', '' ); ?>
 						</td>
 					</tr>
 				</div>
