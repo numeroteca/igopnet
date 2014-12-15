@@ -3,11 +3,8 @@
 add_action( 'init', 'create_post_type', 0 );
 // Custom Taxonomies
 add_action( 'init', 'build_taxonomies', 0 );
-//Initializes Custom Meta Boxes
-add_action( 'init', 'igopnet_init_meta_boxes', 9999 );
 // Extra meta boxes in editor
-add_filter( 'cmb_meta_boxes', 'igopnet_metaboxes' );
-
+add_filter( 'cmb2_meta_boxes', 'igopnet_metaboxes' );
 
 //Creates Custom Post Types
 function create_post_type() {
@@ -73,11 +70,13 @@ function build_taxonomies() {
 		'rewrite' => array( 'slug' => 'org-country' ) ) );
 }
 
-// Initialize the metabox class
-function igopnet_init_meta_boxes() {
-    if ( !class_exists( 'cmb_Meta_Box' ) ) {
-        require_once( 'lib/metabox/init.php' );
-    }
+/**
+ * Get the bootstrap! If using the plugin from wordpress.org, REMOVE THIS!
+ */
+if ( file_exists(  __DIR__ . '/cmb2/init.php' ) ) {
+	require_once  __DIR__ . '/cmb2/init.php';
+} elseif ( file_exists(  __DIR__ . '/CMB2/init.php' ) ) {
+	require_once  __DIR__ . '/CMB2/init.php';
 }
 
 function igopnet_metaboxes( $meta_boxes ) {
@@ -87,7 +86,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_organization_basic',
 		'title' => __( 'Basic information' ),
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -122,7 +121,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				    array('name' => 'no', 'value' => 'no'),
 				)
 			),
-			array(
+			/*array(
 				'name' => __( 'Description' ),
 				'desc' => __( '-' ),
 				'id' => $prefix . 'description',
@@ -133,7 +132,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 					'teeny' => false, // output the minimal editor config used in Press This
 					'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
 				),
-			),
+			),*/
 			array(
 				'name' => __( 'Notes' ),
 				'desc' => __( '-' ),
@@ -169,6 +168,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 
 	//Temas principales
 	$main_themes = array(
+					'' =>'',
 		      'Derechos políticos y a minorías' => 'Derechos políticos y a minorías',
 		      'Economía y finanzas' => 'Economía y finanzas',
 		      'Juventud' => 'Juventud',
@@ -182,7 +182,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_main_themes',
 		'title' => 'Temas principales',
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -193,6 +193,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'theme_1',
 				'type'    => 'select',
 				'options' => $main_themes,
+				'default' => '',
 			),
 			array(
 				'name' => 'Tema principal 2',
@@ -200,6 +201,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'theme_2',
 				'type'    => 'select',
 				'options' => $main_themes,
+				'default' => '',
 			),
 			array(
 				'name' => 'Tema principal 3',
@@ -207,6 +209,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'theme_3',
 				'type'    => 'select',
 				'options' => $main_themes,
+				'default' => '',
 			),
 			array(
 				'id' => $prefix . 'other_themes',
@@ -230,6 +233,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	
 	//Demandas principales
 	$main_demands = array(
+					'' =>'',
 		      'comercio justo' => 'comercio justo',
 		      'consumo de proximidad' => 'consumo de proximidad',
 		      'Defensa a la cultura' => 'Defensa a la cultura',
@@ -273,7 +277,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_main_demands',
 		'title' => 'Demandas principales',
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -284,6 +288,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'demand_1',
 				'type'    => 'select',
 				'options' => $main_demands,
+				'default' => '',
 			),
 			array(
 				'name' => 'Demanda principal 2',
@@ -291,6 +296,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'demand_2',
 				'type'    => 'select',
 				'options' => $main_demands,
+				'default' => '',
 			),
 			array(
 				'name' => 'Demanda principal 3',
@@ -298,6 +304,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'demand_3',
 				'type'    => 'select',
 				'options' => $main_demands,
+				'default' => '',
 			),
 			array(
 				'id' => $prefix . 'other_demands',
@@ -321,6 +328,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 
 	//Acciones de reivindicación más frecuentes
 	$main_actions = array(
+					'' =>'',
 		      'Acampadas' => 'Acampadas',
 		      'Amenazas' => 'Amenazas',
 		      'Asesoría legal' => 'Asesoría legal',
@@ -355,7 +363,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_main_activities',
 		'title' => 'Acciones de reinvindicación más frecuentes',
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -366,6 +374,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'action_1',
 				'type'    => 'select',
 				'options' => $main_actions,
+				'default' => '',
 			),
 			array(
 				'name' => 'Acciones de reinvindicación más frecuentes 2',
@@ -373,6 +382,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'action_2',
 				'type'    => 'select',
 				'options' => $main_actions,
+				'default' => '',
 			),
 			array(
 				'name' => 'Acciones de reinvindicación más frecuentes 3',
@@ -380,6 +390,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'id' => $prefix . 'action_3',
 				'type'    => 'select',
 				'options' => $main_actions,
+				'default' => '',
 			),
 			array(
 				'id' => $prefix . 'other_actions',
@@ -405,7 +416,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_social_networking_sites',
 		'title' => __( 'Social Networks' ),
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -472,7 +483,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_website_info',
 		'title' => __( 'Websites related information' ),
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -524,7 +535,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_twitter_info',
 		'title' => __( 'Twitter in time information' ),
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -566,7 +577,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_facebook_info',
 		'title' => __( 'Facebook in time information' ),
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
@@ -608,7 +619,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 	$meta_boxes[] = array(
 		'id' => 'igopnet_organization_information_source',
 		'title' => __( 'Source of information' ),
-		'pages' => array('organization'), // post type
+		'object_types' => array('organization'), // post type
 		'context' => 'normal',
 		'priority' => 'high',
 		'show_names' => true, // Show field names on the left
