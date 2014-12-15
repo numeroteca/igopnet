@@ -12,8 +12,8 @@ function print_r2($val){
         echo  '</pre>';
 }
 
-		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
-		//$csv_filename = "http://globalrec.org/wp-content/themes/globalrec/insert/data.insert11-from-ods"; // name (no extension)
+		//$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
+		$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
 		$line_length = "4024"; // max line lengh (increase in case you have longer lines than 1024 characters)
 		$delimiter = ";"; // field delimiter character
 		$enclosure = '"'; // field enclosure character
