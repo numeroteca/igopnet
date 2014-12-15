@@ -30,7 +30,9 @@ $tit = get_the_title();
 		$other_urls = get_post_meta( $post_id, $prefix.'other_url', true );
 		$other_themes = get_post_meta( $post_id, $prefix.'other_themes', true );
 		$other_demands = get_post_meta( $post_id, $prefix.'other_demands', true );
+		$other_actions = get_post_meta( $post_id, $prefix.'other_actions', true );
 		$facebook_site = get_post_meta( $post_id, $prefix.'facebook_site', true );
+		$other_facebook_accounts = get_post_meta( $post_id, $prefix.'other_facebook_accounts', true );
 		$youtube_account = get_post_meta( $post_id, $prefix.'youtube_account', true );
 		$twitter_account = get_post_meta( $post_id, $prefix.'twitter_account', true );
 		$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
@@ -52,7 +54,9 @@ $tit = get_the_title();
 		echo !($origin_date=='') ? "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>" : "";
 		echo !($end_date=='') ? "<dt>Fecha de fin</dt><dd>" .date( 'm/Y', $end_date ). "</dd>" : "";
 		echo "<dt>Activa</dt><dd>".get_post_meta( $post_id, $prefix.'active', true ). "</dd>";
-		echo "<dt>Descripci&oacute;n</dt><dd>".get_post_meta( $post_id, $prefix.'description', true ). "</dd>";
+		//echo "<dt>Descripci&oacute;n</dt><dd>".get_post_meta( $post_id, $prefix.'description', true ). "</dd>";
+		echo "<p><strong>Descripci&oacute;n</strong></p>";
+		echo the_content();
 		echo "<dt>Notas</dt><dd>".get_post_meta( $post_id, $prefix.'notes', true ). "</dd>";
 		echo "<dt>Otras webs</dt><dd>";
 	 	foreach ($other_urls as $key => $value) {
@@ -80,14 +84,40 @@ $tit = get_the_title();
 	 	}
 		echo "</dd>";
 		
+		echo "<h2>Acciones de reinvindicaci&oacute;n m&aacute;s frefuentes</h2>";
+		echo "<dt>Accici&oacute;n 1</dt><dd>".get_post_meta( $post_id, $prefix.'action_1', true ). "</dd>";
+		echo "<dt>Accici&oacute;n 2</dt><dd>".get_post_meta( $post_id, $prefix.'action_2', true ). "</dd>";
+		echo "<dt>Accici&oacute;n 3</dt><dd>".get_post_meta( $post_id, $prefix.'action_3', true ). "</dd>";
+		echo "<dt>Otras accioness</dt><dd>";
+		foreach ($other_actions as $key => $value) {
+	 		echo $value['action']."<br/>";
+	 	}
+		echo "</dd>";
+		
 		echo "<h2>Redes sociales en internet</h2>";
 		echo "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>";
 		echo "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>";
-		echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a> comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
+		echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : "";
+		echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
+		echo "<dt>Otras cuentas de Facebook</dt><dd>";
+		if ($other_facebook_accounts[0]['user'] !='') {
+			if ($other_facebook_accounts[0]['user'] !='') {
+				foreach ($other_facebook_accounts as $key => $value) {
+			 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
+			 	}
+			}
+		}
+		echo "</dd>";
 		echo "<dt>Otras cuentas de Twitter</dt><dd>";
-		foreach ($other_twitter_accounts as $key => $value) {
-	 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a> comenz&oacute; en ".date( 'd/m/Y', $value['twitter_origin'] )."<br/>";
-	 	}
+		if ($other_twitter_accounts[0]['user'] !='') {
+			foreach ($other_twitter_accounts as $key => $value) {
+		 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a>";
+	 			if (isset($value['twitter_origin'])) {
+					echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
+		 		}
+		 		echo "<br/>";
+		 	}
+		}
 		echo "</dd>";
 		echo "<dt>Site technologies</dt><dd>".get_post_meta( $post_id, $prefix.'site_technologies', true ). "</dd>";
 		
@@ -107,16 +137,19 @@ $tit = get_the_title();
 				
 			";
 		foreach ($url_info as $key => $value) {
-			echo "
-				<tr>
-					<td>".date( 'd/m/Y',$value['date'])."</td>
-					<td><a href='".$value['url']."'>".$value['url']."</a></td>
-					<td>".$value['google_page_rank']."</td>
-					<td>".$value['alexa_page_rank']."</td>
-					<td>".$value['alexa_inlinks']."</td>
-				</tr>
-			";
+			$the_date = $value['date'];
+			if (isset($the_date)) {
+				echo "
+					<tr>
+						<td>".date( 'd/m/Y',$value['date'])."</td>
+						<td><a href='".$value['url']."'>".$value['url']."</a></td>
+						<td>".$value['google_page_rank']."</td>
+						<td>".$value['alexa_page_rank']."</td>
+						<td>".$value['alexa_inlinks']."</td>
+					</tr>
+				";
 			}
+		}
 		echo "
 			</tbody>
   	</table>"
