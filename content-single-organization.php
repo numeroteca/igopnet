@@ -88,7 +88,7 @@ $tit = get_the_title();
 		echo "<dt>Accici&oacute;n 1</dt><dd>".get_post_meta( $post_id, $prefix.'action_1', true ). "</dd>";
 		echo "<dt>Accici&oacute;n 2</dt><dd>".get_post_meta( $post_id, $prefix.'action_2', true ). "</dd>";
 		echo "<dt>Accici&oacute;n 3</dt><dd>".get_post_meta( $post_id, $prefix.'action_3', true ). "</dd>";
-		echo "<dt>Otras accioness</dt><dd>";
+		echo "<dt>Otras acciones</dt><dd>";
 		foreach ($other_actions as $key => $value) {
 	 		echo $value['action']."<br/>";
 	 	}
@@ -100,23 +100,27 @@ $tit = get_the_title();
 		echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : "";
 		echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
 		echo "<dt>Otras cuentas de Facebook</dt><dd>";
-		if ($other_facebook_accounts[0]['user'] !='') {
+		if (isset($other_facebook_accounts) && is_array($other_facebook_accounts)) {
 			if ($other_facebook_accounts[0]['user'] !='') {
-				foreach ($other_facebook_accounts as $key => $value) {
-			 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
-			 	}
+				if ($other_facebook_accounts[0]['user'] !='') {
+					foreach ($other_facebook_accounts as $key => $value) {
+				 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
+				 	}
+				}
 			}
 		}
 		echo "</dd>";
 		echo "<dt>Otras cuentas de Twitter</dt><dd>";
-		if ($other_twitter_accounts[0]['user'] !='') {
-			foreach ($other_twitter_accounts as $key => $value) {
-		 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a>";
-	 			if (isset($value['twitter_origin'])) {
-					echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
-		 		}
-		 		echo "<br/>";
-		 	}
+		if (isset($other_twitter_accounts) && is_array($other_twitter_accounts)) {
+			if ($other_twitter_accounts[0]['user'] !='') {
+				foreach ($other_twitter_accounts as $key => $value) {
+			 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a>";
+		 			if (isset($value['twitter_origin'])) {
+						echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
+			 		}
+			 		echo "<br/>";
+			 	}
+			}
 		}
 		echo "</dd>";
 		echo "<dt>Site technologies</dt><dd>".get_post_meta( $post_id, $prefix.'site_technologies', true ). "</dd>";
