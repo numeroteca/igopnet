@@ -476,6 +476,23 @@ function igopnet_metaboxes( $meta_boxes ) {
 					),
 				),
 			),
+			array(
+				'id' => $prefix . 'other_facebook_accounts',
+				'type' => 'group',
+				'description' => __( 'Secondary Facebook Accounts','igopnet' ),
+				'options' => array(
+					'add_button' => __( 'Add Another Facebook account', 'igopnet' ),
+					'remove_button' => __( 'Remove Facebook account', 'igopnet' ),
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Secondary Facebook account',
+ 						'id'   => 'user',
+ 						'desc' => __( '' ),
+						'type' => 'text_medium',
+					),
+				),
+			),
 		),
 	);
 
