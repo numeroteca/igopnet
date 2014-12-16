@@ -129,7 +129,7 @@ function print_r2($val){
 						$prefix . 'action_1' => $action_1,
 						$prefix . 'action_2' => $action_2,
 						$prefix . 'action_3' => $action_3,
-						$prefix . 'action_extra' => array(
+						$prefix . 'other_actions' => array(
 							array(
 							'action' => $action_extra
 							)
