@@ -12,8 +12,8 @@ function print_r2($val){
         echo  '</pre>';
 }
 
-		//$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
-		$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
+		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.02_p"; // name (no extension)
+		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
 		$line_length = "4024"; // max line lengh (increase in case you have longer lines than 1024 characters)
 		$delimiter = ";"; // field delimiter character
 		$enclosure = '"'; // field enclosure character
@@ -82,34 +82,31 @@ function print_r2($val){
 					
 					echo "other facebook users: ";
 					print_r2($facebook_others); 
-					foreach ($facebook_others as $facebook_other) {
-						$other_facebook_users['user'] = $facebook_other;
+					foreach ($facebook_others as $key => $facebook_other) {
+						$other_facebook_users[$key]['user'] = $facebook_other;
 					}
-					echo "other themes: ";
-					print_r2($other_themes);
+					echo "other_facebook_users: ";
+					print_r2($other_facebook_users);
 					
 					echo "other twitter users: ";
 					print_r2($twitter_others); 
-					foreach ($twitter_others as $twitter_other) {
-						$other_twitter_users['user'] = $twitter_other;
+					foreach ($twitter_others as $key => $twitter_other) {
+						$other_twitter_users[$key]['user'] = $twitter_other;
 					}
-					echo "other themes: ";
-					print_r2($other_themes);
+					echo "other_twitter_users: ";
+					print_r2($other_twitter_users);
 					
 					echo "other website_others: ";
 					print_r2($website_others); 
-					foreach ($website_others as $web) {
-						$other_websites['url'] = $web; //TODO store more than one value. The second and next get stored in same key, as it has same key name.
-					}
+					foreach ($website_others as $key => $web) {
+						$other_websites[$key]['url'] = $web;					}
 					echo "other websites: ";
 					print_r2($other_websites);
 					
 					//simple custom fields
 					$fields = array(
 						$prefix . 'main_url' => $website,
-						$prefix . 'other_url' => array(
-							$other_websites
-						),
+						$prefix . 'other_url' => $other_websites,
 						$prefix . 'theme_1' => $theme_1,
 						$prefix . 'theme_2' => $theme_2,
 						$prefix . 'theme_3' => $theme_3,
@@ -136,9 +133,7 @@ function print_r2($val){
 						),
 						$prefix . 'notes' => $notes,
 						$prefix . 'facebook_site' => $facebook_main,
-						$prefix . 'other_facebook_accounts' => array(
-							$other_facebook_users //TODO store more than one value. The second and next get stored in same key, as it has same key name.
-						),
+						$prefix . 'other_facebook_accounts' => $other_facebook_users,
 						$prefix . 'twitter_info' => array(
 							array(
 								'date' => $twitter_date,
@@ -163,9 +158,7 @@ function print_r2($val){
 							)
 						),
 						$prefix . 'twitter_account' => $twitter_main,
-						$prefix . 'other_twitter_accounts' => array(
-							$other_twitter_users //TODO store more than one value. The second and next get stored in same key, as it has same key name.
-						),
+						$prefix . 'other_twitter_accounts' => $other_twitter_users,
 						$prefix . 'twitter_origin' => $twitter_init_date,
 						$prefix . 'youtube_account' => $youtube,
 						$prefix . 'origin_date' => $org_init_date,
