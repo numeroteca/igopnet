@@ -46,7 +46,6 @@
 
 	?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
@@ -68,7 +67,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="hfeed">
+<div id="page" class="hfeed <?php echo (is_page('directory') || (get_post_type() == 'organization')) ? 'container directory' : '' ?>">
 	<header id="branding" role="banner">
 			<hgroup>
 				<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
@@ -97,8 +96,9 @@
 							$image[1] >= $header_image_width ) {
 						// Houston, we have a new header image!
 						echo get_the_post_thumbnail( $post->ID, 'post-thumbnail' );
-					} elseif (is_page('directory') || (get_post_type() == 'organization')){//if it is directory page
-						echo "<img src='".get_stylesheet_directory_uri()."/img/banner-directory.png' alt='Directorio Movimientos tecnopolitica' title='Directorio Movimientos tecnopolitica' width='1000' height='50' />";
+					} elseif (is_page('directory') || (get_post_type() == 'organization')) {//if it is directory page
+						//echo "<img src='".get_stylesheet_directory_uri()."/img/banner-directory.png' alt='Directorio Movimientos tecnopolitica' title='Directorio Movimientos tecnopolitica' width='1000' height='50' />";
+						echo "<h1>Directorio Movimientos Tecnopol&iacute;tica</h1>";
 					} else {
 						// Compatibility with versions of WordPress prior to 3.4.
 						if ( function_exists( 'get_custom_header' ) ) {
@@ -123,17 +123,28 @@
 				</div>
 			<?php
 				else :
-			?>
-				<?php get_search_form(); ?>
-			<?php endif; ?>
-				<?php languages_list(); ?>
-			<nav id="access" role="navigation">
-				<h3 class="assistive-text"><?php _e( 'Main menu', 'twentyeleven' ); ?></h3>
-				<?php /* Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff. */ ?>
-				<div class="skip-link"><a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to primary content', 'twentyeleven' ); ?>"><?php _e( 'Skip to primary content', 'twentyeleven' ); ?></a></div>
-				<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'twentyeleven' ); ?>"><?php _e( 'Skip to secondary content', 'twentyeleven' ); ?></a></div>
-				<?php /* Our navigation menu. If one isn't filled out, wp_nav_menu falls back to wp_page_menu. The menu assigned to the primary location is the one used. If one isn't assigned, the menu with the lowest ID is used. */ ?>
-				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+ 					get_search_form();
+				endif; ?>
+				<?php 
+				if ( is_page('directory') || (get_post_type() == 'organization')) {
+					//do nothing
+				} else {
+					languages_list();
+				?>
+					<nav id="access" role="navigation">
+						<h3 class="assistive-text"><?php _e( 'Main menu', 'twentyeleven' ); ?></h3>
+						<?php /* Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff. */ ?>
+						<div class="skip-link"><a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to primary content', 'twentyeleven' ); ?>"><?php _e( 'Skip to primary content', 'twentyeleven' ); ?></a></div>
+						<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'twentyeleven' ); ?>"><?php _e( 'Skip to secondary content', 'twentyeleven' ); ?></a></div>
+				<?php 
+				}
+				if (is_page('directory') || (get_post_type() == 'organization')){
+					echo "<nav>";
+					//wp_nav_menu( array( 'theme_location' => 'primary' ) ); //menu for directory
+				} else {
+					/* Our navigation menu. If one isn't filled out, wp_nav_menu falls back to wp_page_menu. The menu assigned to the primary location is the one used. If one isn't assigned, the menu with the lowest ID is used. */
+					wp_nav_menu( array( 'theme_location' => 'primary' ) ); 
+				} ?>
 			</nav><!-- #access -->
 	</header><!-- #branding -->
 

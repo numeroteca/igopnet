@@ -5,6 +5,8 @@ add_action( 'init', 'create_post_type', 0 );
 add_action( 'init', 'build_taxonomies', 0 );
 // Extra meta boxes in editor
 add_filter( 'cmb2_meta_boxes', 'igopnet_metaboxes' );
+/* Load JavaScript files on the 'wp_enqueue_scripts' action hook. */
+add_action( 'wp_enqueue_scripts', 'igopnet_load_css' );
 
 //Creates Custom Post Types
 function create_post_type() {
@@ -697,3 +699,16 @@ function languages_list(){
         echo '</ul></div>';
     }
 }
+
+// load js scripts to avoid conflicts
+function igopnet_load_css() {
+	if (is_page('directory') || (get_post_type() == 'organization')) {
+		wp_register_style( 'bootstrap-css', get_stylesheet_directory_uri() . '/bootstrap/css/bootstrap.css',array(),null );
+		wp_register_style( 'directory-css', get_stylesheet_directory_uri() . '/directory.css',array(),null );
+		wp_enqueue_style( 'bootstrap-css' );
+		wp_enqueue_style( 'directory-css' );
+	} else {
+		wp_register_style( 'igop-css', get_stylesheet_uri());
+		wp_enqueue_style( 'igop-css' );
+	}
+} // end load js scripts to avoid conflicts

@@ -8,7 +8,7 @@
  */
 ?>
 
-	<article id="directory-list" <?php post_class(); ?>>
+	<article id="directory-list" <?php post_class('container'); ?>>
 		<header class="entry-header">
 			<?php if ( ! is_page_template( 'page-templates/front-page.php' ) ) : ?>
 			<?php the_post_thumbnail(); ?>
@@ -29,7 +29,7 @@
 				);
 			$my_query = new WP_Query($args);
 			?>
-			<table id="org-list">
+			<table id="org-list" class="table table-hover">
 			<thead>
 				<tr>
 					<th>Nombre</th>

@@ -81,10 +81,6 @@ nav-pills > li {
     padding: 10px 15px;
 }
 /* translation list  ends*/
-
-#site-title, #site-description  {
-text-indent: -9999px;
-}
 #branding hgroup {
 height: 0;
 }

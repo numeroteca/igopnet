@@ -13,13 +13,17 @@ get_header(); ?>
 			<div id="content" role="main">
 
 				<?php while ( have_posts() ) : the_post(); ?>
-
+				
+				<?php if (is_page('directory') || (get_post_type() == 'organization')) {
+					//do nothing
+					} else {
+				?>
 					<nav id="nav-single">
 						<h3 class="assistive-text"><?php _e( 'Post navigation', 'twentyeleven' ); ?></h3>
 						<span class="nav-previous"><?php previous_post_link( '%link', __( '<span class="meta-nav">&larr;</span> Previous', 'twentyeleven' ) ); ?></span>
 						<span class="nav-next"><?php next_post_link( '%link', __( 'Next <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) ); ?></span>
 					</nav><!-- #nav-single -->
-
+				<?php } ?>
 					<?php
 						if (get_post_type() == 'organization') {
 							get_template_part( 'content-single','organization' );
