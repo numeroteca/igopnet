@@ -87,7 +87,7 @@
 						$header_image_width = HEADER_IMAGE_WIDTH;
 					}
 					?>
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<a href="<?php echo (is_page('directory') || (get_post_type() == 'organization')) ? '/directory' : esc_url( home_url( '/' ) ); ?>">
 				<?php
 					// The header image
 					// Check if this is a post or page, if it has a thumbnail, and if it's a big one
