@@ -9,6 +9,7 @@
 $post_id = $post->ID;
 $prefix = '_ig_';
 $tit = get_the_title();
+$content = get_the_content();
 $main_url = get_post_meta( $post_id, $prefix.'main_url', true );
 $origin_date = get_post_meta( $post_id, $prefix.'origin_date', true );
 $end_date = get_post_meta( $post_id, $prefix.'end_date', true );
@@ -22,6 +23,7 @@ $youtube_account = get_post_meta( $post_id, $prefix.'youtube_account', true );
 $twitter_account = get_post_meta( $post_id, $prefix.'twitter_account', true );
 $twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 $other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
+$site_technologies = get_post_meta( $post_id, $prefix.'site_technologies', true );
 $url_info = get_post_meta( $post_id, $prefix.'url_info', true );
 $twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 $facebook_info = get_post_meta( $post_id, $prefix.'facebook_info', true );
@@ -31,12 +33,12 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-10">
 				<?php
 				echo "<h1>" .$tit. " <small><a href='".$main_url."'>".$main_url."</a></small></h1>";
 				?>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<?php echo "<dt>Ecosistema</dt><dd>". get_the_term_list( $post_id, 'org-ecosystem', ' ', ', ', '' ). "</dd>"; ?>
 			</div>
 		</div>
@@ -51,54 +53,50 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 			 	}
 			echo "</dd>";
 			echo "<h3>Redes sociales en internet</h3>";
-				echo "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>";
-				echo "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>";
-				echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : "";
-				echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
-				echo "<dt>Otras cuentas de Facebook</dt><dd>";
-				if (isset($other_facebook_accounts) && is_array($other_facebook_accounts)) {
-					if ($other_facebook_accounts[0]['user'] !='') {
-						if ($other_facebook_accounts[0]['user'] !='') {
-							foreach ($other_facebook_accounts as $key => $value) {
-						 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
-						 	}
-						}
-					}
-				}
-				echo "</dd>";
+			echo "<dl>";
+			echo !($facebook_site=='') ? "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>" : "";
+			echo !($youtube_account=='') ? "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>" : "";
+			echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a></dd>" : "";
+			echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
+			if (isset($other_facebook_accounts) && !empty($other_facebook_accounts)) {
+					echo "<dt>Otras cuentas de Facebook</dt><dd>";
+					foreach ($other_facebook_accounts as $key => $value) {
+			 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
+			 	}
+			}
+			echo "</dd>";
+			if (isset($other_twitter_accounts) && !empty($other_twitter_accounts)) {
 				echo "<dt>Otras cuentas de Twitter</dt><dd>";
-				if (isset($other_twitter_accounts) && is_array($other_twitter_accounts)) {
-					if ($other_twitter_accounts[0]['user'] !='') {
-						foreach ($other_twitter_accounts as $key => $value) {
-					 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a>";
-				 			if (isset($value['twitter_origin'])) {
-								echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
-					 		}
-					 		echo "<br/>";
-					 	}
-					}
-				}
-				echo "</dd>";
-				echo "<dt>Site technologies</dt><dd>".get_post_meta( $post_id, $prefix.'site_technologies', true ). "</dd>";
+				foreach ($other_twitter_accounts as $key => $value) {
+			 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a>";
+		 			if (isset($value['twitter_origin'])) {
+						echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
+			 		}
+			 		echo "<br/>";
+			 	}
+			}
+			echo "</dd>";
+			echo  !($site_technologies=='') ? "<dt>Site technologies</dt><dd>".$site_technologies. "</dd>" : "";
+			echo "</dl>";
 			?>
 		</div><!-- end side column -->
 		<div class="col-md-7">
 			<div class="entry-content">
 				<?php
-				echo "<p><strong>Descripci&oacute;n</strong></p>";
-				echo the_content();
+				echo $content != '' ? "<dt><strong>Descripci&oacute;n</strong></dt>" : "";
+				echo $content;
 				//echo "<h2>Informaci&oacute;n b&aacute;sica</h2>";
 				echo "<hr>";
 				echo "<div class='row'><div class='col-md-2'>";
 				echo "<dl>";
-				echo "<dt>Ciudad</dt><dd>".get_the_term_list( $post_id, 'org-city', ' ', ', ', '' ). "</dd>";
-				echo "<dt>Regi&oacute;n</dt><dd>".get_the_term_list( $post_id, 'org-region', ' ', ', ', '' ). "</dd>";
+				echo list_taxonomy_terms($post_id,'org-city','Ciudad');
+				echo list_taxonomy_terms($post_id,'org-region','Regi&oacute;n');
 				echo "</dl>";
 				echo "</div><div class='col-md-10'>";
 				echo "<dl class='dl-horizontal'>";
-				echo "<dt>Tipo</dt><dd>".get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ). "</dd>";
-				echo "<dt>Alcance</dt><dd>".get_the_term_list( $post_id, 'org-scope', ' ', ', ', '' ). "</dd>";
-				echo "<dt>Activa</dt><dd>".get_post_meta( $post_id, $prefix.'active', true ). "</dd>";
+				echo list_taxonomy_terms($post_id,'org-type','Tipo');
+				echo list_taxonomy_terms($post_id,'org-scope','Alcance');
+				echo list_of_items($post_id, $prefix.'active','Activa');
 				echo "</dl>";
 				echo "</div></div>";
 				echo "<div class='row'><div class='col-md-4'>";
@@ -108,39 +106,51 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				echo "</dl>";
 				echo "</div><div class='col-md-6'>";
 				echo "<dl>";
-				echo "<dt>A qui&eacute;n</dt><dd>".get_the_term_list( $post_id, 'org-whom', ' ', ', ', '' ). "</dd>";
+				echo list_taxonomy_terms($post_id,'org-whom','A qui&eacute;n');
 				echo "</dl>";
 				echo "</div></div>";
 				
 				echo "<h2>Temas principales</h2>";
-				echo "<dt>Tema principal 1</dt><dd>".get_post_meta( $post_id, $prefix.'theme_1', true ). "</dd>";
-				echo "<dt>Tema principal 2</dt><dd>".get_post_meta( $post_id, $prefix.'theme_2', true ). "</dd>";
-				echo "<dt>Tema principal 3</dt><dd>".get_post_meta( $post_id, $prefix.'theme_3', true ). "</dd>";
-				echo "<dt>Otros temas</dt><dd>";
-				foreach ($other_themes as $key => $value) {
-			 		echo $value['theme']."<br/>";
-			 	}
-				echo "</dd>";
-		
+				echo list_of_items($post_id, $prefix.'theme_1','Tema principal 1');
+				echo list_of_items($post_id, $prefix.'theme_2','Tema principal 2');
+				echo list_of_items($post_id, $prefix.'theme_3','Tema principal 3');
+				if (isset($other_themes[0]['theme'])) {
+					if ($other_themes[0]['theme'] != '') {
+						echo "<dt>Otros temas</dt><dd>";
+						foreach ($other_themes as $key => $value) {
+					 		echo $value['theme']."<br/>";
+					 	}
+						echo "</dd>";
+					}
+				}
+				
 				echo "<h2>Demandas principales</h2>";
-				echo "<dt>Demanda principal 1</dt><dd>".get_post_meta( $post_id, $prefix.'demand_1', true ). "</dd>";
-				echo "<dt>Demanda principal 2</dt><dd>".get_post_meta( $post_id, $prefix.'demand_2', true ). "</dd>";
-				echo "<dt>Demanda principal 3</dt><dd>".get_post_meta( $post_id, $prefix.'demand_3', true ). "</dd>";
-				echo "<dt>Otras demandas</dt><dd>";
-				foreach ($other_demands as $key => $value) {
-			 		echo $value['demand']."<br/>";
-			 	}
-				echo "</dd>";
-		
+				echo list_of_items($post_id, $prefix.'demand_1','Demanda principal 1');
+				echo list_of_items($post_id, $prefix.'demand_2','Demanda principal 2');
+				echo list_of_items($post_id, $prefix.'demand_3','Demanda principal 3');
+				if (isset($other_demands[0]['demand'] )) {
+					if ($other_demands[0]['demand'] != '') {
+						echo "<dt>Otras demandas</dt><dd>";
+						foreach ($other_demands as $key => $value) {
+					 		echo $value['demand']."<br/>";
+					 	}
+						echo "</dd>";
+					}
+				}
+				
 				echo "<h2>Acciones de reinvindicaci&oacute;n m&aacute;s frefuentes</h2>";
-				echo "<dt>Accici&oacute;n 1</dt><dd>".get_post_meta( $post_id, $prefix.'action_1', true ). "</dd>";
-				echo "<dt>Accici&oacute;n 2</dt><dd>".get_post_meta( $post_id, $prefix.'action_2', true ). "</dd>";
-				echo "<dt>Accici&oacute;n 3</dt><dd>".get_post_meta( $post_id, $prefix.'action_3', true ). "</dd>";
-				echo "<dt>Otras acciones</dt><dd>";
-				foreach ($other_actions as $key => $value) {
-			 		echo $value['action']."<br/>";
-			 	}
-				echo "</dd>";
+				echo list_of_items($post_id, $prefix.'action_1','Accici&oacute;n 1');
+				echo list_of_items($post_id, $prefix.'action_2','Accici&oacute;n 2');
+				echo list_of_items($post_id, $prefix.'action_3','Accici&oacute;n 3');
+				if (isset($other_actions[0]['action'])) {
+					if ($other_actions[0]['action'] != '') {
+						echo "<dt>Otras acciones</dt><dd>";
+						foreach ($other_actions as $key => $value) {
+					 		echo $value['action']."<br/>";
+					 	}
+						echo "</dd>";
+					}
+				}
 		
 				
 		
@@ -241,8 +251,6 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
 			</div><!-- .entry-content -->
 			
-			<hr>
-			
 			<footer class="entry-meta">
 				<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
 
@@ -268,4 +276,6 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 			</footer><!-- .entry-meta -->
 		</div>
 	</div>
+				
+			<hr>
 </article><!-- #post-<?php the_ID(); ?> -->

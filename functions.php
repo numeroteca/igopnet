@@ -684,6 +684,24 @@ function igopnet_metaboxes( $meta_boxes ) {
   return $meta_boxes;
 }
 
+// Function to list values of custom metaboxes in dd dt format.
+function list_of_items($postid,$value,$name) {
+	$items = get_post_meta($postid,$value,true);
+	if ($items!='') {
+		echo "<dt>".$name."</dt>";
+		echo "<dd>".$items."</dd>";
+		}
+}
+
+// Function to list taxonomy terms of Waste Picker Organization in dt-dd format
+function list_taxonomy_terms($post_id='',$slug='',$name='') {
+	$term_list = get_the_term_list( $post_id, $slug , ' ', ', ', '' );
+	if (!empty($term_list)) {
+		echo "<dt>" .$name. "</dt>";
+		echo "<dd>" .$term_list. "</dd>";
+	}
+}
+
 //Lists the active languages
 function languages_list(){
     $languages = icl_get_languages('skip_missing=0&orderby=code');
