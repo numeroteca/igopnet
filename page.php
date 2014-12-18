@@ -4,10 +4,12 @@
 			<div id="content">
 
 				<?php while ( have_posts() ) : the_post(); ?>
-					
+					<?php echo '<!-- ' . basename( get_page_template() ) . ' -->'; ?>
 					<?php
-						if (is_page() == 'directory') {
-							get_template_part( 'content','directory' );
+						if (is_page('directory')) {
+							get_template_part( 'content','directory-list' );
+						} else if (is_page('sobre-el-directorio')) {//if it belongs to directory
+							get_template_part( 'content','directory-page' );
 						} else {
 							get_template_part( 'content', 'page' );
 						} ?>

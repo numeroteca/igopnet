@@ -728,7 +728,7 @@ function languages_list(){
 
 // load js scripts to avoid conflicts
 function igopnet_load_css() {
-	if (is_page('directory') || (get_post_type() == 'organization')) {
+	if (is_page('directory') || is_page('sobre-el-directorio')  || (get_post_type() == 'organization')) {
 		wp_register_style( 'bootstrap-css', get_stylesheet_directory_uri() . '/bootstrap/css/bootstrap.css',array(),null );
 		wp_register_style( 'directory-css', get_stylesheet_directory_uri() . '/directory.css',array(),null );
 		wp_enqueue_style( 'bootstrap-css' );
