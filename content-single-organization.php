@@ -62,7 +62,7 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 			echo !($youtube_account=='') ? "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>" : "";
 			echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a></dd>" : "";
 			echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
-			if (isset($other_facebook_accounts)) {
+			if (isset($other_facebook_accounts) && !empty($other_facebook_accounts)) {
 				if ($other_facebook_accounts[0]['user'] !='') {
 					echo "<dt>Otras cuentas de Facebook</dt><dd>";
 					foreach ($other_facebook_accounts as $key => $value) {
@@ -71,7 +71,7 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 			 	}
 			}
 			echo "</dd>";
-			if (isset($other_twitter_accounts)) {
+			if (isset($other_twitter_accounts) && !empty($other_twitter_accounts)) {
 				if ($other_twitter_accounts[0]['user'] !='') {
 					echo "<dt>Otras cuentas de Twitter</dt><dd>";
 					foreach ($other_twitter_accounts as $key => $value) {
