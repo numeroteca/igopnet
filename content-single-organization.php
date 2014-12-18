@@ -43,15 +43,18 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 			</div>
 		</div>
 	</header><!-- .entry-header -->
+	<hr>
 	<div class="row">
 		<div class="col-md-3"><!-- side column -->
 			<?php
 			echo "<dt>Web principal</dt><dd><a href='".$main_url."'>".$main_url."</a></dd>";
-			echo "<dt>Otras webs</dt><dd>";
-			 	foreach ($other_urls as $key => $value) {
-			 		echo "<a href='".$value['url']."'>".$value['url']."</a><br/>";
-			 	}
-			echo "</dd>";
+			if (isset($other_urls) && !empty($other_urls)) {
+				echo "<dt>Otras webs</dt><dd>";
+				 	foreach ($other_urls as $key => $value) {
+				 		echo "<a href='".$value['url']."'>".$value['url']."</a><br/>";
+				 	}
+				echo "</dd>";
+			}
 			echo "<h3>Redes sociales en internet</h3>";
 			echo "<dl>";
 			echo !($facebook_site=='') ? "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>" : "";
@@ -170,8 +173,7 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				
 					";
 				foreach ($url_info as $key => $value) {
-					$the_date = $value['date'];
-					if (isset($the_date)) {
+					if (isset($value['date'])) {
 						echo "
 							<tr>
 								<td>".date( 'd/m/Y',$value['date'])."</td>
@@ -201,14 +203,16 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				
 					";
 				foreach ($twitter_info as $key => $value) {
-					echo "
-						<tr>
-							<td>".date( 'd/m/Y',$value['date'])."</td>
-							<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
-							<td>".$value['followers']."</td>
-						</tr>
-					";
+					if (isset($value['date'])) {
+						echo "
+							<tr>
+								<td>".date( 'd/m/Y',$value['date'])."</td>
+								<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
+								<td>".$value['followers']."</td>
+							</tr>
+						";
 					}
+				}
 				echo "
 					</tbody>
 				</table>"
@@ -241,11 +245,13 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				;
 			
 				echo "<h2>Fuente de informaci&oacute;n</h2>";
-				echo "<dt>Notas</dt><dd>".get_post_meta( $post_id, $prefix.'notes', true ). "</dd>";
-				echo "<dt>Codificador</dt><dd>".get_post_meta( $post_id, $prefix . 'coder', true ). "</dd>";
+				echo "<dl>";
+				echo list_of_items($post_id, $prefix.'notes','Notas');
+				echo list_of_items($post_id, $prefix.'coder','Codificador');
 				echo !($data_date=='') ? "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $data_date ). "</dd>" : "";
-				echo "<dt>Fuente de los datos</dt><dd>".get_post_meta( $post_id, $prefix . 'info_source', true ). "</dd>";
-				echo "<dt>Validaci&oacute;n</dt><dd>".get_post_meta( $post_id, $prefix . 'validation', true ). "</dd>";
+				echo list_of_items($post_id, $prefix.'info_source','Fuente de los datos');
+				echo list_of_items($post_id, $prefix.'validation','Validaci&oacute;n');
+				echo "</dl>";
 				?>
 		
 				<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
