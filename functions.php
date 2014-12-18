@@ -7,6 +7,14 @@ add_action( 'init', 'build_taxonomies', 0 );
 add_filter( 'cmb2_meta_boxes', 'igopnet_metaboxes' );
 /* Load JavaScript files on the 'wp_enqueue_scripts' action hook. */
 add_action( 'wp_enqueue_scripts', 'igopnet_load_css' );
+// Register Custom Navigation Walker from https://github.com/twittem/wp-bootstrap-navwalker
+require_once('wp_bootstrap_navwalker.php');
+
+//register nave menu for Directory
+add_action( 'after_setup_theme', 'register_directory_menu' );
+function register_directory_menu() {
+  register_nav_menu( 'directory-tecnopol', 'Directorio Teconpolitics' );
+}
 
 //Creates Custom Post Types
 function create_post_type() {

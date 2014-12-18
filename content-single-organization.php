@@ -29,6 +29,33 @@ $twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 $facebook_info = get_post_meta( $post_id, $prefix.'facebook_info', true );
 $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 ?>
+<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+		  <!-- Brand and toggle get grouped for better mobile display -->
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		      <span class="sr-only">Toggle navigation</span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>
+		  </div>
+	 <?php //Bootstrapized directory menu
+	wp_nav_menu(
+		array(
+			'menu'              => 'directory-tecnopol',
+			'depth'             => 2,
+			'container'         => 'div',
+			'container_class'   => 'collapse navbar-collapse',
+			'container_id'      => 'bs-example-navbar-collapse-1',
+			'menu_class'        => 'nav navbar-nav',
+			'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
+			'walker'            => new wp_bootstrap_navwalker()
+		)
+	);
+	?>
+		</div>
+</nav>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
@@ -61,22 +88,26 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 			echo !($youtube_account=='') ? "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>" : "";
 			echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a></dd>" : "";
 			echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
-			if (isset($other_facebook_accounts) && !empty($other_facebook_accounts)) {
+			if (isset($other_facebook_accounts)) {
+				if ($other_facebook_accounts[0]['user'] !='') {
 					echo "<dt>Otras cuentas de Facebook</dt><dd>";
 					foreach ($other_facebook_accounts as $key => $value) {
 			 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
+					}
 			 	}
 			}
 			echo "</dd>";
-			if (isset($other_twitter_accounts) && !empty($other_twitter_accounts)) {
-				echo "<dt>Otras cuentas de Twitter</dt><dd>";
-				foreach ($other_twitter_accounts as $key => $value) {
-			 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a>";
-		 			if (isset($value['twitter_origin'])) {
-						echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
-			 		}
-			 		echo "<br/>";
-			 	}
+			if (isset($other_twitter_accounts)) {
+				if ($other_twitter_accounts[0]['user'] !='') {
+					echo "<dt>Otras cuentas de Twitter</dt><dd>";
+					foreach ($other_twitter_accounts as $key => $value) {
+				 		echo "<a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a>";
+			 			if (isset($value['twitter_origin'])) {
+							echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
+				 		}
+				 		echo "<br/>";
+				 	}
+				}
 			}
 			echo "</dd>";
 			echo  !($site_technologies=='') ? "<dt>Site technologies</dt><dd>".$site_technologies. "</dd>" : "";
@@ -114,6 +145,7 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				echo "</div></div>";
 				
 				echo "<h2>Temas principales</h2>";
+				echo "<dl>";
 				echo list_of_items($post_id, $prefix.'theme_1','Tema principal 1');
 				echo list_of_items($post_id, $prefix.'theme_2','Tema principal 2');
 				echo list_of_items($post_id, $prefix.'theme_3','Tema principal 3');
@@ -126,8 +158,10 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 						echo "</dd>";
 					}
 				}
+				echo "</dl>";
 				
 				echo "<h2>Demandas principales</h2>";
+				echo "<dl>";
 				echo list_of_items($post_id, $prefix.'demand_1','Demanda principal 1');
 				echo list_of_items($post_id, $prefix.'demand_2','Demanda principal 2');
 				echo list_of_items($post_id, $prefix.'demand_3','Demanda principal 3');
@@ -140,8 +174,10 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 						echo "</dd>";
 					}
 				}
+				echo "</dl>";
 				
 				echo "<h2>Acciones de reinvindicaci&oacute;n m&aacute;s frefuentes</h2>";
+				echo "<dl>";
 				echo list_of_items($post_id, $prefix.'action_1','Accici&oacute;n 1');
 				echo list_of_items($post_id, $prefix.'action_2','Accici&oacute;n 2');
 				echo list_of_items($post_id, $prefix.'action_3','Accici&oacute;n 3');
@@ -154,6 +190,7 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 						echo "</dd>";
 					}
 				}
+				echo "</dl>";	
 		
 				
 		
