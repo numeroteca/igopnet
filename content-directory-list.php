@@ -7,33 +7,7 @@
  * @since Twenty Twelve 1.0
  */
 ?>
-	<nav class="navbar navbar-default" role="navigation">
-		<div class="container-fluid">
-		  <!-- Brand and toggle get grouped for better mobile display -->
-		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-		      <span class="sr-only">Toggle navigation</span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		    </button>
-		  </div>
-	 <?php //Bootstrapized directory menu
-	wp_nav_menu(
-		array(
-			'menu'              => 'directory-tecnopol',
-			'depth'             => 2,
-			'container'         => 'div',
-			'container_class'   => 'collapse navbar-collapse',
-			'container_id'      => 'bs-example-navbar-collapse-1',
-			'menu_class'        => 'nav navbar-nav',
-			'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
-			'walker'            => new wp_bootstrap_navwalker()
-		)
-	);
-	?>
-		</div>
-	</nav>
+<?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
 	<article id="directory-list" <?php post_class('container'); ?>>
 		<header class="entry-header">
 			<?php if ( ! is_page_template( 'page-templates/front-page.php' ) ) : ?>
@@ -60,13 +34,12 @@
 				<tr>
 					<th>Nombre</th>
 					<th>URL</th>
-					<!--<th>Alcance</th>-->
 					<th>Tipo</th>
-					<!--<th>Ciudad</th>-->
-					<th>Regi&oacute;n</th>
-					<th>Twitter</th>
+					<th>Redes sociales</th>
+					<th>Google <abbr title="Page Rank">PR</abbr></th>
+					<th>Alexa <abbr title="Page Rank">PR</abbr></th>
+					<th>Alexa inlinks</th>
 					<th>Twitter Followers</th>
-					<th>Ecosistema</th>
 				</tr>
 			</thead>
 				<tbody>
@@ -89,6 +62,7 @@
 				$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 				$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
 				$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
+				$last_url_item = end($url_info);
 				$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 				$data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				?>
@@ -104,26 +78,27 @@
 								$mainurl_stripped = str_replace($remove_this, "", $main_url);
 								echo "<a href='".$main_url."'>".$mainurl_stripped."</a>"; ?>
 						</td>
-						<!--<td>
-							<?php echo get_the_term_list( $post_id, 'org-scope', ' ', ', ', '' ); ?>
-						</td>-->
 						<td>
 							<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?>
 						</td>
-						<!--<td>
-							<?php echo get_the_term_list( $post_id, 'org-city', ' ', ', ', '' ); ?>
-						</td>-->
 						<td>
-							<?php echo get_the_term_list( $post_id, 'org-region', ' ', ', ', '' ); ?>
+							<?php
+							echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>Twitter</a>, " : "" ;
+							echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'>Facebook</a>, " : "";
+							echo !($youtube_account=='') ? "<a href='".$youtube_account."'>Youtube</a>" : "";
+							?>
 						</td>
 						<td>
-							<?php echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : '' ; ?>
+							<?php echo $last_url_item['google_page_rank']; ?>
+						</td>
+						<td>
+							<?php echo $last_url_item['alexa_page_rank']; ?>
+						</td>
+						<td>
+							<?php echo $last_url_item['alexa_inlinks']; ?>
 						</td>
 						<td>
 							<?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
-						</td>
-						<td>
-							<?php echo get_the_term_list( $post_id, 'org-ecosystem', ' ', ', ', '' ); ?>
 						</td>
 					</tr>
 				</div>
