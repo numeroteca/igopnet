@@ -9,6 +9,8 @@ add_filter( 'cmb2_meta_boxes', 'igopnet_metaboxes' );
 add_action( 'wp_enqueue_scripts', 'igopnet_load_css' );
 // Register Custom Navigation Walker from https://github.com/twittem/wp-bootstrap-navwalker
 require_once('wp_bootstrap_navwalker.php');
+// Loads Custom Meta Boxes
+require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/"
 
 //register nave menu for Directory
 add_action( 'after_setup_theme', 'register_directory_menu' );
@@ -78,15 +80,6 @@ function build_taxonomies() {
 		'label' => __( 'Country' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-country' ) ) );
-}
-
-/**
- * Get the bootstrap! If using the plugin from wordpress.org, REMOVE THIS!
- */
-if ( file_exists(  __DIR__ . '/cmb2/init.php' ) ) {
-	require_once  __DIR__ . '/cmb2/init.php';
-} elseif ( file_exists(  __DIR__ . '/CMB2/init.php' ) ) {
-	require_once  __DIR__ . '/CMB2/init.php';
 }
 
 function igopnet_metaboxes( $meta_boxes ) {
@@ -728,7 +721,7 @@ function languages_list(){
 
 // load js scripts to avoid conflicts
 function igopnet_load_css() {
-	if (is_page('directory') || is_page('sobre-el-directorio')  || (get_post_type() == 'organization')) {
+	if (is_page('directory') || is_page('sobre-el-directorio') || (get_post_type() == 'organization')) {
 		wp_register_style( 'bootstrap-css', get_stylesheet_directory_uri() . '/bootstrap/css/bootstrap.css',array(),null );
 		wp_register_style( 'directory-css', get_stylesheet_directory_uri() . '/directory.css',array(),null );
 		wp_enqueue_style( 'bootstrap-css' );
