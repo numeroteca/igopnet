@@ -34,7 +34,7 @@
 				</h2>
 				<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
 				<?php echo "<a href='".$main_url."'>".$mainurl_stripped."</a><br/>"; ?>
-				<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?>
+				<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?><br/>
 				<?php
 				echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>Twitter</a> " : "" ;
 				echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'>Facebook</a> " : "";

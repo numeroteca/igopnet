@@ -31,12 +31,12 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 ?>
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('organization-single'); ?>>
 	<header class="entry-header">
 		<div class="row">
 			<div class="col-md-10">
 				<?php
-				echo "<h1>" .$tit. " <small><a href='".$main_url."'>".$main_url."</a></small></h1>";
+				echo "<h1>" .$tit. " <small><a href='".$main_url."'><span class='glyphicon glyphicon-link' aria-hidden='true'></span></a></small></h1>";
 				?>
 			</div>
 			<div class="col-md-2">
@@ -56,7 +56,7 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				 	}
 				echo "</dd>";
 			}
-			echo "<h3>Redes sociales en internet</h3>";
+			echo "<h2>Redes sociales en internet</h2>";
 			echo "<dl>";
 			echo !($facebook_site=='') ? "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>" : "";
 			echo !($youtube_account=='') ? "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>" : "";
