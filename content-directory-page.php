@@ -1,10 +1,6 @@
 <?php
 /**
  * The template used for displaying page directory in page.php
- *
- * @package WordPress
- * @subpackage Twenty_Twelve
- * @since Twenty Twelve 1.0
  */
 ?>
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>

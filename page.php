@@ -1,4 +1,9 @@
 <?php get_header(); ?>
+<?php
+$post_id = $post->ID;
+$prefix = '_ig_';
+$page_belongs_to = get_post_meta( $post_id, $prefix.'belongs_to' , true );
+?>
 
 		<div id="primary" role="main">
 			<div id="content">
@@ -8,7 +13,9 @@
 					<?php
 						if (is_page('directory')) {
 							get_template_part( 'content','directory-list' );
-						} else if (is_page('sobre-el-directorio')) {//if it belongs to directory
+						} else if (is_page('boxes')) { //if it belongs to directory
+							get_template_part( 'content','directory-boxes' );
+						} else if ($page_belongs_to == 'directory tecnopolitics') { //if it belongs to directory
 							get_template_part( 'content','directory-page' );
 						} else {
 							get_template_part( 'content', 'page' );

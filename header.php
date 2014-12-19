@@ -3,10 +3,6 @@
  * The Header for our theme.
  *
  * Displays all of the <head> section and everything up till <div id="main">
- *
- * @package WordPress
- * @subpackage Twenty_Eleven
- * @since Twenty Eleven 1.0
  */
 ?><!DOCTYPE html>
 <!--[if IE 6]>
@@ -34,6 +30,11 @@
 
 	// Add the blog name.
 	bloginfo( 'name' );
+	
+	//Prepares data to checks if this page belongs to directory
+	$post_id = $post->ID;
+	$prefix = '_ig_';
+	$page_belongs_to = get_post_meta( $post_id, $prefix.'belongs_to' , true );
 
 	// Add the blog description for the home/front page.
 	$site_description = get_bloginfo( 'description', 'display' );
@@ -67,7 +68,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="hfeed <?php echo (is_page('directory') || is_page('sobre-el-directorio') || (get_post_type() == 'organization')) ? 'container directory' : '' ?>">
+<div id="page" class="hfeed <?php echo (($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) ? 'container directory' : '' ?>">
 	<header id="branding" role="banner">
 			<hgroup>
 				<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
@@ -87,7 +88,7 @@
 						$header_image_width = HEADER_IMAGE_WIDTH;
 					}
 					?>
-			<a href="<?php echo (is_page('directory') || is_page('sobre-el-directorio') || (get_post_type() == 'organization')) ? '/directory' : esc_url( home_url( '/' ) ); ?>">
+			<a href="<?php echo (($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) ? '/directory' : esc_url( home_url( '/' ) ); ?>">
 				<?php
 					// The header image
 					// Check if this is a post or page, if it has a thumbnail, and if it's a big one
@@ -96,7 +97,7 @@
 							$image[1] >= $header_image_width ) {
 						// Houston, we have a new header image!
 						echo get_the_post_thumbnail( $post->ID, 'post-thumbnail' );
-					} elseif (is_page('directory') || is_page('sobre-el-directorio') || (get_post_type() == 'organization')) {//if it is directory page
+					} elseif (($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) {//if it is directory page
 						//echo "<img src='".get_stylesheet_directory_uri()."/img/banner-directory.png' alt='Directorio Movimientos tecnopolitica' title='Directorio Movimientos tecnopolitica' width='1000' height='50' />";
 						echo "<h1>Directorio Movimientos Tecnopol&iacute;tica</h1>";
 					} else {
@@ -126,7 +127,7 @@
  					get_search_form();
 				endif; ?>
 				<?php 
-				if ( is_page('directory') || is_page('sobre-el-directorio') || (get_post_type() == 'organization')) {
+				if ( ($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) {
 					//do nothing
 				} else {
 					languages_list();
@@ -138,7 +139,7 @@
 						<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'twentyeleven' ); ?>"><?php _e( 'Skip to secondary content', 'twentyeleven' ); ?></a></div>
 				<?php 
 				}
-				if (is_page('directory') || is_page('sobre-el-directorio') || (get_post_type() == 'organization')){
+				if ( ($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')){
 					echo "<nav>";
 					//wp_nav_menu( array( 'theme_location' => 'primary' ) ); //menu for directory
 				} else {

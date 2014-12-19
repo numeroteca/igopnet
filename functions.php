@@ -682,6 +682,31 @@ function igopnet_metaboxes( $meta_boxes ) {
 		),
 	);
 	
+	//Pages belong to directory tecnopolitics
+	$meta_boxes[] = array(
+		'id' => 'igopnet_directory_pages',
+		'title' => __( 'Página pertenece a...' ),
+		'object_types' => array('page'), // post type
+		'context' => 'normal',
+		'priority' => 'high',
+		'show_names' => true, // Show field names on the left
+		'fields' => array(
+			array(
+				'name' => 'Página pertenece a',
+				'desc' => __( '' ),
+				'id' => $prefix . 'belongs_to',
+				'type'    => 'select',
+				'options' => array(
+					'' =>'',
+		      'directory tecnopolitics' => 'directory tecnopolitics',
+		      ),
+		    'default' => '',
+			),
+		),
+	);
+	
+				
+	
   return $meta_boxes;
 }
 
@@ -721,7 +746,11 @@ function languages_list(){
 
 // load js scripts to avoid conflicts
 function igopnet_load_css() {
-	if (is_page('directory') || is_page('sobre-el-directorio') || (get_post_type() == 'organization')) {
+	//Prepares data to checks if this page belongs to directory
+	global $post;
+	$page_belongs_to = get_post_meta( $post->ID, '_ig_belongs_to' , true );
+	
+	if (($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) {
 		wp_register_style( 'bootstrap-css', get_stylesheet_directory_uri() . '/bootstrap/css/bootstrap.css',array(),null );
 		wp_register_style( 'directory-css', get_stylesheet_directory_uri() . '/directory.css',array(),null );
 		wp_enqueue_style( 'bootstrap-css' );
