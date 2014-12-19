@@ -1,3 +1,6 @@
+body {
+	background-color: #FFF !important;
+}
 #branding hgroup {
 	height: 0px;
 }
@@ -5,6 +8,9 @@
 	text-indent: -9999px;
 	height:0;
 }
-body {
-	background-color: #FFF !important;
+
+/* organization boxes */
+.archive .organization h2 {
+	font-size:20px;
+	margin-top:0px;
 }
