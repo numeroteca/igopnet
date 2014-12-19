@@ -62,8 +62,13 @@
 				$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 				$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
 				$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
+				
 				$last_url_item = end($url_info);
 				$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
+				$alexa_page_rank = $last_url_item['alexa_page_rank'];
+				$google_page_rank = $last_url_item['google_page_rank'];
+				$alexa_inlinks = $last_url_item['alexa_inlinks'];
+				
 				$data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				?>
 
@@ -89,13 +94,29 @@
 							?>
 						</td>
 						<td>
-							<?php echo $last_url_item['google_page_rank']; ?>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo 100*$google_page_rank/9; ?>%;">
+									<?php echo $google_page_rank; ?>
+								</div>
+							</div>							
 						</td>
 						<td>
-							<?php echo $last_url_item['alexa_page_rank']; ?>
+							<!--<div class="progress"> TODO how to represent graphicaly alexa page rank
+								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width:
+								<?php echo 100-(100*$alexa_page_rank/5000000); ?>%;">
+									<?php echo $alexa_page_rank; ?>
+								</div>
+							</div>-->
+							<?php //echo 100-(100*$alexa_page_rank/5000000); ?>
+							<?php echo $alexa_page_rank; ?>
 						</td>
 						<td>
-							<?php echo $last_url_item['alexa_inlinks']; ?>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo 100*$alexa_inlinks/1600; ?>%;">
+									<?php echo $alexa_inlinks; ?>
+								</div>
+							</div>
+							<?php echo $alexa_inlinks; ?>
 						</td>
 						<td>
 							<?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
