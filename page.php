@@ -11,9 +11,9 @@ $page_belongs_to = get_post_meta( $post_id, $prefix.'belongs_to' , true );
 				<?php while ( have_posts() ) : the_post(); ?>
 					<?php echo '<!-- ' . basename( get_page_template() ) . ' -->'; ?>
 					<?php
-						if (is_page('directory')) {
+						if (is_page('directory') || is_page('listado-indepencia-cataluna')) {
 							get_template_part( 'content','directory-list' );
-						} else if (is_page('boxes')) { //if it belongs to directory
+						} else if (is_page('Boxes 15M') || is_page('Boxes Independencia Cataluña')) { //if it belongs to directory
 							get_template_part( 'content','directory-boxes' );
 						} else if ($page_belongs_to == 'directory tecnopolitics') { //if it belongs to directory
 							get_template_part( 'content','directory-page' );

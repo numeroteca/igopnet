@@ -10,7 +10,7 @@ add_action( 'wp_enqueue_scripts', 'igopnet_load_css' );
 // Register Custom Navigation Walker from https://github.com/twittem/wp-bootstrap-navwalker
 require_once('wp_bootstrap_navwalker.php');
 // Loads Custom Meta Boxes
-require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/"
+require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'
 
 //register nave menu for Directory
 add_action( 'after_setup_theme', 'register_directory_menu' );
@@ -701,6 +701,17 @@ function igopnet_metaboxes( $meta_boxes ) {
 		      'directory tecnopolitics' => 'directory tecnopolitics',
 		      ),
 		    'default' => '',
+			),
+			array(
+				'name' => 'Active ecosystem',
+				'desc' => __( '' ),
+				'id' => $prefix . 'active_ecosystem',
+				'type'    => 'select',
+				'options' => array(
+					'15m' =>'15m',
+		      'independencia-cataluna' => 'independencia-cataluna',
+		      ),
+		    'default' => '15M',
 			),
 		),
 	);

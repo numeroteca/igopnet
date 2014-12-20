@@ -2,6 +2,8 @@
 /**
  * The template used for displaying page directory in page.php
  */
+$prefix = '_ig_';
+$active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true );
 ?>
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
 	<article id="directory-list" <?php post_class('container'); ?>>
@@ -22,6 +24,13 @@
 				'posts_per_page' => -1,
 				'orderby' => 'title',
 				'order' => 'ASC',
+				'tax_query' => array(
+						array(
+							'taxonomy' => 'org-ecosystem',
+							'field'    => 'slug',
+							'terms'    => $active_ecosytem,
+						),
+					),
 				);
 			$my_query = new WP_Query($args);
 			?>
