@@ -15,6 +15,8 @@ $page_belongs_to = get_post_meta( $post_id, $prefix.'belongs_to' , true );
 							get_template_part( 'content','directory-list' );
 						} else if (is_page('Boxes 15M') || is_page('Boxes Independencia Cataluña')) { //if it belongs to directory
 							get_template_part( 'content','directory-boxes' );
+						} else if (is_page('Estadísticas')) { //if it belongs to directory
+							get_template_part( 'content','directory-stats' );
 						} else if ($page_belongs_to == 'directory tecnopolitics') { //if it belongs to directory
 							get_template_part( 'content','directory-page' );
 						} else {
