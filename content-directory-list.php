@@ -86,6 +86,10 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 							<?php
 								$remove_this = array("http://","https://","www.");
 								$mainurl_stripped = str_replace($remove_this, "", $main_url);
+								$max_length = 25;
+								if ( strlen($mainurl_stripped) > $max_length ) {
+									$mainurl_stripped = substr($mainurl_stripped,0,$max_length).'...';
+								}
 								echo "<a href='".$main_url."'>".$mainurl_stripped."</a>"; ?>
 						</td>
 						<td>
@@ -95,7 +99,7 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 							<?php
 							echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>Twitter</a>, " : "" ;
 							echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'>Facebook</a>, " : "";
-							echo !($youtube_account=='') ? "<a href='".$youtube_account."'>Youtube</a>" : "";
+							echo !($youtube_account=='') ? "<a href='https://youtube.com/".$youtube_account."'>Youtube</a>" : "";
 							?>
 						</td>
 						<td>

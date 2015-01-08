@@ -33,7 +33,12 @@
 					</a>
 				</h2>
 				<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
-				<?php echo "<a href='".$main_url."'>".$mainurl_stripped."</a><br/>"; ?>
+				<?php
+				$max_length = 23;
+				if ( strlen($mainurl_stripped) > $max_length ) {
+					$mainurl_stripped = substr($mainurl_stripped,0,$max_length).'...';
+				}
+				echo "<a href='".$main_url."'>".$mainurl_stripped."</a><br/>"; ?>
 				<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?><br/>
 				<?php
 				echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>Twitter</a> " : "" ;
