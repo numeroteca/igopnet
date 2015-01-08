@@ -29,6 +29,7 @@ $url_info = get_post_meta( $post_id, $prefix.'url_info', true );
 $twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 $facebook_info = get_post_meta( $post_id, $prefix.'facebook_info', true );
 $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
+$sources = get_post_meta( $post_id, $prefix.'info_source', true );
 ?>
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
 
@@ -272,7 +273,15 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 				echo list_of_items($post_id, $prefix.'notes','Notas');
 				echo list_of_items($post_id, $prefix.'coder','Codificador');
 				echo !($data_date=='') ? "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $data_date ). "</dd>" : "";
-				echo list_of_items($post_id, $prefix.'info_source','Fuente de los datos');
+				if (isset($sources) && !empty($sources)) {
+					if ($sources[0]['info'] !='') {
+						echo "<dt>Fuente de los datos</dt><dd>";
+						foreach ($sources as $key => $value) {
+					 		echo $value['info']."<br/>";
+					 	}
+					}
+				}
+				echo "</dd>";
 				echo list_of_items($post_id, $prefix.'validation','Validaci&oacute;n');
 				echo "</dl>";
 				?>

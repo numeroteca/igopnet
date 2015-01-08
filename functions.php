@@ -664,14 +664,20 @@ function igopnet_metaboxes( $meta_boxes ) {
 			),
 			array(
 				'name' => 'Fuente de los datos',
-				'desc' => __( '-' ),
 				'id' => $prefix . 'info_source',
-				'type' => 'wysiwyg',
+				'type' => 'group',
+				'description' => __( '','igopnet' ),
 				'options' => array(
-					'wpautop' => true,
-					'textarea_rows' => get_option('default_post_edit_rows',2),
-					'teeny' => false, // output the minimal editor config used in Press This
-					'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+					'add_button' => __( 'Add Another information source', 'igopnet' ),
+					'remove_button' => __( 'Remove information source', 'igopnet' ),
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Other source of information',
+ 						'id'   => 'info',
+ 						'desc' => __( '' ),
+						'type' => 'text',
+					),
 				),
 			),
 			array(

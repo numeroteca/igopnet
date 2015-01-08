@@ -12,7 +12,7 @@ function print_r2($val){
         echo  '</pre>';
 }
 
-		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.04"; // name (no extension)
+		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.05"; // name (no extension)
 		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
 		$line_length = "4024"; // max line lengh (increase in case you have longer lines than 1024 characters)
 		$delimiter = ";"; // field delimiter character
@@ -62,24 +62,24 @@ function print_r2($val){
 					$twitter_main = $fp_csv[28]; //cf
 					$twitter_others = explode(", ", $fp_csv[29]); //cf
 					$twitter_init_date = strtotime($fp_csv[30]); //cf
-					$twitter_followers = $fp_csv[31]; // cf TODO insert
-					$twitter_date = strtotime($fp_csv[32]); // cf TODO insert
+					$twitter_followers = $fp_csv[31]; // cf
+					$twitter_date = strtotime($fp_csv[32]); //
 					$youtube = $fp_csv[33]; // cf
 					$youtube_others = explode(", ", $fp_csv[34]); // cf
-					$google_page_rank = $fp_csv[35]; // cf TODO insert
-					$google_inlinks = $fp_csv[36]; // cf TODO insert
-					$alexa_page_rank = $fp_csv[37]; //cf TODO insert
-					$alexa_inlinks = $fp_csv[38]; //cf TODO insert
+					$google_page_rank = $fp_csv[35]; // cf
+					$google_inlinks = $fp_csv[36]; // cf
+					$alexa_page_rank = $fp_csv[37]; //cf
+					$alexa_inlinks = $fp_csv[38]; //cf
 					//$ = $fp_csv[38]; // cf
-					$website_date = strtotime($fp_csv[40]); // cf TODO insert
+					$website_date = strtotime($fp_csv[40]); // cf
 					$org_init_date = strtotime($fp_csv[41]); // cf
 					$org_end_date = strtotime($fp_csv[42]); // cf
 					$active = $fp_csv[43]; // cf
-					$source = $fp_csv[44]; // cf TODO change to tax?
+					$source = explode("; ", $fp_csv[44]); // cf
 					$coder = $fp_csv[45]; // cf
-					$register = $fp_csv[46]; // cf TODO create cf
+					$register = $fp_csv[46]; // cf
 					$data_date = strtotime($fp_csv[47]); // cf
-					$update_date = strtotime($fp_csv[48]); // cf TODO create cf
+					$update_date = strtotime($fp_csv[48]); //
 					
 					echo "other facebook users: ";
 					print_r2($facebook_others); 
@@ -108,9 +108,18 @@ function print_r2($val){
 					echo "other website_others: ";
 					print_r2($website_others); 
 					foreach ($website_others as $key => $web) {
-						$other_websites[$key]['url'] = $web;					}
+						$other_websites[$key]['url'] = $web;
+					}
 					echo "other websites: ";
 					print_r2($other_websites);
+					
+					echo "sources: ";
+					print_r2($source);
+					foreach ($source as $key => $web) {
+						$other_sources[$key]['info'] = $web;
+					}
+					echo "other websites: ";
+					print_r2($other_sources);
 					
 					//simple custom fields
 					$fields = array(
@@ -155,7 +164,7 @@ function print_r2($val){
 						),
 						$prefix . 'url_info' => array(
 							array(
-								'date' => $website_date,//TODO not being inserted!!
+								'date' => $website_date,
 								'url' => $website,
 								'google_page_rank' => $google_page_rank,
 								'alexa_page_rank' => $alexa_page_rank,
@@ -166,7 +175,7 @@ function print_r2($val){
 						$prefix . 'other_twitter_accounts' => $other_twitter_users,
 						$prefix . 'twitter_origin' => $twitter_init_date,
 						$prefix . 'youtube_account' => $youtube,
-						$prefix . 'other_youtube_accounts' => $other_twitter_users,
+						$prefix . 'other_youtube_accounts' => $other_youtube_users,
 						$prefix . 'origin_date' => $org_init_date,
 						$prefix . 'end_date' => $org_end_date,
 						$prefix . 'active' => $active,
