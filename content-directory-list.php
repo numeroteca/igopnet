@@ -67,7 +67,6 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 				$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 				$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
 				$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
-				
 				$last_url_item = end($url_info);
 				$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 				$alexa_page_rank = $last_url_item['alexa_page_rank'];
@@ -97,9 +96,9 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 						</td>
 						<td>
 							<?php
-							echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>Twitter</a>, " : "" ;
-							echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'>Facebook</a>, " : "";
-							echo !($youtube_account=='') ? "<a href='https://youtube.com/".$youtube_account."'>Youtube</a>" : "";
+							echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'><img src='".get_stylesheet_directory_uri()."/img/twitter_logo.png' alt='Twitter'></a> " : "" ;
+							echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'><img src='".get_stylesheet_directory_uri()."/img/facebook_logo.png' alt='Facebook'></a > " : "";
+							echo !($youtube_account=='') ? "<a href='https://youtube.com/".$youtube_account."'><img src='".get_stylesheet_directory_uri()."/img/youtube_logo.png' alt='YouTube'></a>" : "";
 							?>
 						</td>
 						<td>
