@@ -12,7 +12,7 @@ function print_r2($val){
         echo  '</pre>';
 }
 
-		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.02_p"; // name (no extension)
+		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.04"; // name (no extension)
 		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
 		$line_length = "4024"; // max line lengh (increase in case you have longer lines than 1024 characters)
 		$delimiter = ";"; // field delimiter character
@@ -186,7 +186,7 @@ function print_r2($val){
 					// insert post
 					$wpg = wp_insert_post(array(
 						'post_type' => 'organization',
-						'post_status' => 'private',
+						'post_status' => 'publish',
 						'post_author' => 1,
 						'post_title' => $tit,
 						'post_content' => $description,
@@ -276,6 +276,7 @@ function print_r2($val){
 							echo "<hr>";
 	
 							next($terms);
+							unset($other_websites,$other_facebook_users,$other_twitter_users); //empties values
 						}
 						
 					} // if project has been inserted
