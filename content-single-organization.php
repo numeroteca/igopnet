@@ -20,6 +20,7 @@ $other_actions = get_post_meta( $post_id, $prefix.'other_actions', true );
 $facebook_site = get_post_meta( $post_id, $prefix.'facebook_site', true );
 $other_facebook_accounts = get_post_meta( $post_id, $prefix.'other_facebook_accounts', true );
 $youtube_account = get_post_meta( $post_id, $prefix.'youtube_account', true );
+$other_youtube_accounts = get_post_meta( $post_id, $prefix.'other_youtube_accounts', true );
 $twitter_account = get_post_meta( $post_id, $prefix.'twitter_account', true );
 $twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 $other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
@@ -82,6 +83,15 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 							echo " comenz&oacute; en ".	date( 'd/m/Y', $value['twitter_origin']).".";
 				 		}
 				 		echo "<br/>";
+				 	}
+				}
+			}
+			echo "</dd>";
+			if (isset($other_youtube_accounts) && !empty($other_youtube_accounts)) {
+				if ($other_youtube_accounts[0]['user'] !='') {
+					echo "<dt>Otras cuentas de Youtube</dt><dd>";
+					foreach ($other_youtube_accounts as $key => $value) {
+				 		echo "<a href='https://youtube.com/".$value['user']. "'>".$value['user']."</a><br/>";
 				 	}
 				}
 			}

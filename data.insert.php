@@ -65,20 +65,21 @@ function print_r2($val){
 					$twitter_followers = $fp_csv[31]; // cf TODO insert
 					$twitter_date = strtotime($fp_csv[32]); // cf TODO insert
 					$youtube = $fp_csv[33]; // cf
-					$google_page_rank = $fp_csv[34]; // cf TODO insert
-					$google_inlinks = $fp_csv[35]; // cf TODO insert
-					$alexa_page_rank = $fp_csv[36]; //cf TODO insert
-					$alexa_inlinks = $fp_csv[37]; //cf TODO insert
+					$youtube_others = explode(", ", $fp_csv[34]); // cf
+					$google_page_rank = $fp_csv[35]; // cf TODO insert
+					$google_inlinks = $fp_csv[36]; // cf TODO insert
+					$alexa_page_rank = $fp_csv[37]; //cf TODO insert
+					$alexa_inlinks = $fp_csv[38]; //cf TODO insert
 					//$ = $fp_csv[38]; // cf
-					$website_date = strtotime($fp_csv[39]); // cf TODO insert
-					$org_init_date = strtotime($fp_csv[40]); // cf
-					$org_end_date = strtotime($fp_csv[41]); // cf
-					$active = $fp_csv[42]; // cf
-					$source = $fp_csv[43]; // cf TODO change to tax?
-					$coder = $fp_csv[44]; // 
-					$register = $fp_csv[45]; // cf TODO create cf
-					$data_date = strtotime($fp_csv[46]); // cf
-					$update_date = strtotime($fp_csv[47]); // cf TODO create cf
+					$website_date = strtotime($fp_csv[40]); // cf TODO insert
+					$org_init_date = strtotime($fp_csv[41]); // cf
+					$org_end_date = strtotime($fp_csv[42]); // cf
+					$active = $fp_csv[43]; // cf
+					$source = $fp_csv[44]; // cf TODO change to tax?
+					$coder = $fp_csv[45]; // cf
+					$register = $fp_csv[46]; // cf TODO create cf
+					$data_date = strtotime($fp_csv[47]); // cf
+					$update_date = strtotime($fp_csv[48]); // cf TODO create cf
 					
 					echo "other facebook users: ";
 					print_r2($facebook_others); 
@@ -96,6 +97,14 @@ function print_r2($val){
 					echo "other_twitter_users: ";
 					print_r2($other_twitter_users);
 					
+					echo "other youtube users: ";
+					print_r2($youtube_others);
+					foreach ($youtube_others as $key => $youtube_other) {
+						$other_youtube_users[$key]['user'] = $youtube_other;
+					}
+					echo "other_youtube_users: ";
+					print_r2($other_twitter_users);
+					
 					echo "other website_others: ";
 					print_r2($website_others); 
 					foreach ($website_others as $key => $web) {
@@ -110,11 +119,7 @@ function print_r2($val){
 						$prefix . 'theme_1' => $theme_1,
 						$prefix . 'theme_2' => $theme_2,
 						$prefix . 'theme_3' => $theme_3,
-						$prefix . 'other_themes' => array(
-							array(
-								'theme' => $theme_extra
-							)
-						),
+						$prefix . 'other_themes' => $theme_extra,
 						$prefix . 'demand_1' => $demand_1,
 						$prefix . 'demand_2' => $demand_2,
 						$prefix . 'demand_3' => $demand_3,
@@ -161,6 +166,7 @@ function print_r2($val){
 						$prefix . 'other_twitter_accounts' => $other_twitter_users,
 						$prefix . 'twitter_origin' => $twitter_init_date,
 						$prefix . 'youtube_account' => $youtube,
+						$prefix . 'other_youtube_accounts' => $other_twitter_users,
 						$prefix . 'origin_date' => $org_init_date,
 						$prefix . 'end_date' => $org_end_date,
 						$prefix . 'active' => $active,

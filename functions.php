@@ -425,6 +425,23 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'type' => 'text_medium',
 			),
 			array(
+				'id' => $prefix . 'other_youtube_accounts',
+				'type' => 'group',
+				'description' => __( 'Secondary Youtube Accounts','igopnet' ),
+				'options' => array(
+					'add_button' => __( 'Add Another Youtube account', 'igopnet' ),
+					'remove_button' => __( 'Remove Youtube account', 'igopnet' ),
+				),
+ 				'fields' => array(
+					array(
+						'name' => 'Secondary Youtube account',
+ 						'id'   => 'user',
+ 						'desc' => __( 'Ex: juventudsin' ),
+						'type' => 'text_medium',
+					),
+				),
+			),
+			array(
 				'name' => 'Site technologies',
 				'desc' => 'Main site techonologies. Ex: "Analytics: Google Analytics Blog: WordPress CMS: WordPress Font script: Google Font API JavaScript framework: jQuery Mobile framework: jQuery Mobile Web server: Nginx"',
 				'id' => $prefix . 'site_technologies',
