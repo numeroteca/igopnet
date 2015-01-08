@@ -155,6 +155,7 @@ foreach ($terms as $term) {
 				<div class="col-md-4 text-right">
 					<?php
 					foreach ($google_page_rank_total as $key => $value) {
+						$key == '' ? $key = '-' : '' ; //if there is no value displays "-"
 						echo '<p>'.$key.'</p>';
 					}
 				?>
