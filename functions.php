@@ -216,20 +216,8 @@ function igopnet_metaboxes( $meta_boxes ) {
 			),
 			array(
 				'id' => $prefix . 'other_themes',
-				'type' => 'group',
+				'type' => 'textarea',
 				'description' => 'Temas no incluidos en las anteriores',
-				'options' => array(
-					'add_button' => 'Añade otro tema',
-					'remove_button' => 'Borra otro tema',
-				),
- 				'fields' => array(
-					array(
-						'name' => 'Otra tema',
- 						'id'   => 'theme',
- 						'desc' => __( '' ),
-						'type' => 'text',
-					),
-				),
 			),
 		),
 	);
@@ -258,7 +246,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 		      'Más y mejores mecanismos de participación' => 'Más y mejores mecanismos de participación',
 		      'mayor control a los bancos' => 'mayor control a los bancos',
 		      'Memoria Histórica' => 'Memoria Histórica',
-		      'No mas exilio económico' => 'No mas exilio económico',
+		      'No más exilio económico' => 'No más exilio económico',
 		      'No más precariedad laboral' => 'No más precariedad laboral',
 		      'No recortes a estado de bienestar' => 'No recortes a estado de bienestar',
 		      'Por un Internet libre y abierto' => 'Por un Internet libre y abierto',
@@ -771,3 +759,21 @@ function igopnet_load_css() {
 		wp_enqueue_style( 'igop-css' );
 	}
 } // end load js scripts to avoid conflicts
+
+//Function to get the number of waste picker groups that have certain custom fields and are 'waste pickers'
+function get_number_posts($meta_key,$meta_value) {
+	$args = array(
+				'posts_per_page' => -1,
+				'post_type' => 'organization',
+				'meta_query' => array(
+					 array(
+						'key'     => $meta_key,
+						'value'   => $meta_value,
+						'compare' => 'LIKE',
+						),
+					),
+				);
+	$posts_array = get_posts( $args );
+	$result = count($posts_array);
+	return $result;
+}
