@@ -132,24 +132,24 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 				echo "</div></div>";
 				
 				echo "<h2>Temas principales</h2>";
-				echo "<dl>";
+				echo "<dl class='dl-horizontal'>";
 				echo list_of_items($post_id, $prefix.'theme_1','Tema principal 1');
 				echo list_of_items($post_id, $prefix.'theme_2','Tema principal 2');
 				echo list_of_items($post_id, $prefix.'theme_3','Tema principal 3');
 				echo list_of_items($post_id, $prefix.'other_themes','Otros temas');
 				
 				echo "<h2>Demandas principales</h2>";
-				echo "<dl>";
+				echo "<dl class='dl-horizontal'>";
 				echo list_of_items($post_id, $prefix.'demand_1','Demanda principal 1');
 				echo list_of_items($post_id, $prefix.'demand_2','Demanda principal 2');
 				echo list_of_items($post_id, $prefix.'demand_3','Demanda principal 3');
 				echo list_of_items($post_id, $prefix.'other_demands','Otras demandas');
 				
 				echo "<h2>Acciones de reinvindicaci&oacute;n m&aacute;s frefuentes</h2>";
-				echo "<dl>";
-				echo list_of_items($post_id, $prefix.'action_1','Accici&oacute;n 1');
-				echo list_of_items($post_id, $prefix.'action_2','Accici&oacute;n 2');
-				echo list_of_items($post_id, $prefix.'action_3','Accici&oacute;n 3');
+				echo "<dl class='dl-horizontal'>";
+				echo list_of_items($post_id, $prefix.'action_1','Acci&oacute;n 1');
+				echo list_of_items($post_id, $prefix.'action_2','Acci&oacute;n 2');
+				echo list_of_items($post_id, $prefix.'action_3','Acci&oacute;n 3');
 				echo list_of_items($post_id, $prefix.'other_actions','Otras acciones');
 		
 				echo "
