@@ -50,16 +50,18 @@ $data_date = get_post_meta( $post_id, $prefix . 'data_date', true );
 			<?php
 			echo "<dt>Web principal</dt><dd><a href='".$main_url."'>".$main_url."</a></dd>";
 			if (isset($other_urls) && !empty($other_urls)) {
-				echo "<dt>Otras webs</dt><dd>";
-				 	foreach ($other_urls as $key => $value) {
-				 		echo "<a href='".$value['url']."'>".$value['url']."</a><br/>";
-				 	}
-				echo "</dd>";
+				if ($other_urls[0]['url'] != '') { //if first value is empty
+					echo "<dt>Otras webs</dt><dd>";
+					 	foreach ($other_urls as $key => $value) {
+					 		echo "<a href='".$value['url']."'>".$value['url']."</a><br/>";
+					 	}
+					echo "</dd>";
+				}
 			}
 			echo "<h2>Redes sociales en internet</h2>";
 			echo "<dl>";
 			echo !($facebook_site=='') ? "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>" : "";
-			echo !($youtube_account=='') ? "<dt>Youtube</dt><dd><a href='".$youtube_account."'>".$youtube_account."</a></dd>" : "";
+			echo !($youtube_account=='') ? "<dt>Youtube</dt><dd><a href='https://youtube.com/".$youtube_account."'>".$youtube_account."</a></dd>" : "";
 			echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a></dd>" : "";
 			echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
 			if (isset($other_facebook_accounts) && !empty($other_facebook_accounts)) {
