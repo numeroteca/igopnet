@@ -299,20 +299,8 @@ function igopnet_metaboxes( $meta_boxes ) {
 			),
 			array(
 				'id' => $prefix . 'other_demands',
-				'type' => 'group',
+				'type' => 'textarea',
 				'description' => 'Demanda no incluidas en las anteriores',
-				'options' => array(
-					'add_button' => 'Añade otra demanda',
-					'remove_button' => 'Borra esta demanda',
-				),
- 				'fields' => array(
-					array(
-						'name' => 'Otra demanda',
- 						'id'   => 'demand',
- 						'desc' => __( '' ),
-						'type' => 'text',
-					),
-				),
 			),
 		),
 	);
@@ -385,20 +373,8 @@ function igopnet_metaboxes( $meta_boxes ) {
 			),
 			array(
 				'id' => $prefix . 'other_actions',
-				'type' => 'group',
+				'type' => 'textarea',
 				'description' => 'Acciones de reinvindicación mas frecuentes no incluidas en las anteriores',
-				'options' => array(
-					'add_button' => 'Añade otra',
-					'remove_button' => 'Borra esta',
-				),
- 				'fields' => array(
-					array(
-						'name' => 'Otra acción',
- 						'id'   => 'action',
- 						'desc' => __( '' ),
-						'type' => 'text',
-					),
-				),
 			),
 		),
 	);

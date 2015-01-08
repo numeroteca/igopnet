@@ -136,50 +136,21 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 				echo list_of_items($post_id, $prefix.'theme_1','Tema principal 1');
 				echo list_of_items($post_id, $prefix.'theme_2','Tema principal 2');
 				echo list_of_items($post_id, $prefix.'theme_3','Tema principal 3');
-				if (isset($other_themes[0]['theme'])) {
-					if ($other_themes[0]['theme'] != '') {
-						echo "<dt>Otros temas</dt><dd>";
-						foreach ($other_themes as $key => $value) {
-					 		echo $value['theme']."<br/>";
-					 	}
-						echo "</dd>";
-					}
-				}
-				echo "</dl>";
+				echo list_of_items($post_id, $prefix.'other_themes','Otros temas');
 				
 				echo "<h2>Demandas principales</h2>";
 				echo "<dl>";
 				echo list_of_items($post_id, $prefix.'demand_1','Demanda principal 1');
 				echo list_of_items($post_id, $prefix.'demand_2','Demanda principal 2');
 				echo list_of_items($post_id, $prefix.'demand_3','Demanda principal 3');
-				if (isset($other_demands[0]['demand'] )) {
-					if ($other_demands[0]['demand'] != '') {
-						echo "<dt>Otras demandas</dt><dd>";
-						foreach ($other_demands as $key => $value) {
-					 		echo $value['demand']."<br/>";
-					 	}
-						echo "</dd>";
-					}
-				}
-				echo "</dl>";
+				echo list_of_items($post_id, $prefix.'other_demands','Otras demandas');
 				
 				echo "<h2>Acciones de reinvindicaci&oacute;n m&aacute;s frefuentes</h2>";
 				echo "<dl>";
 				echo list_of_items($post_id, $prefix.'action_1','Accici&oacute;n 1');
 				echo list_of_items($post_id, $prefix.'action_2','Accici&oacute;n 2');
 				echo list_of_items($post_id, $prefix.'action_3','Accici&oacute;n 3');
-				if (isset($other_actions[0]['action'])) {
-					if ($other_actions[0]['action'] != '') {
-						echo "<dt>Otras acciones</dt><dd>";
-						foreach ($other_actions as $key => $value) {
-					 		echo $value['action']."<br/>";
-					 	}
-						echo "</dd>";
-					}
-				}
-				echo "</dl>";	
-		
-				
+				echo list_of_items($post_id, $prefix.'other_actions','Otras acciones');
 		
 				echo "
 				<h2>Informaci&oacute;n sobre sitios web</h2>

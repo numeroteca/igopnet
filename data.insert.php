@@ -132,19 +132,11 @@ function print_r2($val){
 						$prefix . 'demand_1' => $demand_1,
 						$prefix . 'demand_2' => $demand_2,
 						$prefix . 'demand_3' => $demand_3,
-						$prefix . 'other_demands' => array(
-							array(
-								'demand' => $demand_extra
-							)
-						),
+						$prefix . 'other_demands' => $demand_extra,
 						$prefix . 'action_1' => $action_1,
 						$prefix . 'action_2' => $action_2,
 						$prefix . 'action_3' => $action_3,
-						$prefix . 'other_actions' => array(
-							array(
-							'action' => $action_extra
-							)
-						),
+						$prefix . 'other_actions' => $action_extra,
 						$prefix . 'notes' => $notes,
 						$prefix . 'facebook_site' => $facebook_main,
 						$prefix . 'other_facebook_accounts' => $other_facebook_users,
