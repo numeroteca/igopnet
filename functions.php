@@ -11,6 +11,7 @@ add_action( 'wp_enqueue_scripts', 'igopnet_load_css' );
 require_once('wp_bootstrap_navwalker.php');
 // Loads Custom Meta Boxes
 require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'
+//require_once  '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'; 
 
 //register nave menu for Directory
 add_action( 'after_setup_theme', 'register_directory_menu' );
@@ -567,6 +568,21 @@ function igopnet_metaboxes( $meta_boxes ) {
 					array(
 						'name' => 'Followers',
 						'id'   => 'followers',
+						'type' => 'text_small',
+					),
+					array(
+						'name' => 'Following',
+						'id'   => 'following',
+						'type' => 'text_small',
+					),
+					array(
+						'name' => 'Favorites',
+						'id'   => 'favorites',
+						'type' => 'text_small',
+					),
+					array(
+						'name' => 'Tweets',
+						'id'   => 'tweets',
 						'type' => 'text_small',
 					),
 				),

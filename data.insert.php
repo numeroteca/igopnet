@@ -12,7 +12,7 @@ function print_r2($val){
         echo  '</pre>';
 }
 
-		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.10_r"; // name (no extension)
+		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.11"; // name (no extension)
 		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.06"; // name (no extension)
 		$line_length = "4024"; // max line lengh (increase in case you have longer lines than 1024 characters)
 		$delimiter = ";"; // field delimiter character
@@ -60,26 +60,29 @@ function print_r2($val){
 					$facebook_likes = $fp_csv[26]; //cf
 					$facebook_date = strtotime($fp_csv[27]); //cf
 					$twitter_main = $fp_csv[28]; //cf
-					$twitter_others = explode(", ", $fp_csv[29]); //cf
-					$twitter_init_date = strtotime($fp_csv[30]); //cf
-					$twitter_followers = $fp_csv[31]; // cf
-					$twitter_date = strtotime($fp_csv[32]); //
-					$youtube = $fp_csv[33]; // cf
-					$youtube_others = explode(", ", $fp_csv[34]); // cf
-					$google_page_rank = $fp_csv[35]; // cf
-					$google_inlinks = $fp_csv[36]; // cf
-					$alexa_page_rank = $fp_csv[37]; //cf
-					$alexa_inlinks = $fp_csv[38]; //cf
+					$twitter_init_date = strtotime($fp_csv[29]); //cf
+					$twitter_followers = $fp_csv[30]; // cf
+					$twitter_following = $fp_csv[31]; // cf
+					$twitter_favorites = $fp_csv[32]; // cf
+					$twitter_tweets = $fp_csv[33]; // cf
+					$twitter_others = explode(", ", $fp_csv[34]); //cf
+					$twitter_date = strtotime($fp_csv[35]); //cf
+					$youtube = $fp_csv[36]; // cf
+					$youtube_others = explode(", ", $fp_csv[37]); // cf
+					$google_page_rank = $fp_csv[38]; // cf
+					$google_inlinks = $fp_csv[39]; // cf
+					$alexa_page_rank = $fp_csv[40]; //cf
+					$alexa_inlinks = $fp_csv[41]; //cf
 					//$ = $fp_csv[38]; // cf
-					$website_date = strtotime($fp_csv[40]); // cf
-					$org_init_date = strtotime($fp_csv[41]); // cf
-					$org_end_date = strtotime($fp_csv[42]); // cf
-					$active = $fp_csv[43]; // cf
-					$source = explode("** ", $fp_csv[44]); // cf
-					$coder = $fp_csv[45]; // cf
-					$register = $fp_csv[46]; // cf
-					$data_date = strtotime($fp_csv[47]); // cf
-					$update_date = strtotime($fp_csv[48]); //
+					$website_date = strtotime($fp_csv[43]); // cf
+					$org_init_date = strtotime($fp_csv[44]); // cf
+					$org_end_date = strtotime($fp_csv[45]); // cf
+					$active = $fp_csv[46]; // cf
+					$source = explode("** ", $fp_csv[47]); // cf
+					$coder = $fp_csv[48]; // cf
+					$register = $fp_csv[49]; // cf
+					$data_date = strtotime($fp_csv[50]); // cf
+					$update_date = strtotime($fp_csv[51]); //
 					
 					echo "other facebook users: ";
 					print_r2($facebook_others); 
@@ -145,6 +148,9 @@ function print_r2($val){
 								'date' => $twitter_date,
 								'user' => $twitter_main,
 								'followers' => $twitter_followers,
+								'following' => $twitter_following,
+								'favorites' => $twitter_favorites,
+								'tweets' => $twitter_tweets,
 								)
 							),
 						$prefix . 'facebook_info' => array(
