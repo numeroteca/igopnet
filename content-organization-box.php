@@ -23,8 +23,8 @@
 						<?php echo $google_page_rank; ?> GPR
 					</div>
 				</div>
-				APR: <?php echo $last_url_item['alexa_page_rank']; ?> <br/>
-				TF: <?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
+				Alexa: <?php echo $last_url_item['alexa_page_rank']; ?> <br/>
+				Followers: <?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
 			</div>
 			<div class="col-md-8">
 				<h2>
@@ -41,9 +41,9 @@
 				echo "<a href='".$main_url."'>".$mainurl_stripped."</a><br/>"; ?>
 				<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?><br/>
 				<?php
-				echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'>Twitter</a> " : "" ;
-				echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'>Facebook</a> " : "";
-				echo !($youtube_account=='') ? "<a href='".$youtube_account."'>Youtube</a>" : "";
+				echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'><img src='".get_stylesheet_directory_uri()."/img/twitter_logo.png' alt='Twitter'></a> " : "" ;
+				echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'><img src='".get_stylesheet_directory_uri()."/img/facebook_logo.png' alt='Facebook'></a > " : "";
+				echo !($youtube_account=='') ? "<a href='https://youtube.com/".$youtube_account."'><img src='".get_stylesheet_directory_uri()."/img/youtube_logo.png' alt='YouTube'></a>" : "";
 				?>
 			</div>
 		</div>
