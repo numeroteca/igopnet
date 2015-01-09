@@ -53,7 +53,9 @@ foreach ($terms as $term) {
 	}
 	
 	foreach ($posts_ids as $key => $value) {
-		$years_created[$key] = date( 'Y', get_post_meta( $value , $prefix . 'origin_date', true ) ); //Get all the years of creation of the organizations
+		if (get_post_meta( $value , $prefix . 'origin_date', true ) != '') {
+			$years_created[$key] = date( 'Y', get_post_meta( $value , $prefix . 'origin_date', true ) ); //Get all the years of creation of the organizations
+		}
 		$site_info[$key] = get_post_meta( $value , $prefix . 'url_info', true ); //Get all the web info of the organizations
 		$twitter_info[$key] = get_post_meta( $value , $prefix . 'twitter_info', true );
 		$facebook_info[$key] = get_post_meta( $value , $prefix . 'facebook_info', true );
@@ -188,10 +190,77 @@ foreach ($terms as $term) {
 	</div>
 	<div class="row">
 		<div class="col-md-5">
+			<h3 id="alexahistogram">Alexa Page Rank de la web principal <small>nº de organizaciones en cada rango (histograma)</small></h3>
+			<?php
+			//Flattens value of the array.
+			foreach($alexa_page_rank_total as $key => $value) {
+				$flattenedAlexa[] = $value;
+			}
+			
+			//Sets up of max value and size of ranges
+			$maxValue = 30000000;
+			$splitValue = 2500000;
+			$widths = range(0, $maxValue, $splitValue);
+			
+			//construct range-keys array
+			$bins = array();
+			foreach($widths as $key => $val)
+			{
+				if (!isset($widths[$key + 1])) break;
+				$bins[] = $val.'-'. ($widths[$key + 1]);
+			}
+			
+			//construct flotHistogram count array (values are converted to keys)
+			$flotHistogram = array_fill_keys($bins, 0);
+			//construct array of values for each key
+			$histogram = array();
+			foreach($flattenedAlexa as $price)
+			{
+				//if value doesn't exist, value is estored in the max key
+				$key = $price ? floor(($price)/$splitValue) : floor(($maxValue-1)/$splitValue);
+				if (!isset($histogram[$key])) $histogram[$key] = array();
+				$histogram[$key][] = $price;
+			}
+			
+			//counts the values for every range
+			foreach($histogram as $key => $value) {
+				$rangeValues[$key] = count($value);
+			}
+			//reorders array by key value
+			ksort($rangeValues);
+			?>
+			<div class="row">
+				<div class="col-md-5 text-right">
+				<?php
+					foreach ($flotHistogram as $key => $value) {
+						echo '<p>'.$key.'</p>';
+					}
+				?>
+				</div>
+				<div class="col-md-7">
+				<?php
+					$max=0;
+					foreach ($rangeValues as $key => $value) {
+						$max = max( array( $max, $value) ); //calculates max value
+					}
+					foreach ($rangeValues as $key => $value) {
+						?>
+					<div class="progress">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
+							<span title="<?php echo $value; ?>">
+								<?php echo $value; ?>
+							</span>
+						</div>
+					</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-5">
 			<h3>Alexa Page Rank de la web principal <small></small></h3>
 			<div class="row">
 				<div class="col-md-1 text-right">
-					<?php
+				<?php
 					foreach ($alexa_page_rank_total as $key => $value) {
 						echo '<p> </p>';
 					}
@@ -216,6 +285,8 @@ foreach ($terms as $term) {
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-4">
 			<h3>Alexa Inlinks de la web principal <small></small></h3>
 			<div class="row">
