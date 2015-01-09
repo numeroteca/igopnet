@@ -120,11 +120,10 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 						</td>
 						<td>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo 100*$alexa_inlinks/1600; ?>%;">
+								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo 100*$alexa_inlinks/1600; ?>%;color:#000;">
 									<?php echo $alexa_inlinks; ?>
 								</div>
 							</div>
-							<?php echo $alexa_inlinks; ?>
 						</td>
 						<td>
 							<?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
