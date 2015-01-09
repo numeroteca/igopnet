@@ -12,8 +12,8 @@ function print_r2($val){
         echo  '</pre>';
 }
 
-		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.05"; // name (no extension)
-		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.02_r"; // name (no extension)
+		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.10_r"; // name (no extension)
+		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.06"; // name (no extension)
 		$line_length = "4024"; // max line lengh (increase in case you have longer lines than 1024 characters)
 		$delimiter = ";"; // field delimiter character
 		$enclosure = '"'; // field enclosure character
@@ -75,7 +75,7 @@ function print_r2($val){
 					$org_init_date = strtotime($fp_csv[41]); // cf
 					$org_end_date = strtotime($fp_csv[42]); // cf
 					$active = $fp_csv[43]; // cf
-					$source = explode("; ", $fp_csv[44]); // cf
+					$source = explode("** ", $fp_csv[44]); // cf
 					$coder = $fp_csv[45]; // cf
 					$register = $fp_csv[46]; // cf
 					$data_date = strtotime($fp_csv[47]); // cf
@@ -118,7 +118,7 @@ function print_r2($val){
 					foreach ($source as $key => $web) {
 						$other_sources[$key]['info'] = $web;
 					}
-					echo "other websites: ";
+					echo "other sources: ";
 					print_r2($other_sources);
 					
 					//simple custom fields
@@ -173,7 +173,7 @@ function print_r2($val){
 						$prefix . 'active' => $active,
 						$prefix . 'coder' => $coder,
 						$prefix . 'data_date' => $data_date,
-						$prefix . 'info_source' => $source,
+						$prefix . 'info_source' => $other_sources,
 					);
 					
 					//Taxonomies
