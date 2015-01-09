@@ -24,4 +24,15 @@ body {
 /* Progress bars in stats */
 #directory-stats .progress {
 	margin-bottom: 10px;
+	background-color: #FFF;
+	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) inset;
 }
+
+#org-list .progress {
+	margin-bottom: 0px;
+}
+
+#org-list img {
+	opacity: 0.5;
+}
+
