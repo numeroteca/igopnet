@@ -18,7 +18,7 @@ body {
 /* organization single */
 .organization-single h2 {
 	font-size:20px;
-	margin-top:20px;
+	margin-top:40px;
 }
 
 /* Progress bars in stats */
@@ -39,8 +39,9 @@ body {
 .just-bars .progress {
 	font-size: 0px;
 	height: 5px;
-	margin-bottom: 1px !important;
+	margin-bottom: 0px !important;
 	cursor:pointer;
+	border-radius: 0px;
 }
 .progress-bar:hover {
 	background-color:#F00 !important;
