@@ -224,10 +224,10 @@ foreach ($terms as $term) {
 			
 			//counts the values for every range
 			foreach($histogram as $key => $value) {
-				$rangeValues[$key] = count($value);
+				$rangeValuesAlexaPR[$key] = count($value);
 			}
 			//reorders array by key value
-			ksort($rangeValues);
+			ksort($rangeValuesAlexaPR);
 			?>
 			<div class="row">
 				<div class="col-md-5 text-right">
@@ -239,14 +239,14 @@ foreach ($terms as $term) {
 				</div>
 				<div class="col-md-7">
 				<?php
-					$max=0;
-					foreach ($rangeValues as $key => $value) {
-						$max = max( array( $max, $value) ); //calculates max value
+					$maxAlexaPR = 0;
+					foreach ($rangeValuesAlexaPR as $key => $value) {
+						$maxAlexaPR = max( array( $maxAlexaPR, $value) ); //calculates max value
 					}
-					foreach ($rangeValues as $key => $value) {
+					foreach ($rangeValuesAlexaPR as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaPR; ?>%;background-color:#999;color:black">
 							<span title="<?php echo $value; ?>">
 								<?php echo $value; ?>
 							</span>
@@ -268,7 +268,7 @@ foreach ($terms as $term) {
 				</div>
 				<div class="col-md-8">
 					<?php
-					$max=0;
+					$max = 0;
 					foreach ($alexa_page_rank_total as $key => $value) {
 						$max = max( array( $max, $value) ); //calculates max value
 					}
@@ -288,6 +288,78 @@ foreach ($terms as $term) {
 	</div>
 	<div class="row">
 		<div class="col-md-4">
+			<h3>Alexa Inlinks de la web principal <small>nº de organizaciones en cada rango (histograma)</small></h3>
+			<?php
+			//Flattens value of the array.
+			foreach($alexa_inlinks_total as $key => $value) {
+				$flattenedAlexaInlinks[] = $value;
+			}
+			
+			//Sets up of max value and size of ranges
+			$maxAlexaInlinks = 1600; //can not start with o, otherwise it deosn't work
+			foreach ($alexa_inlinks_total as $key => $value) {
+				$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
+			}
+			$maxValue = 1600;
+			$splitValue = 200;
+			$widths = range(0, $maxValue, $splitValue);
+			
+			//construct range-keys array
+			$bins = array();
+			foreach($widths as $key => $val) {
+				if (!isset($widths[$key + 1])) break;
+				$bins[] = $val.'-'. ($widths[$key + 1]);
+			}
+			
+			//construct flotHistogram count array (values are converted to keys)
+			$flotHistogramInlinks = array_fill_keys($bins, 0);
+			$flotHistogramInlinks = array_reverse($flotHistogramInlinks,true); //reverse array to display high values at the top
+			
+			//construct array of values for each key
+			$histogram = array();
+			foreach($flattenedAlexaInlinks as $price) {
+				//if value doesn't exist, value is estored in the max key
+				$key = floor($price/$splitValue);
+				if (!isset($histogram[$key])) $histogram[$key] = array();
+				$histogram[$key][] = $price;
+			}
+			
+			//counts the values for every range
+			foreach($histogram as $key => $value) {
+				$rangeValuesAlexaInlinks[$key] = count($value);
+			}
+			//reorders array by key value
+			ksort($rangeValuesAlexaInlinks);
+			?>
+			<div class="row">
+				<div class="col-md-5 text-right">
+				<?php
+					foreach ($flotHistogramInlinks as $key => $value) {
+						echo '<p>'.$key.'</p>';
+					}
+				?>
+				</div>
+				<div class="col-md-7">
+				<?php
+					$maxAlexaInlinks = 0;
+					foreach ($rangeValuesAlexaInlinks as $key => $value) {
+						$maxAlexaInlinks = max( array( $maxAlexaInlinks, $value) ); //calculates max value
+					}
+					
+					for	($i = 7; $i >= 0; $i--) { //iterates to all the keys, even if there is no value in them to match the ranges to the left
+						?>
+					<div class="progress">
+						<div class="progress-bar" style="width:<?php echo 100*$rangeValuesAlexaInlinks[$i]/$maxAlexaInlinks; ?>%;background-color:#999;color:black">
+							<span title="<?php echo $rangeValuesAlexaInlinks[$i]; ?>">
+								<?php echo $rangeValuesAlexaInlinks[$i]; ?>
+							</span>
+						</div>
+					</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
 			<h3>Alexa Inlinks de la web principal <small></small></h3>
 			<div class="row">
 				<div class="col-md-1 text-right">
@@ -299,14 +371,14 @@ foreach ($terms as $term) {
 				</div>
 				<div class="col-md-8">
 					<?php
-					$max=0;
+					$maxAlexaInlinks = 0; //can not start with o, otherwise it deosn't work
 					foreach ($alexa_inlinks_total as $key => $value) {
-						$max = max( array( $max, $value) ); //calculates max value
+						$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
 					}
 					foreach ($alexa_inlinks_total as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks ; ?>%;background-color:#999;color:black">
 							<span title="<?php echo $value; ?> organizations formed">
 								<?php echo $value; ?>
 							</span>
