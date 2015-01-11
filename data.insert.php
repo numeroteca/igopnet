@@ -73,7 +73,7 @@ function print_r2($val){
 					$google_inlinks = $fp_csv[39]; // cf
 					$alexa_page_rank = $fp_csv[40]; //cf
 					$alexa_inlinks = $fp_csv[41]; //cf
-					//$ = $fp_csv[38]; // cf
+					$site_technologies = $fp_csv[42]; // cf
 					$website_date = strtotime($fp_csv[43]); // cf
 					$org_init_date = strtotime($fp_csv[44]); // cf
 					$org_end_date = strtotime($fp_csv[45]); // cf
@@ -167,6 +167,7 @@ function print_r2($val){
 								'google_page_rank' => $google_page_rank,
 								'alexa_page_rank' => $alexa_page_rank,
 								'alexa_inlinks' => $alexa_inlinks,
+								'site_technologies' => $site_technologies,
 							)
 						),
 						$prefix . 'twitter_account' => $twitter_main,

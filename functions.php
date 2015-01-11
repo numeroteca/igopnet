@@ -528,6 +528,11 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'id'   => 'alexa_inlinks',
 						'type' => 'text_medium',
 					),
+					array(
+						'name' => 'Site Techonologies',
+						'id'   => 'site_technologies',
+						'type' => 'text',
+					),
 				),
 			),
 		),

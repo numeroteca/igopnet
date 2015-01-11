@@ -184,6 +184,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 					</tbody>
 				</table>"
 				;
+				echo "<dl><dt>Tecnolo&iacuteas usadas<br>en web principal</dt><dd>". $url_info[0]['site_technologies']."</dd></dl>";
 			
 				echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>
 				<table class='table table-hover'>
@@ -232,13 +233,15 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 				
 					";
 				foreach ($facebook_info as $key => $value) {
-					echo "
-						<tr>
-							<td>".date( 'd/m/Y',$value['date'])."</td>
-							<td><a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a></td>
-							<td>".$value['likes']."</td>
-						</tr>
-					";
+					if (isset($value['date'])) {
+						echo "
+							<tr>
+								<td>".date( 'd/m/Y',$value['date'])."</td>
+								<td><a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a></td>
+								<td>".$value['likes']."</td>
+							</tr>
+						";
+						}
 					}
 				echo "
 					</tbody>
