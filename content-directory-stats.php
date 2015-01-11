@@ -217,17 +217,16 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 			foreach($widths as $key => $val)
 			{
 				if (!isset($widths[$key + 1])) break;
-				$bins[] = $val.'-'. ($widths[$key + 1]);
+				$bins[] = number_format($val, 0, ',', '.').'-'. number_format(($widths[$key + 1]), 0, ',', '.');
 			}
 			
 			//construct flotHistogram count array (values are converted to keys)
 			$flotHistogram = array_fill_keys($bins, 0);
 			//construct array of values for each key
 			$histogram = array();
-			foreach($flattenedAlexa as $price)
-			{
+			foreach($flattenedAlexa as $price) {
 				//if value doesn't exist, value is estored in the max key
-				$key = $price ? floor(($price)/$splitValue) : floor(($maxValue-1)/$splitValue);
+				$key = $price ? floor(($price)/$splitValue) : floor(($maxValue)/$splitValue); //if value is 0 puts the value with the maximun value (lowest imporatance)
 				if (!isset($histogram[$key])) $histogram[$key] = array();
 				$histogram[$key][] = $price;
 			}
@@ -266,7 +265,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-7">
 			<h3>Alexa Page Rank de la web principal <small></small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
@@ -282,7 +281,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 						?>
 					<div class="progress">
 						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> Alexa Page Rank">
+							<span title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
 								<?php echo $value; ?>
 							</span>
 						</div>
@@ -296,7 +295,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 		</div>
 	</div>
 	<div class="row">
-		<div id="alexa-inlinks" class="col-md-4">
+		<div id="alexa-inlinks" class="col-md-5">
 			<h3>Alexa Inlinks de la web principal <small>nº de organizaciones en cada rango (histograma)</small></h3>
 			<?php
 			//Flattens value of the array.
@@ -317,7 +316,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 			$bins = array();
 			foreach($widths as $key => $val) {
 				if (!isset($widths[$key + 1])) break;
-				$bins[] = $val.'-'. ($widths[$key + 1]);
+				$bins[] = number_format($val, 0, ',', '.').'-'. number_format(($widths[$key + 1]), 0, ',', '.');
 			}
 			
 			//construct flotHistogram count array (values are converted to keys)
@@ -383,7 +382,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 						} else {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks ; ?>%;background-color:#999;color:black" title="<?php echo $value; ?> Alexa Inlinks">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks ; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Inlinks">
 							<span title="<?php echo $value; ?>">
 								<?php echo $value; ?>
 							</span>
@@ -410,7 +409,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 					foreach ($twitter_followers as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo $value; ?> Twitter Followers">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Twitter Followers">
 							<span title="<?php echo $value; ?> Twitter Followers">
 								<?php echo $value; ?>
 							</span>
@@ -432,7 +431,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 					foreach ($facebook_likes as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo $value; ?> Facebook Likes">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Facebook Likes">
 							<span title="<?php echo $value; ?> Facebook Likes">
 								<?php echo $value; ?>
 							</span>
