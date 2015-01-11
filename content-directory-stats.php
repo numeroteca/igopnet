@@ -11,7 +11,7 @@ $terms = get_terms( 'org-type', array(
 	)
 );
 $max_count_org_type = 0;
-foreach ($terms as $term) {
+foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is counting both ecosystem at the same time
 	$types[$term->name] = $term->count;
 	$max_count_org_type = $term->count > $max_count_org_type ? $term->count : $max_count_org_type;
 }
@@ -95,7 +95,17 @@ foreach ($terms as $term) {
 	
 	?>
 	<div class="row">
-		<div class="col-md-12">
+		<h3>Inex</h3>
+		<p>
+			<a href="#tipos-org">Tipos de organizaci&oacute;n</a><br>
+			<a href="#fecha-inicio">Fecha inicio</a><br>
+			<a href="#google-page-rank">Google Page Rank</a><br>
+			<a href="#alexa-page-rank">Alexa Page Rank</a><br>
+			<a href="#alexa-inlinks">Alexa inlinks</a><br>
+			<a href="#twitter-followers">Twitter Followers</a><br>
+			<a href="#facebook-likes">Facebook Likes</a><br>
+		</p>
+		<div id="tipos-org" class="col-md-12">
 			<h3>Tipos de organizaci&oacute;n <small>nº de organizaciones</small></h3>
 			<div class="row">
 				<div class="col-md-5 text-right">
@@ -122,7 +132,7 @@ foreach ($terms as $term) {
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3">
+		<div id="fecha-inicio" class="col-md-3">
 			<h3>Fecha de inicio <small>nº de organizaciones</small></h3>
 			<div class="row">
 				<div class="col-md-4 text-right">
@@ -151,7 +161,7 @@ foreach ($terms as $term) {
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div id="google-page-rank" class="col-md-4">
 			<h3>Google Page Rank de la web principal (1-10) <small>nº de organizaciones con cada valor (histograma)</small></h3>
 			<div class="row">
 				<div class="col-md-4 text-right">
@@ -178,7 +188,7 @@ foreach ($terms as $term) {
 						?>
 					<div class="progress">
 						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> organizations formed">
+							<span title="<?php echo $value; ?> organizaciones con Google Page Rank">
 								<?php echo $value; ?>
 							</span>
 						</div>
@@ -189,7 +199,7 @@ foreach ($terms as $term) {
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-5">
+		<div id="alexa-page-rank" class="col-md-5">
 			<h3 id="alexahistogram">Alexa Page Rank de la web principal <small>nº de organizaciones en cada rango (histograma)</small></h3>
 			<?php
 			//Flattens value of the array.
@@ -256,38 +266,37 @@ foreach ($terms as $term) {
 				</div>
 			</div>
 		</div>
-		<div class="col-md-5">
+		<div class="col-md-4">
 			<h3>Alexa Page Rank de la web principal <small></small></h3>
 			<div class="row">
-				<div class="col-md-1 text-right">
-				<?php
-					foreach ($alexa_page_rank_total as $key => $value) {
-						echo '<p> </p>';
-					}
-				?>
-				</div>
-				<div class="col-md-8">
+				<div class="col-md-12 just-bars">
 					<?php
 					$max = 0;
 					foreach ($alexa_page_rank_total as $key => $value) {
 						$max = max( array( $max, $value) ); //calculates max value
 					}
 					foreach ($alexa_page_rank_total as $key => $value) {
+						if ($value == 0) {
+							//Do nothing
+						} else {
 						?>
 					<div class="progress">
 						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> organizations formed">
+							<span title="<?php echo $value; ?> Alexa Page Rank">
 								<?php echo $value; ?>
 							</span>
 						</div>
 					</div>
-					<?php } ?>
+					<?php
+						}
+					}
+					?>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-4">
+		<div id="alexa-inlinks" class="col-md-4">
 			<h3>Alexa Inlinks de la web principal <small>nº de organizaciones en cada rango (histograma)</small></h3>
 			<?php
 			//Flattens value of the array.
@@ -362,21 +371,14 @@ foreach ($terms as $term) {
 		<div class="col-md-4">
 			<h3>Alexa Inlinks de la web principal <small></small></h3>
 			<div class="row">
-				<div class="col-md-1 text-right">
-					<?php
-					foreach ($alexa_inlinks_total as $key => $value) {
-						echo '<p> </p>';
-					}
-				?>
-				</div>
-				<div class="col-md-8 just-bars">
+				<div class="col-md-12 just-bars">
 					<?php
 					$maxAlexaInlinks = 0; //can not start with o, otherwise it deosn't work
 					foreach ($alexa_inlinks_total as $key => $value) {
 						$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
 					}
 					foreach ($alexa_inlinks_total as $key => $value) {
-						if ($value == 1) {
+						if ($value == -1) {
 							//Do nothing
 						} else {
 						?>
@@ -388,25 +390,18 @@ foreach ($terms as $term) {
 						</div>
 					</div>
 					<?php
-						} 
-					} 
+						}
+					}
 					?>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-5">
+		<div id="twitter-followers" class="col-md-4">
 			<h3>Twitter Followers <small></small></h3>
 			<div class="row">
-				<div class="col-md-1 text-right">
-					<?php
-					foreach ($twitter_followers as $key => $value) {
-						echo '<p> </p>';
-					}
-				?>
-				</div>
-				<div class="col-md-8">
+				<div class="col-md-12 just-bars">
 					<?php
 					$max=0;
 					foreach ($twitter_followers as $key => $value) {
@@ -415,8 +410,8 @@ foreach ($terms as $term) {
 					foreach ($twitter_followers as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> organizations formed">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo $value; ?> Twitter Followers">
+							<span title="<?php echo $value; ?> Twitter Followers">
 								<?php echo $value; ?>
 							</span>
 						</div>
@@ -425,17 +420,10 @@ foreach ($terms as $term) {
 				</div>
 			</div>
 		</div>
-		<div class="col-md-5">
+		<div id="facebook-likes" class="col-md-4">
 			<h3>Facebook likes <small></small></h3>
 			<div class="row">
-				<div class="col-md-1 text-right">
-					<?php
-					foreach ($facebook_likes as $key => $value) {
-						echo '<p> </p>';
-					}
-				?>
-				</div>
-				<div class="col-md-8">
+				<div class="col-md-12 just-bars">
 					<?php
 					$max=0;
 					foreach ($facebook_likes as $key => $value) {
@@ -444,8 +432,8 @@ foreach ($terms as $term) {
 					foreach ($facebook_likes as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> organizations formed">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo $value; ?> Facebook Likes">
+							<span title="<?php echo $value; ?> Facebook Likes">
 								<?php echo $value; ?>
 							</span>
 						</div>
