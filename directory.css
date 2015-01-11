@@ -36,3 +36,12 @@ body {
 	opacity: 0.5;
 }
 
+.just-bars .progress {
+	font-size: 0px;
+	height: 5px;
+	margin-bottom: 1px !important;
+	cursor:pointer;
+}
+.progress-bar:hover {
+	background-color:#F00 !important;
+}

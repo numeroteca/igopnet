@@ -369,22 +369,28 @@ foreach ($terms as $term) {
 					}
 				?>
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-8 just-bars">
 					<?php
 					$maxAlexaInlinks = 0; //can not start with o, otherwise it deosn't work
 					foreach ($alexa_inlinks_total as $key => $value) {
 						$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
 					}
 					foreach ($alexa_inlinks_total as $key => $value) {
+						if ($value == 1) {
+							//Do nothing
+						} else {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks ; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> organizations formed">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks ; ?>%;background-color:#999;color:black" title="<?php echo $value; ?> Alexa Inlinks">
+							<span title="<?php echo $value; ?>">
 								<?php echo $value; ?>
 							</span>
 						</div>
 					</div>
-					<?php } ?>
+					<?php
+						} 
+					} 
+					?>
 				</div>
 			</div>
 		</div>
