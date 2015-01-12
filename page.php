@@ -23,7 +23,12 @@ $page_belongs_to = get_post_meta( $post_id, $prefix.'belongs_to' , true );
 							get_template_part( 'content', 'page' );
 						} ?>
 
-					<?php comments_template( '', true ); ?>
+					<?php
+					if (is_page('directory') || is_page('listado-indepencia-cataluna') || is_page('Boxes 15M') || is_page('Boxes Independencia Cataluña') || is_page('Estadísticas Cat') || is_page('Estadísticas 15M')) {
+					} else {
+						comments_template( '', true );
+					}
+					?>
 
 				<?php endwhile; // end of the loop. ?>
 
