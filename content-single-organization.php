@@ -185,68 +185,72 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 				</table>"
 				;
 				echo "<dl><dt>Tecnolog&iacuteas usadas<br>en web principal</dt><dd>". $url_info[0]['site_technologies']."</dd></dl>";
-			
-				echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>
-				<table class='table table-hover'>
-					<thead>
-						<tr>
-							<th>Fecha</th>
-							<th>Twitter</th>
-							<th>Seguidores</th>
-							<th>Le siguen</th>
-							<th>Favoritos</th>
-							<th>nº Tuits</th>
-						</tr>
-					</thead>
-					<tbody>
 				
-					";
-				foreach ($twitter_info as $key => $value) {
-					if (isset($value['date'])) {
-						echo "
+				if (!empty($twitter_info[0]['user'])) {
+					echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>
+					<table class='table table-hover'>
+						<thead>
 							<tr>
-								<td>".date( 'd/m/Y',$value['date'])."</td>
-								<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
-								<td>".$value['followers']."</td>
-								<td>".$value['following']."</td>
-								<td>".$value['favorites']."</td>
-								<td>".$value['tweets']."</td>
+								<th>Fecha</th>
+								<th>Twitter</th>
+								<th>Seguidores</th>
+								<th>Le siguen</th>
+								<th>Favoritos</th>
+								<th>nº Tuits</th>
 							</tr>
-						";
-					}
-				}
-				echo "
-					</tbody>
-				</table>"
-				;
-			
-				echo "<h2>Informaci&oacute;n sobre Facebook</h2>
-				<table class='table table-hover'>
-					<thead>
-						<tr>
-							<th>Fecha</th>
-							<th>Facebook</th>
-							<th>Likes</th>
-						</tr>
-					</thead>
-					<tbody>
+						</thead>
+						<tbody>
 				
-					";
-				foreach ($facebook_info as $key => $value) {
-					if (isset($value['date'])) {
-						echo "
-							<tr>
-								<td>".date( 'd/m/Y',$value['date'])."</td>
-								<td><a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a></td>
-								<td>".$value['likes']."</td>
-							</tr>
 						";
+					foreach ($twitter_info as $key => $value) {
+						if (isset($value['date'])) {
+							echo "
+								<tr>
+									<td>".date( 'd/m/Y',$value['date'])."</td>
+									<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
+									<td>".$value['followers']."</td>
+									<td>".$value['following']."</td>
+									<td>".$value['favorites']."</td>
+									<td>".$value['tweets']."</td>
+								</tr>
+							";
 						}
 					}
-				echo "
-					</tbody>
-				</table>"
-				;
+					echo "
+						</tbody>
+					</table>"
+					;
+				}
+				
+				if (!empty($facebook_info[0]['date'])) {
+					echo "<h2>Informaci&oacute;n sobre Facebook</h2>
+					<table class='table table-hover'>
+						<thead>
+							<tr>
+								<th>Fecha</th>
+								<th>Facebook</th>
+								<th>Likes</th>
+							</tr>
+						</thead>
+						<tbody>
+				
+						";
+					foreach ($facebook_info as $key => $value) {
+						if (isset($value['date'])) {
+							echo "
+								<tr>
+									<td>".date( 'd/m/Y',$value['date'])."</td>
+									<td><a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a></td>
+									<td>".$value['likes']."</td>
+								</tr>
+							";
+							}
+						}
+					echo "
+						</tbody>
+					</table>"
+					;
+				}
 			
 				echo "<h2>Fuente de informaci&oacute;n</h2>";
 				echo "<dl>";
