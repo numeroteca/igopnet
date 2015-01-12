@@ -48,7 +48,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 	</header><!-- .entry-header -->
 	<hr>
 	<div class="row">
-		<div class="col-md-3"><!-- side column -->
+		<div class="col-md-3 col-md-push-8"><!-- side column -->
 			<?php
 			echo "<dt>Web principal</dt><dd><a href='".$main_url."'>".$main_url."</a></dd>";
 			if (isset($other_urls) && !empty($other_urls)) {
@@ -101,7 +101,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 			echo "</dl>";
 			?>
 		</div><!-- end side column -->
-		<div class="col-md-7">
+		<div class="col-md-7 col-md-pull-3">
 			<div class="entry-content">
 				<?php
 				echo $content != '' ? "<dt><strong>Descripci&oacute;n</strong></dt>" : "";
@@ -184,7 +184,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 					</tbody>
 				</table>"
 				;
-				echo "<dl><dt>Tecnolo&iacuteas usadas<br>en web principal</dt><dd>". $url_info[0]['site_technologies']."</dd></dl>";
+				echo "<dl><dt>Tecnolog&iacuteas usadas<br>en web principal</dt><dd>". $url_info[0]['site_technologies']."</dd></dl>";
 			
 				echo "<h2>Informaci&oacute;n sobre cuentas de Twitter</h2>
 				<table class='table table-hover'>
@@ -252,7 +252,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 				echo "<dl>";
 				echo list_of_items($post_id, $prefix.'notes','Notas');
 				echo list_of_items($post_id, $prefix.'coder','Codificador');
-				echo !($data_date=='') ? "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $data_date ). "</dd>" : "";
+				echo !($data_date=='') ? "<dt>Fecha introducci&oacute;n<br>datos</dt><dd>" .date( 'd/m/Y', $data_date ). "</dd>" : "";
 				if (isset($sources) && !empty($sources)) {
 					if ($sources[0]['info'] !='') {
 						echo "<dt>Fuente de los datos</dt><dd>";
