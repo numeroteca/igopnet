@@ -48,7 +48,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 	</header><!-- .entry-header -->
 	<hr>
 	<div class="row">
-		<div class="col-md-3 col-md-push-8"><!-- side column -->
+		<div class="col-md-4 col-md-push-8 side-bar"><!-- side column -->
 			<?php
 			echo "<dt>Web principal</dt><dd><a href='".$main_url."'>".$main_url."</a></dd>";
 			if (isset($other_urls) && !empty($other_urls)) {
@@ -62,19 +62,11 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 			}
 			echo "<h2>Redes sociales en internet</h2>";
 			echo "<dl>";
-			echo !($facebook_site=='') ? "<dt>Facebook site</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>" : "";
-			echo !($youtube_account=='') ? "<dt>Youtube</dt><dd><a href='https://youtube.com/".$youtube_account."'>".$youtube_account."</a></dd>" : "";
-			echo !($twitter_account=='') ? "<dt>Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a></dd>" : "";
+			echo !($twitter_account=='') ? "<dt><img src='".get_stylesheet_directory_uri()."/img/twitter_logo.png' alt='Twitter'> Twitter (cuenta principal)</dt><dd><a href='https://twitter.com/".$twitter_account. "'>@".$twitter_account."</a>" : "";
 			echo !($twitter_origin=='') ? " comenz&oacute; en ".date( 'd/m/Y', $twitter_origin )."</dd>" : "";
-			if (isset($other_facebook_accounts) && !empty($other_facebook_accounts)) {
-				if ($other_facebook_accounts[0]['user'] !='') {
-					echo "<dt>Otras cuentas de Facebook</dt><dd>";
-					foreach ($other_facebook_accounts as $key => $value) {
-			 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
-					}
-			 	}
-			}
-			echo "</dd>";
+			echo !($facebook_site=='') ? "<dt><img src='".get_stylesheet_directory_uri()."/img/facebook_logo.png' alt='Facebook'> Facebook</dt><dd><a href='https://facebook.com/".$facebook_site. "'>".$facebook_site."</a></dd>" : "";
+			echo !($youtube_account=='') ? "<dt><img src='".get_stylesheet_directory_uri()."/img/youtube_logo.png' alt='YouTube'> Youtube</dt><dd><a href='https://youtube.com/".$youtube_account."'>".$youtube_account."</a></dd>" : "";
+			echo "<hr>";
 			if (isset($other_twitter_accounts) && !empty($other_twitter_accounts)) {
 				if ($other_twitter_accounts[0]['user'] !='') {
 					echo "<dt>Otras cuentas de Twitter</dt><dd>";
@@ -86,6 +78,15 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 				 		echo "<br/>";
 				 	}
 				}
+			}
+			echo "</dd>";
+			if (isset($other_facebook_accounts) && !empty($other_facebook_accounts)) {
+				if ($other_facebook_accounts[0]['user'] !='') {
+					echo "<dt>Otras cuentas de Facebook</dt><dd>";
+					foreach ($other_facebook_accounts as $key => $value) {
+			 		echo "<a href='https://facebook.com/".$value['user']. "'>".$value['user']."</a><br/>";
+					}
+			 	}
 			}
 			echo "</dd>";
 			if (isset($other_youtube_accounts) && !empty($other_youtube_accounts)) {
@@ -101,35 +102,36 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 			echo "</dl>";
 			?>
 		</div><!-- end side column -->
-		<div class="col-md-7 col-md-pull-3">
+		<div class="col-md-7 col-md-pull-4">
 			<div class="entry-content">
 				<?php
 				echo $content != '' ? "<dt><strong>Descripci&oacute;n</strong></dt>" : "";
 				echo $content;
 				//echo "<h2>Informaci&oacute;n b&aacute;sica</h2>";
 				echo "<hr>";
-				echo "<div class='row'><div class='col-md-2'>";
+				echo "<div class='row'><div class='col-md-3'>";
 				echo "<dl>";
 				echo list_taxonomy_terms($post_id,'org-city','Ciudad');
 				echo list_taxonomy_terms($post_id,'org-region','Regi&oacute;n');
 				echo "</dl>";
-				echo "</div><div class='col-md-10'>";
+				echo "</div><div class='col-md-9'>";
 				echo "<dl class='dl-horizontal'>";
 				echo list_taxonomy_terms($post_id,'org-type','Tipo');
 				echo list_taxonomy_terms($post_id,'org-scope','Alcance');
 				echo list_of_items($post_id, $prefix.'active','Activa');
 				echo "</dl>";
 				echo "</div></div>";
-				echo "<div class='row'><div class='col-md-4'>";
+				echo "<div class='row'><div class='col-md-3'>";
 				echo "<dl>";
 				echo !($origin_date=='') ? "<dt>Fecha de inicio</dt><dd>" .date( 'm/Y', $origin_date ). "</dd>" : "";
 				echo !($end_date=='') ? "<dt>Fecha de fin</dt><dd>" .date( 'm/Y', $end_date ). "</dd>" : "";
 				echo "</dl>";
 				echo "</div><div class='col-md-6'>";
 				echo "<dl>";
-				echo list_taxonomy_terms($post_id,'org-whom','A qui&eacute;n');
+				echo list_taxonomy_terms($post_id,'org-whom','A qui&eacute;n se dirigen');
 				echo "</dl>";
 				echo "</div></div>";
+				echo "<hr>";
 				
 				echo "<h2>Temas principales</h2>";
 				echo "<dl class='dl-horizontal'>";
@@ -174,8 +176,8 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 								<td>".date( 'd/m/Y',$value['date'])."</td>
 								<td><a href='".$value['url']."'>".$value['url']."</a></td>
 								<td>".$value['google_page_rank']."</td>
-								<td>".$value['alexa_page_rank']."</td>
-								<td>".$value['alexa_inlinks']."</td>
+								<td>".number_format($value['alexa_page_rank'], 0, ',', '.')."</td>
+								<td>".number_format($value['alexa_inlinks'], 0, ',', '.')."</td>
 							</tr>
 						";
 					}
@@ -208,10 +210,10 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 								<tr>
 									<td>".date( 'd/m/Y',$value['date'])."</td>
 									<td><a href='https://twitter.com/".$value['user']. "'>@".$value['user']."</a></td>
-									<td>".$value['followers']."</td>
-									<td>".$value['following']."</td>
-									<td>".$value['favorites']."</td>
-									<td>".$value['tweets']."</td>
+									<td>".number_format($value['followers'], 0, ',', '.')."</td>
+									<td>".number_format($value['following'], 0, ',', '.')."</td>
+									<td>".number_format($value['favorites'], 0, ',', '.')."</td>
+									<td>".number_format($value['tweets'], 0, ',', '.')."</td>
 								</tr>
 							";
 						}
@@ -275,26 +277,6 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 			
 			<footer class="entry-meta">
 				<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
-
-				<?php if ( get_the_author_meta( 'description' ) && ( ! function_exists( 'is_multi_author' ) || is_multi_author() ) ) : // If a user has filled out their description and this is a multi-author blog, show a bio on their entries ?>
-				<div id="author-info">
-					<div id="author-avatar">
-						<?php
-						/** This filter is documented in author.php */
-						echo get_avatar( get_the_author_meta( 'user_email' ), apply_filters( 'twentyeleven_author_bio_avatar_size', 68 ) );
-						?>
-					</div><!-- #author-avatar -->
-					<div id="author-description">
-						<h2><?php printf( __( 'About %s', 'twentyeleven' ), get_the_author() ); ?></h2>
-						<?php the_author_meta( 'description' ); ?>
-						<div id="author-link">
-							<a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" rel="author">
-								<?php printf( __( 'View all posts by %s <span class="meta-nav">&rarr;</span>', 'twentyeleven' ), get_the_author() ); ?>
-							</a>
-						</div><!-- #author-link	-->
-					</div><!-- #author-description -->
-				</div><!-- #author-info -->
-				<?php endif; ?>
 			</footer><!-- .entry-meta -->
 		</div>
 	</div>

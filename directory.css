@@ -21,6 +21,10 @@ body {
 	margin-top:40px;
 }
 
+.organization-single .side-bar dt{
+	margin-top:8px;
+}
+
 /* Progress bars in stats */
 #directory-stats .progress {
 	margin-bottom: 10px;
