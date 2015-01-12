@@ -23,8 +23,15 @@
 						<?php echo $google_page_rank; ?> GPR
 					</div>
 				</div>
-				Alexa: <?php echo $last_url_item['alexa_page_rank']; ?> <br/>
-				Followers: <?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
+				<small>
+					Alexa: <?php echo number_format($last_url_item['alexa_page_rank'], 0, ',', '.'); ?> <br/>
+					<?php
+					if (!empty($twitter_info)) { //if twitter in time info is not empty
+						if ($twitter_info[0]['followers'] != '') { //if the number of followers is available
+							echo "Twitter: ". number_format($twitter_info[0]['followers'], 0, ',', '.');
+						}
+					} ?>
+				</small>
 			</div>
 			<div class="col-md-8">
 				<h2>

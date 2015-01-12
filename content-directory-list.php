@@ -116,7 +116,7 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 								</div>
 							</div>-->
 							<?php //echo 100-(100*$alexa_page_rank/5000000); ?>
-							<?php echo $alexa_page_rank; ?>
+							<?php echo "<small>".number_format($alexa_page_rank, 0, ',', '.')."</small>"; ?>
 						</td>
 						<td>
 							<div class="progress">
@@ -126,7 +126,14 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 							</div>
 						</td>
 						<td>
-							<?php echo (!empty($twitter_info)) ? $twitter_info[0]['followers'] : ""; ?>
+							<small>
+							<?php
+							if (!empty($twitter_info)) { //if twitter in time info is not empty
+								if ($twitter_info[0]['followers'] != '') { //if the number of followers is available
+									echo number_format($twitter_info[0]['followers'], 0, ',', '.');
+								}
+							} ?>
+							</small>
 						</td>
 					</tr>
 				</div>
