@@ -12,8 +12,8 @@ function print_r2($val){
         echo  '</pre>';
 }
 
-		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.11"; // name (no extension)
-		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.06"; // name (no extension)
+		$csv_filename = "http://localhost/igopnet/wp-content/themes/igopnet-child/insert/data.insert.12"; // name (no extension)
+		//$csv_filename = "/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/insert/data.insert.12"; // name (no extension)
 		$line_length = "4024"; // max line lengh (increase in case you have longer lines than 1024 characters)
 		$delimiter = ";"; // field delimiter character
 		$enclosure = '"'; // field enclosure character
@@ -78,7 +78,7 @@ function print_r2($val){
 					$org_init_date = strtotime($fp_csv[44]); // cf
 					$org_end_date = strtotime($fp_csv[45]); // cf
 					$active = $fp_csv[46]; // cf
-					$source = explode("** ", $fp_csv[47]); // cf
+					$source = explode("; ", $fp_csv[47]); // cf
 					$coder = $fp_csv[48]; // cf
 					$register = $fp_csv[49]; // cf
 					$data_date = strtotime($fp_csv[50]); // cf
