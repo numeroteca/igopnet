@@ -132,10 +132,10 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 		</div>
 	</div>
 	<div class="row">
-		<div id="fecha-inicio" class="col-md-3">
+		<div id="fecha-inicio" class="col-md-4">
 			<h3>Fecha de inicio <small>nº de organizaciones</small></h3>
 			<div class="row">
-				<div class="col-md-4 text-right">
+				<div class="col-md-3 text-right">
 					<?php
 					foreach ($years_total as $year => $value) {
 						echo '<p>'.$year.'</p>';
@@ -208,8 +208,8 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 			}
 			
 			//Sets up of max value and size of ranges
-			$maxValue = 30000000;
-			$splitValue = 2500000;
+			$maxValue = 28000000;
+			$splitValue = 2000000;
 			$widths = range(0, $maxValue, $splitValue);
 			
 			//construct range-keys array
@@ -226,7 +226,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 			$histogram = array();
 			foreach($flattenedAlexa as $price) {
 				//if value doesn't exist, value is estored in the max key
-				$key = $price ? floor(($price)/$splitValue) : floor(($maxValue)/$splitValue); //if value is 0 puts the value with the maximun value (lowest imporatance)
+				$key = $price ? floor(($price)/$splitValue) : floor(($maxValue-1)/$splitValue); //if value is 0 puts the value with the maximun value (lowest imporatance)
 				if (!isset($histogram[$key])) $histogram[$key] = array();
 				$histogram[$key][] = $price;
 			}
@@ -252,12 +252,12 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 					foreach ($rangeValuesAlexaPR as $key => $value) {
 						$maxAlexaPR = max( array( $maxAlexaPR, $value) ); //calculates max value
 					}
-					foreach ($rangeValuesAlexaPR as $key => $value) {
+					for	($i = 0; $i <= 14; $i++) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaPR; ?>%;background-color:#999;color:black">
+						<div class="progress-bar" style="width:<?php echo 100*$rangeValuesAlexaPR[$i]/$maxAlexaPR; ?>%;background-color:#999;color:black">
 							<span title="<?php echo $value; ?>">
-								<?php echo $value; ?>
+								<?php echo $rangeValuesAlexaPR[$i]; ?>
 							</span>
 						</div>
 					</div>
@@ -280,7 +280,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 						} else {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
 							<span title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
 								<?php echo $value; ?>
 							</span>
