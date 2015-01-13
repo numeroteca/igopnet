@@ -10,11 +10,7 @@ $terms = get_terms( 'org-type', array(
 	'order' => 'DESC'
 	)
 );
-$max_count_org_type = 0;
-foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is counting both ecosystem at the same time
-	$types[$term->name] = $term->count;
-	$max_count_org_type = $term->count > $max_count_org_type ? $term->count : $max_count_org_type;
-}
+
 ?>
 
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
@@ -53,6 +49,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 	}
 	
 	foreach ($posts_ids as $key => $value) {
+		$organization_type[$key] = wp_get_post_terms($value , 'org-type', array("fields" => "names"));;
 		if (get_post_meta( $value , $prefix . 'origin_date', true ) != '') {
 			$years_created[$key] = date( 'Y', get_post_meta( $value , $prefix . 'origin_date', true ) ); //Get all the years of creation of the organizations
 		}
@@ -60,6 +57,12 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 		$twitter_info[$key] = get_post_meta( $value , $prefix . 'twitter_info', true );
 		$facebook_info[$key] = get_post_meta( $value , $prefix . 'facebook_info', true );
 	}
+	
+	foreach ($organization_type as $key => $value) {//Flattens array
+		$organization_type_clean[$key] = !empty($value[0]) ? $value[0] : "Falta por rellenar"; //prevents from crashing when value is empty
+	}
+	$organization_type_total = array_count_values($organization_type_clean); //counts values of organizations whit the same organization type
+	
 	$years_total = array_count_values($years_created); //counts values of organizations created every year
 	ksort($years_total); //orders array by key
 	
@@ -110,14 +113,18 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 			<div class="row">
 				<div class="col-md-5 text-right">
 					<?php
-					foreach ($types as $key => $value) {
+					foreach ($organization_type_total as $key => $value) {
 						echo '<p>'.$key.': </p>';
+					}
+					$max_count_org_type = 0;
+					foreach ($organization_type_total as $value) { //TODO separate by $active_ecosystem. Now it is counting both ecosystem at the same time
+						$max_count_org_type = $value > $max_count_org_type ? $value : $max_count_org_type;
 					}
 					?>
 				</div>
 				<div class="col-md-3">
 					<?php
-					foreach ($types as $key => $value) {
+					foreach ($organization_type_total as $key => $value) {
 						?>
 					<div class="progress">
 						<div class="progress-bar" style="width:<?php echo 100*$value/$max_count_org_type; ?>%;background-color:#999;color:black">
@@ -200,7 +207,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 	</div>
 	<div class="row">
 		<div id="alexa-page-rank" class="col-md-5">
-			<h3 id="alexahistogram">Alexa Page Rank de la web principal <small>nº de organizaciones en cada rango (histograma)</small></h3>
+			<h3 id="alexahistogram">Alexa Page Rank de la web principal <br><small>nº de organizaciones en cada rango (histograma)</small></h3>
 			<?php
 			//Flattens value of the array.
 			foreach($alexa_page_rank_total as $key => $value) {
@@ -262,6 +269,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 						</div>
 					</div>
 					<?php } ?>
+					Valores de Alexa Page Rank inexistentes o por encima de 26.000.000 se incluyen en el &uacute;ltimo rango.
 				</div>
 			</div>
 		</div>
@@ -367,7 +375,7 @@ foreach ($terms as $term) { //TODO separate by $active_exosystem. Now it is coun
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-7">
 			<h3>Alexa Inlinks de la web principal <small></small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
