@@ -1,9 +1,16 @@
-<?php
-/**
- * The template used for displaying page directory in page.php
- */
+<?php /* The template used for displaying page directory in page.php */
 $prefix = '_ig_';
-$active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true );
+//$active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true );
+
+$base_url = get_permalink();
+preg_match('/\?/',$base_url,$matches); // check if pretty permalinks enabled
+if ( $matches[0] == "?" ) {
+	$param_url = "&ecosystem=";
+} else {
+	$param_url = "?ecosystem=";
+}
+$active_ecosystem = sanitize_text_field( $_GET['ecosystem'] );
+
 ?>
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
 	<article id="directory-list" <?php post_class('container'); ?>>
@@ -11,7 +18,7 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 			<?php if ( ! is_page_template( 'page-templates/front-page.php' ) ) : ?>
 			<?php the_post_thumbnail(); ?>
 			<?php endif; ?>
-			<h1 class="entry-title"><?php the_title(); ?></h1>
+			<h1 class="entry-title"><?php the_title(); echo $active_ecosystem== '15m' ? ' 15M' : ' Independencia Catalu&ntilde;a';?></h1>
 		</header>
 
 		<div class="entry-content">
@@ -28,7 +35,7 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 						array(
 							'taxonomy' => 'org-ecosystem',
 							'field'    => 'slug',
-							'terms'    => $active_ecosytem,
+							'terms'    => $active_ecosystem,
 						),
 					),
 				);
