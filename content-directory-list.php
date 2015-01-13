@@ -9,7 +9,8 @@ if ( $matches[0] == "?" ) {
 } else {
 	$param_url = "?ecosystem=";
 }
-$active_ecosystem = sanitize_text_field( $_GET['ecosystem'] );
+$active_ecosystem = '15m';
+$active_ecosystem = (sanitize_text_field( $_GET['ecosystem'] ) != '') ? sanitize_text_field( $_GET['ecosystem'] ) : $active_ecosystem;
 
 ?>
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
