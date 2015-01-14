@@ -774,6 +774,8 @@ function igopnet_load_css() {
 		wp_register_style( 'directory-css', get_stylesheet_directory_uri() . '/directory.css',array(),null );
 		wp_enqueue_style( 'bootstrap-css' );
 		wp_enqueue_style( 'directory-css' );
+		wp_enqueue_script( 'jquery', '/wp-includes/js/jquery/jquery.js',array(),null);
+		wp_enqueue_script( 'bootstrap-js', get_stylesheet_directory_uri() . '/bootstrap/js/bootstrap.js',array(),null);
 	} else {
 		wp_register_style( 'igop-css', get_stylesheet_uri());
 		wp_enqueue_style( 'igop-css' );
