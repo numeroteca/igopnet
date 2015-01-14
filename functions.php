@@ -797,3 +797,35 @@ function get_number_posts($meta_key,$meta_value) {
 	$result = count($posts_array);
 	return $result;
 }
+
+//Hook archive.php to display only organizations in archive from one ecosystem $active_ecosystem
+add_action( 'pre_get_posts', 'be_change_event_posts_per_page' );
+function be_change_event_posts_per_page( $query ) {
+	$base_url = get_permalink();
+	preg_match('/\?/',$base_url,$matches); // check if pretty permalinks enabled
+	if ( $matches[0] == "?" ) {
+		$param_url = "&ecosystem=";
+	} else {
+		$param_url = "?ecosystem=";
+	}
+
+	$active_ecosystem = sanitize_text_field( $_GET['ecosystem'] );
+	if ($active_ecosystem == '' ) {
+		$active_ecosystem = '15m';//TODO chage by default to all
+	}
+	
+	if( $query->is_main_query() && $query->is_archive() ) {
+		$query->set( 'posts_per_page', '-1' );
+
+		$meta_query = array(
+			array(
+				'taxonomy' => 'org-ecosystem',
+				'field'    => 'slug',
+				'terms'    => $active_ecosystem,
+			),
+		);
+		$query->set( 'tax_query', $meta_query );
+		$query->set( 'orderby', 'title' );
+		$query->set( 'order', 'ASC' );
+	}
+}

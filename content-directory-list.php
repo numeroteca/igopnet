@@ -9,8 +9,24 @@ if ( $matches[0] == "?" ) {
 } else {
 	$param_url = "?ecosystem=";
 }
-$active_ecosystem = '15m';
-$active_ecosystem = (sanitize_text_field( $_GET['ecosystem'] ) != '') ? sanitize_text_field( $_GET['ecosystem'] ) : $active_ecosystem;
+
+$active_ecosystem = sanitize_text_field( $_GET['ecosystem'] );
+if ($active_ecosystem == '' ) {
+	$active_ecosystem = '15m';
+}
+
+$orders = array(
+	array(
+		'value_url' => 'tit',
+		'type' => 'meta_value',
+		'tit' => 'title'
+	),
+	array(
+		'value_url' => 'google_page_rank',
+		'type' => 'meta_value',
+		'tit' => 'google_page_rank'
+	)
+);
 
 ?>
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
@@ -31,6 +47,8 @@ $active_ecosystem = (sanitize_text_field( $_GET['ecosystem'] ) != '') ? sanitize
 				'post_type' => 'organization', 
 				'posts_per_page' => -1,
 				'orderby' => 'title',
+				//'meta_key' => $prefix.'url_info',
+				//'orderby'   => '		meta_value_num',
 				'order' => 'ASC',
 				'tax_query' => array(
 						array(
@@ -75,7 +93,7 @@ $active_ecosystem = (sanitize_text_field( $_GET['ecosystem'] ) != '') ? sanitize
 				$twitter_origin = get_post_meta( $post_id, $prefix.'twitter_origin', true );
 				$other_twitter_accounts = get_post_meta( $post_id, $prefix.'other_twitter_accounts', true );
 				$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
-				$last_url_item = end($url_info);
+				$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
 				$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
 				$alexa_page_rank = $last_url_item['alexa_page_rank'];
 				$google_page_rank = $last_url_item['google_page_rank'];
@@ -100,7 +118,10 @@ $active_ecosystem = (sanitize_text_field( $_GET['ecosystem'] ) != '') ? sanitize
 								echo "<a href='".$main_url."'>".$mainurl_stripped."</a>"; ?>
 						</td>
 						<td>
-							<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?>
+							<?php
+								$term_list = wp_get_post_terms($post_id, 'org-type', array("fields" => "all"));
+								echo "<a href='/org-type/".$term_list[0]->slug."/?ecosystem=". $active_ecosystem ."'>".$term_list[0]->name."</a>";
+							?>
 						</td>
 						<td>
 							<?php

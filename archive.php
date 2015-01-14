@@ -24,7 +24,8 @@ get_header(); ?>
 							<?php printf( __( 'Yearly Archives: %s', 'twentyeleven' ), '<span>' . get_the_date( _x( 'Y', 'yearly archives date format', 'twentyeleven' ) ) . '</span>' ); ?>
 						<?php elseif ( is_tax() ) : ?>
 							
-							<?php single_cat_title(); ?>
+							<?php //single_cat_title(); ?>
+							<?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); echo $term->name; ?>
 						<?php else : ?>
 							<?php _e( 'Blog Archives', 'twentyeleven' ); ?>
 						<?php endif; ?>
@@ -34,6 +35,7 @@ get_header(); ?>
 				<?php twentyeleven_content_nav( 'nav-above' ); ?>
 				<?php $count = 0; ?>
 				<?php $my_count = $wp_query->post_count; //The number of posts being displayed ?>
+				
 				<?php /* Start the Loop */?>
 				<?php while ( have_posts() ) : the_post(); 
 

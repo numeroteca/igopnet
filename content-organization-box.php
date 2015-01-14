@@ -10,7 +10,6 @@
 	$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
 	$last_url_item = end($url_info);
 	$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
-	
 	$google_page_rank = $last_url_item['google_page_rank'];
 ?>
 
@@ -45,8 +44,13 @@
 				if ( strlen($mainurl_stripped) > $max_length ) {
 					$mainurl_stripped = substr($mainurl_stripped,0,$max_length).'...';
 				}
-				echo "<a href='".$main_url."'>".$mainurl_stripped."</a><br/>"; ?>
-				<?php echo get_the_term_list( $post_id, 'org-type', ' ', ', ', '' ); ?><br/>
+				echo "<a href='".$main_url."'>".$mainurl_stripped."</a><br/>";
+				
+				//Displays organization type
+				$term_list = wp_get_post_terms($post_id, 'org-type', array("fields" => "all"));
+				$ecosystem = wp_get_post_terms($post_id, 'org-ecosystem', array("fields" => "all"));
+				echo "<a href='/org-type/".$term_list[0]->slug."/?ecosystem=". $ecosystem[0]->slug ."'>".$term_list[0]->name."</a>";
+				?><br/>
 				<?php
 				echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'><img src='".get_stylesheet_directory_uri()."/img/twitter_logo.png' alt='Twitter'></a> " : "" ;
 				echo !($facebook_site=='') ? "<a href='https://facebook.com/".$facebook_site. "'><img src='".get_stylesheet_directory_uri()."/img/facebook_logo.png' alt='Facebook'></a > " : "";

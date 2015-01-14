@@ -98,7 +98,7 @@ $terms = get_terms( 'org-type', array(
 	
 	?>
 	<div class="row">
-		<h3>Inex</h3>
+		<h3>Index</h3>
 		<p>
 			<a href="#tipos-org">Tipos de organizaci&oacute;n</a><br>
 			<a href="#fecha-inicio">Fecha inicio</a><br>
