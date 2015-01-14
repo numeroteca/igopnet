@@ -46,10 +46,8 @@
 				}
 				echo "<a href='".$main_url."'>".$mainurl_stripped."</a><br/>";
 				
-				//Displays organization type
-				$term_list = wp_get_post_terms($post_id, 'org-type', array("fields" => "all"));
-				$ecosystem = wp_get_post_terms($post_id, 'org-ecosystem', array("fields" => "all"));
-				echo "<a href='/org-type/".$term_list[0]->slug."/?ecosystem=". $ecosystem[0]->slug ."'>".$term_list[0]->name."</a>";
+				//Displays organization type and links to the taxonomy archive page with the propper url related to active ecosystem
+				echo display_tax_link_with_ecosystem($post_id, 'org-type')
 				?><br/>
 				<?php
 				echo !($twitter_account=='') ? "<a href='https://twitter.com/".$twitter_account. "'><img src='".get_stylesheet_directory_uri()."/img/twitter_logo.png' alt='Twitter'></a> " : "" ;

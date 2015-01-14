@@ -743,7 +743,7 @@ function list_taxonomy_terms($post_id='',$slug='',$name='') {
 	$term_list = get_the_term_list( $post_id, $slug , ' ', ', ', '' );
 	if (!empty($term_list)) {
 		echo "<dt>" .$name. "</dt>";
-		echo "<dd>" .$term_list. "</dd>";
+		echo "<dd>". display_tax_link_with_ecosystem( $post_id, $slug). "</dd>";
 	}
 }
 
@@ -803,31 +803,40 @@ function get_number_posts($meta_key,$meta_value) {
 //Hook archive.php to display only organizations in archive from one ecosystem $active_ecosystem
 add_action( 'pre_get_posts', 'be_change_event_posts_per_page' );
 function be_change_event_posts_per_page( $query ) {
-	$base_url = get_permalink();
-	preg_match('/\?/',$base_url,$matches); // check if pretty permalinks enabled
-	if ( $matches[0] == "?" ) {
-		$param_url = "&ecosystem=";
-	} else {
-		$param_url = "?ecosystem=";
-	}
+	if (is_tax()) {//TODO change if new taxonomies are created for the standard post
+		$base_url = get_permalink();
+		preg_match('/\?/',$base_url,$matches); // check if pretty permalinks enabled
+		if ( $matches[0] == "?" ) {
+			$param_url = "&ecosystem=";
+		} else {
+			$param_url = "?ecosystem=";
+		}
 
-	$active_ecosystem = sanitize_text_field( $_GET['ecosystem'] );
-	if ($active_ecosystem == '' ) {
-		$active_ecosystem = '15m';//TODO chage by default to all
-	}
+		$active_ecosystem = sanitize_text_field( $_GET['ecosystem'] );
+		if ($active_ecosystem == '' ) {
+			$active_ecosystem = '15m';//TODO chage by default to all
+		}
 	
-	if( $query->is_main_query() && $query->is_archive() ) {
-		$query->set( 'posts_per_page', '-1' );
+		if( $query->is_main_query() && $query->is_archive() ) {
+			$query->set( 'posts_per_page', '-1' );
 
-		$meta_query = array(
-			array(
-				'taxonomy' => 'org-ecosystem',
-				'field'    => 'slug',
-				'terms'    => $active_ecosystem,
-			),
-		);
-		$query->set( 'tax_query', $meta_query );
-		$query->set( 'orderby', 'title' );
-		$query->set( 'order', 'ASC' );
+			$meta_query = array(
+				array(
+					'taxonomy' => 'org-ecosystem',
+					'field'    => 'slug',
+					'terms'    => $active_ecosystem,
+				),
+			);
+			$query->set( 'tax_query', $meta_query );
+			$query->set( 'orderby', 'title' );
+			$query->set( 'order', 'ASC' );
+		}
 	}
+}
+
+function display_tax_link_with_ecosystem($post_id, $tax) {
+	//Displays organization type and links to the taxonomy archive page with the propper url related to active ecosystem
+	$tax_data = wp_get_post_terms($post_id, $tax, array("fields" => "all"));
+	$ecosystem = wp_get_post_terms($post_id, 'org-ecosystem', array("fields" => "all"));
+	return "<a href='/". $tax_data[0]->taxonomy ."/". $tax_data[0]->slug ."/?ecosystem=". $ecosystem[0]->slug ."'>". $tax_data[0]->name ."</a>";
 }

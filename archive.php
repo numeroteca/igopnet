@@ -6,7 +6,18 @@
  * For example, puts together date-based pages if no date.php file exists.
  */
 
-get_header(); ?>
+get_header();
+
+$base_url = get_permalink();
+		preg_match('/\?/',$base_url,$matches); // check if pretty permalinks enabled
+		if ( $matches[0] == "?" ) {
+			$param_url = "&ecosystem=";
+		} else {
+			$param_url = "?ecosystem=";
+		}
+
+		$active_ecosystem = sanitize_text_field( $_GET['ecosystem'] );
+?>
 
 		<section id="primary">
 			<div id="content" role="main" class="archive">
@@ -26,6 +37,7 @@ get_header(); ?>
 							
 							<?php //single_cat_title(); ?>
 							<?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); echo $term->name; ?>
+								<small><?php echo $active_ecosystem== '15m' ? ' 15M' : ' Independencia Catalu&ntilde;a'; ?></small>
 						<?php else : ?>
 							<?php _e( 'Blog Archives', 'twentyeleven' ); ?>
 						<?php endif; ?>
