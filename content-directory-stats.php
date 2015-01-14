@@ -33,6 +33,8 @@ $terms = get_terms( 'org-type', array(
 	$args = array(
 	'posts_per_page' => -1,
 	'post_type' => 'organization',
+	'orderby' => 'title',
+	'order' => 'ASC',
 	'tax_query' => array(
 		array(
 			'taxonomy' => 'org-ecosystem',
@@ -449,6 +451,52 @@ $terms = get_terms( 'org-type', array(
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="nubes" class="row">
+	<hr style="border-width:20px; margin-top:40px;">
+	<h3>Google Page Rank</h3>
+	<?php
+	foreach ($posts_array as $value) {
+		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
+		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
+		$google_page_rank = $last_url_item['google_page_rank'];
+		echo "<a href='" .
+		$value->guid. "' title='Google Page Rank ".	$google_page_rank ." (". $value->post_title.")'><span style='font-size:". $google_page_rank*3.5 ."px;'>". $value->post_title. " </span></a>";
+	}
+	?>
+	<hr style="border-width:20px;margin-top:40px;">
+	<h3>Alexa Page Rank</h3>
+	<?php
+	foreach ($posts_array as $value) {
+		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
+		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
+		$alexa_page_rank = ($last_url_item['alexa_page_rank'] == 0) || ($alexa_page_rank == '') ? 8000000 : $last_url_item['alexa_page_rank'] ;
+		$alexa_page_rank = $alexa_page_rank < 60000 ? 60000 :  $alexa_page_rank;
+		echo "<a href='" .$value->guid. "' title=\"Alexa Page Rank ";
+		echo $alexa_page_rank == 60000 ? "valor minorado, tamaño real" : number_format($alexa_page_rank, 0, ',', '.');
+		echo " (".$value->post_title.")\"><span style='font-size:". 5000000/$alexa_page_rank ."px;'>".$value->post_title. " </span></a>";
+	}
+	?>
+	<hr style="border-width:20px;margin-top:40px;">
+	<h3>Alexa Inlinks</h3>
+	<?php
+	foreach ($posts_array as $value) {
+		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
+		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
+		$alexa_inlinks = $last_url_item['alexa_inlinks'];
+		$alexa_inlinks = $alexa_inlinks > 3000 ? 3000 : $alexa_inlinks;
+		echo "<a href='" .$value->guid. "' title=\"Alexa Inlinks ". number_format($alexa_inlinks, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $alexa_inlinks/23.3 ."px;'>".$value->post_title. " </span></a>";
+	}
+	?>
+	<hr style="border-width:20px;margin-top:40px;">
+	<h3>Twitter Followers</h3>
+	<?php
+	foreach ($posts_array as $value) {
+		$twitter_info = get_post_meta( $value->ID, $prefix.'twitter_info', true );
+		$twitter_followers = $twitter_info[0]['followers'] == '' ? 1 : $twitter_info[0]['followers'];
+		echo "<a href='" .$value->guid. "' title=\"Twitter Folowers ". number_format($twitter_followers, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $twitter_followers/1790 ."px;'>".$value->post_title. " </span></a>";
+	}
+	?>
 	</div>
 	<footer class="entry-meta">
 	</footer><!-- .entry-meta -->
