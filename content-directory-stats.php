@@ -378,7 +378,7 @@ $terms = get_terms( 'org-type', array(
 			</div>
 		</div>
 		<div class="col-md-7">
-			<h3>Alexa Inlinks de la web principal <small></small></h3>
+			<h3>Alexa Inlinks web principal <small></small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
@@ -478,6 +478,21 @@ $terms = get_terms( 'org-type', array(
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
+	<h3>Alexa Inlinks Logar&iacute;tmico <small>Logartimo en base 1.5</small></h3>
+	<?php
+	echo "Valo m&iacute;nimo: 1<br>";
+	echo "Valo m&aacute;ximo: ".$maxAlexaInlinks."<br>";
+	
+	foreach ($posts_array as $value) {
+		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
+		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
+		$alexa_inlinks = $last_url_item['alexa_inlinks'];
+		$alexa_inlinks = $alexa_inlinks > 3000 ? 3000 : $alexa_inlinks;
+		$alexa_inlinks_log = log( $alexa_inlinks, 1.6 );
+		echo "<a href='" .$value->guid. "' title=\"Alexa Inlinks ". number_format($alexa_inlinks, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $alexa_inlinks_log*1.75 ."px;'>".$value->post_title. " </span></a> | ";
+	}
+	?>
+	<hr style="border-width:20px;margin-top:40px;">
 	<h3>Alexa Inlinks</h3>
 	<?php
 	foreach ($posts_array as $value) {
@@ -497,7 +512,6 @@ $terms = get_terms( 'org-type', array(
 		echo "<a href='" .$value->guid. "' title=\"Twitter Folowers ". number_format($twitter_followers, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $twitter_followers/1790 ."px;'>".$value->post_title. " </span></a>";
 	}
 	?>
+	<hr style="border-width:20px;margin-top:40px;">
 	</div>
-	<footer class="entry-meta">
-	</footer><!-- .entry-meta -->
 </article><!-- #post -->
