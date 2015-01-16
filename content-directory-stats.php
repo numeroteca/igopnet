@@ -69,34 +69,32 @@ $terms = get_terms( 'org-type', array(
 	ksort($years_total); //orders array by key
 	
 	//Website info
-	foreach ($site_info as $key => $value) {
-		$google_page_rank[$key] = $value[0]['google_page_rank']; //TODO for last value of the main site. Now it just takes the first value.
-		$alexa_page_rank_total[$key] = $value[0]['alexa_page_rank']; //TODO for last value of the main site. Now it just takes the first value.
-		$alexa_inlinks_total[$key] = $value[0]['alexa_inlinks']; //TODO for last value of the main site. Now it just takes the first value.
+	foreach ($posts_array as $key => $value) {
+		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
+		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
+		$google_page_rank_total[$value->post_title] = $last_url_item['google_page_rank'];
+		$alexa_page_rank_total[$value->post_title] = isset($last_url_item['alexa_page_rank']) ? $last_url_item['alexa_page_rank']	: '' ;
+		$alexa_inlinks_total[$value->post_title] = $last_url_item['alexa_inlinks'];
 	}
 	
-	$google_page_rank_total = array_count_values($google_page_rank); //counts values of gogle page rank
-	ksort($google_page_rank_total); //orders array by key
-	
+	$google_page_rank_total = array_count_values($google_page_rank_total); //counts values of gogle page rank
 	asort($alexa_page_rank_total); //orders array by value
-	asort($alexa_inlinks_total);
-	rsort($alexa_inlinks_total);
+	ksort($google_page_rank_total); //orders array by key
+	arsort($alexa_inlinks_total); //orders array by value
 	
 	//Twiter info
 	foreach ($twitter_info as $key => $value) {
-		$twitter_followers[$key] = $value[0]['followers']; //TODO for last value of the main site. Now it just takes the first value.
+		$twitter_followers[$key] = isset($value[0]['followers']) ? $value[0]['followers'] : ''; //TODO for last value of the main site. Now it just takes the first value.
 	}
 	
-	asort($twitter_followers);
-	rsort($twitter_followers);
+	arsort($twitter_followers);
 	
 	//Facebook info
 	foreach ($facebook_info as $key => $value) {
-		$facebook_likes[$key] = $value[0]['likes']; //TODO for last value of the main site. Now it just takes the first value.
+		$facebook_likes[$key] = isset($value[0]['likes']) ? $value[0]['likes'] : ''; //TODO for last value of the main site. Now it just takes the first value.
 	}
 	
-	asort($facebook_likes);
-	rsort($facebook_likes);
+	arsort($facebook_likes);
 	
 	?>
 	<div class="row">
@@ -119,7 +117,7 @@ $terms = get_terms( 'org-type', array(
 						echo '<p>'.$key.': </p>';
 					}
 					$max_count_org_type = 0;
-					foreach ($organization_type_total as $value) { //TODO separate by $active_ecosystem. Now it is counting both ecosystem at the same time
+					foreach ($organization_type_total as $value) {
 						$max_count_org_type = $value > $max_count_org_type ? $value : $max_count_org_type;
 					}
 					?>
@@ -208,7 +206,7 @@ $terms = get_terms( 'org-type', array(
 		</div>
 	</div>
 	<div class="row">
-		<div id="alexa-page-rank" class="col-md-5">
+		<div id="alexa-page-rank" class="col-md-4">
 			<h3 id="alexahistogram">Alexa Page Rank de la web principal <br><small>nº de organizaciones en cada rango (histograma)</small></h3>
 			<?php
 			//Flattens value of the array.
@@ -275,8 +273,8 @@ $terms = get_terms( 'org-type', array(
 				</div>
 			</div>
 		</div>
-		<div class="col-md-7">
-			<h3>Alexa Page Rank de la web principal <small></small></h3>
+		<div class="col-md-4">
+			<h3>Alexa Page Rank web principal <small>Escala lineal</small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
@@ -284,20 +282,37 @@ $terms = get_terms( 'org-type', array(
 					foreach ($alexa_page_rank_total as $key => $value) {
 						$max = max( array( $max, $value) ); //calculates max value
 					}
+					$alexa_page_rank_total = array_filter($alexa_page_rank_total); //removes organizations with no value for alexa page rank
 					foreach ($alexa_page_rank_total as $key => $value) {
-						if ($value == 0) {
-							//Do nothing
-						} else {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Page Rank ('. $key .')'; ?>">
 							<span title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
 								<?php echo $value; ?>
 							</span>
 						</div>
 					</div>
 					<?php
-						}
+					}
+					?>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<h3>Alexa Page Rank web principal <small>Escala logar&iacute;tmica</small></h3>
+			<div class="row">
+				<div class="col-md-12 just-bars">
+					<?php
+					foreach ($alexa_page_rank_total as $key => $value) {
+						?>
+					<div class="progress">
+						<div class="progress-bar" style="width:<?php echo log($value,1.5); ?>%;background-color:#ccc;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Page Rank ('. $key .')'; ?>">
+							<span title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
+								<?php echo $value; ?>
+							</span>
+						</div>
+					</div>
+					<?php
 					}
 					?>
 				</div>
@@ -314,7 +329,7 @@ $terms = get_terms( 'org-type', array(
 			}
 			
 			//Sets up of max value and size of ranges
-			$maxAlexaInlinks = 1600; //can not start with o, otherwise it deosn't work
+			$maxAlexaInlinks = 0;
 			foreach ($alexa_inlinks_total as $key => $value) {
 				$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
 			}
@@ -378,7 +393,7 @@ $terms = get_terms( 'org-type', array(
 			</div>
 		</div>
 		<div class="col-md-4">
-			<h3>Alexa Inlinks web principal <small>Distribuci&oacute;n lineal</small></h3>
+			<h3>Alexa Inlinks web principal <small>Escala lineal</small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
@@ -386,24 +401,23 @@ $terms = get_terms( 'org-type', array(
 					foreach ($alexa_inlinks_total as $key => $value) {
 						$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
 					}
-					//print_r($alexa_inlinks_total);
 					foreach ($alexa_inlinks_total as $key => $value) {
-						?>
-					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Inlinks">
-							<span title="<?php echo $value; ?>">
-								<?php echo $value; ?>
-							</span>
+					?>
+						<div class="progress">
+							<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Inlinks (' .$key. ')'; ?>">
+								<span title="<?php echo $alexa_inlinks; ?>">
+									<?php echo $alexa_page_rank; ?>
+								</span>
+							</div>
 						</div>
-					</div>
 					<?php
 					}
 					?>
 				</div>
 			</div>
 		</div>
-	<div class="col-md-4">
-			<h3>Alexa Inlinks web principal <small>Distribuci&oacute;n log</small></h3>
+		<div class="col-md-4">
+			<h3>Alexa Inlinks web principal <small>Escala logar&iacute;tmica</small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
