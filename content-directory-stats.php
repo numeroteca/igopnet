@@ -305,7 +305,7 @@ $terms = get_terms( 'org-type', array(
 		</div>
 	</div>
 	<div class="row">
-		<div id="alexa-inlinks" class="col-md-5">
+		<div id="alexa-inlinks" class="col-md-4">
 			<h3>Alexa Inlinks de la web principal <small>nº de organizaciones en cada rango (histograma)</small></h3>
 			<?php
 			//Flattens value of the array.
@@ -377,8 +377,8 @@ $terms = get_terms( 'org-type', array(
 				</div>
 			</div>
 		</div>
-		<div class="col-md-7">
-			<h3>Alexa Inlinks web principal <small></small></h3>
+		<div class="col-md-4">
+			<h3>Alexa Inlinks web principal <small>Distribuci&oacute;n lineal</small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
@@ -386,20 +386,38 @@ $terms = get_terms( 'org-type', array(
 					foreach ($alexa_inlinks_total as $key => $value) {
 						$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
 					}
+					//print_r($alexa_inlinks_total);
 					foreach ($alexa_inlinks_total as $key => $value) {
-						if ($value == -1) {
-							//Do nothing
-						} else {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks ; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Inlinks">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaInlinks; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Inlinks">
 							<span title="<?php echo $value; ?>">
 								<?php echo $value; ?>
 							</span>
 						</div>
 					</div>
 					<?php
-						}
+					}
+					?>
+				</div>
+			</div>
+		</div>
+	<div class="col-md-4">
+			<h3>Alexa Inlinks web principal <small>Distribuci&oacute;n log</small></h3>
+			<div class="row">
+				<div class="col-md-12 just-bars">
+					<?php
+					foreach ($alexa_inlinks_total as $key => $value) {
+						$log_value = ($value == 1) ? log(2,1.6)/2 : log($value,1.6);
+						?>
+					<div class="progress">
+						<div class="progress-bar" style="width:<?php echo $log_value*4.3; ?>%;background-color:#ccc;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Inlinks">
+							<span title="<?php echo $value; ?>">
+								<?php echo $value; ?>
+							</span>
+						</div>
+					</div>
+					<?php
 					}
 					?>
 				</div>
