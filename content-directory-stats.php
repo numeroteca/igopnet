@@ -51,13 +51,10 @@ $terms = get_terms( 'org-type', array(
 	}
 	
 	foreach ($posts_ids as $key => $value) {
-		$organization_type[$key] = wp_get_post_terms($value , 'org-type', array("fields" => "names"));;
+		$organization_type[$key] = wp_get_post_terms($value , 'org-type', array("fields" => "names"));
 		if (get_post_meta( $value , $prefix . 'origin_date', true ) != '') {
 			$years_created[$key] = date( 'Y', get_post_meta( $value , $prefix . 'origin_date', true ) ); //Get all the years of creation of the organizations
 		}
-		$site_info[$key] = get_post_meta( $value , $prefix . 'url_info', true ); //Get all the web info of the organizations
-		$twitter_info[$key] = get_post_meta( $value , $prefix . 'twitter_info', true );
-		$facebook_info[$key] = get_post_meta( $value , $prefix . 'facebook_info', true );
 	}
 	
 	foreach ($organization_type as $key => $value) {//Flattens array
@@ -75,6 +72,8 @@ $terms = get_terms( 'org-type', array(
 		$google_page_rank_total[$value->post_title] = $last_url_item['google_page_rank'];
 		$alexa_page_rank_total[$value->post_title] = isset($last_url_item['alexa_page_rank']) ? $last_url_item['alexa_page_rank']	: '' ;
 		$alexa_inlinks_total[$value->post_title] = $last_url_item['alexa_inlinks'];
+		$twitter_info[$value->post_title] = get_post_meta( $value->ID , $prefix . 'twitter_info', true );
+		$facebook_info[$value->post_title] = get_post_meta( $value->ID , $prefix . 'facebook_info', true );
 	}
 	
 	$google_page_rank_total = array_count_values($google_page_rank_total); //counts values of gogle page rank
@@ -84,16 +83,14 @@ $terms = get_terms( 'org-type', array(
 	
 	//Twiter info
 	foreach ($twitter_info as $key => $value) {
-		$twitter_followers[$key] = isset($value[0]['followers']) ? $value[0]['followers'] : ''; //TODO for last value of the main site. Now it just takes the first value.
+		$twitter_followers[$key] = isset($value[0]['followers']) ? $value[0]['followers'] : ''; //TODO for last value of the main Twitter account. Now it just takes the first value.
 	}
-	
 	arsort($twitter_followers);
 	
 	//Facebook info
 	foreach ($facebook_info as $key => $value) {
 		$facebook_likes[$key] = isset($value[0]['likes']) ? $value[0]['likes'] : ''; //TODO for last value of the main site. Now it just takes the first value.
 	}
-	
 	arsort($facebook_likes);
 	
 	?>
@@ -107,6 +104,7 @@ $terms = get_terms( 'org-type', array(
 			<a href="#alexa-inlinks">Alexa inlinks</a><br>
 			<a href="#twitter-followers">Twitter Followers</a><br>
 			<a href="#facebook-likes">Facebook Likes</a><br>
+			<a href="#nubes">Redes sociales por nubes de palabras</a><br>
 		</p>
 		<div id="tipos-org" class="col-md-12">
 			<h3>Tipos de organizaci&oacute;n <small>nº de organizaciones</small></h3>
@@ -306,7 +304,7 @@ $terms = get_terms( 'org-type', array(
 					foreach ($alexa_page_rank_total as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo log($value,1.5); ?>%;background-color:#ccc;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Page Rank ('. $key .')'; ?>">
+						<div class="progress-bar" style="width:<?php echo log($value,1.5)*2; ?>%;background-color:#ccc;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Page Rank ('. $key .')'; ?>">
 							<span title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
 								<?php echo $value; ?>
 							</span>
@@ -440,7 +438,7 @@ $terms = get_terms( 'org-type', array(
 	</div>
 	<div class="row">
 		<div id="twitter-followers" class="col-md-4">
-			<h3>Twitter Followers <small></small></h3>
+			<h3>Twitter Followers <small>Escala lineal</small></h3>
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
@@ -451,7 +449,7 @@ $terms = get_terms( 'org-type', array(
 					foreach ($twitter_followers as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Twitter Followers">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Twitter Followers (' .$key. ')'; ?>">
 							<span title="<?php echo $value; ?> Twitter Followers">
 								<?php echo $value; ?>
 							</span>
@@ -461,6 +459,8 @@ $terms = get_terms( 'org-type', array(
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
 		<div id="facebook-likes" class="col-md-4">
 			<h3>Facebook likes <small></small></h3>
 			<div class="row">
@@ -486,7 +486,7 @@ $terms = get_terms( 'org-type', array(
 	</div>
 	<div id="nubes" class="row">
 	<hr style="border-width:20px; margin-top:40px;">
-	<h3>Google Page Rank</h3>
+	<h3>Google Page Rank <small>Escala lineal</small></h3>
 	<?php
 	foreach ($posts_array as $value) {
 		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
@@ -497,7 +497,7 @@ $terms = get_terms( 'org-type', array(
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
-	<h3>Alexa Page Rank <small>Escala logar&iacute;tmica (base 1.1)</small></h3>
+	<h3>Alexa Page Rank <small>Escala logar&iacute;tmica</small></h3>
 	<?php
 	foreach ($posts_array as $value) {
 		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
@@ -514,7 +514,7 @@ $terms = get_terms( 'org-type', array(
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
-	<h3>Alexa Page Rank</h3>
+	<h3>Alexa Page Rank <small>Escala lineal</small></h3>
 	<?php
 	foreach ($posts_array as $value) {
 		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
@@ -529,7 +529,7 @@ $terms = get_terms( 'org-type', array(
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
-	<h3>Alexa Inlinks Logar&iacute;tmico <small>Escala logar&iacute;tmica (base 1.6)</small></h3>
+	<h3>Alexa Inlinks Logar&iacute;tmico <small>Escala logar&iacute;tmica</small></h3>
 	<?php
 	echo "Valo m&iacute;nimo: 1<br>";
 	echo "Valo m&aacute;ximo: ".$maxAlexaInlinks."<br>";
@@ -538,28 +538,44 @@ $terms = get_terms( 'org-type', array(
 		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
 		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
 		$alexa_inlinks = $last_url_item['alexa_inlinks'];
-		$alexa_inlinks = $alexa_inlinks > 3000 ? 3000 : $alexa_inlinks;
+		//$alexa_inlinks = $alexa_inlinks > 3000 ? 3000 : $alexa_inlinks;
 		$alexa_inlinks_log = log( $alexa_inlinks, 1.6 );
 		echo "<a href='" .$value->guid. "' title=\"Alexa Inlinks ". number_format($alexa_inlinks, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $alexa_inlinks_log*1.75 ."px;'>".$value->post_title. " </span></a> | ";
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
-	<h3>Alexa Inlinks</h3>
+	<h3>Alexa Inlinks <small>Escala lineal</small></h3>
 	<?php
 	foreach ($posts_array as $value) {
 		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
 		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
 		$alexa_inlinks = $last_url_item['alexa_inlinks'];
-		$alexa_inlinks = $alexa_inlinks > 3000 ? 3000 : $alexa_inlinks;
-		echo "<a href='" .$value->guid. "' title=\"Alexa Inlinks ". number_format($alexa_inlinks, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $alexa_inlinks/23.3 ."px;'>".$value->post_title. " </span></a>";
+		$alexa_inlinks = $alexa_inlinks > 3000 ? 3000 : $alexa_inlinks; //se reducen a mano los valores demasiado altos (deben suprimirse de base de datos)
+		echo "<a href='" .$value->guid. "' title=\"Alexa Inlinks ";
+		echo 3000 == $alexa_inlinks ? "valor minorado " : "";
+		echo number_format($alexa_inlinks, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $alexa_inlinks/23.3 ."px;'>".$value->post_title. " </span></a>";
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
-	<h3>Twitter Followers</h3>
+	<h3>Twitter Followers <small>Escala logar&iacute;tmica</small></h3>
 	<?php
 	foreach ($posts_array as $value) {
 		$twitter_info = get_post_meta( $value->ID, $prefix.'twitter_info', true );
-		$twitter_followers = $twitter_info[0]['followers'] == '' ? 1 : $twitter_info[0]['followers'];
+		if (isset($twitter_info[0]['followers'])) {
+			$twitter_followers = ($twitter_info[0]['followers'] == '') || ($twitter_info[0]['followers'] == 0) ? 1 : $twitter_info[0]['followers'];
+		}
+		$twitter_followers_log = log($twitter_followers,1.1);
+		echo "<a href='" .$value->guid. "' title=\"Twitter Folowers ". number_format($twitter_followers, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $twitter_followers_log/5 ."px;'>".$value->post_title. " </span></a> | ";
+	}
+	?>
+	<hr style="border-width:20px;margin-top:40px;">
+	<h3>Twitter Followers <small>Escala lineal</small></h3>
+	<?php
+	foreach ($posts_array as $value) {
+		$twitter_info = get_post_meta( $value->ID, $prefix.'twitter_info', true );
+		if (isset($twitter_info[0]['followers'])) {
+			$twitter_followers = $twitter_info[0]['followers'] == '' ? 0 : $twitter_info[0]['followers'];
+		}
 		echo "<a href='" .$value->guid. "' title=\"Twitter Folowers ". number_format($twitter_followers, 0, ',', '.') ." (".$value->post_title.")\"><span style='font-size:". $twitter_followers/1790 ."px;'>".$value->post_title. " </span></a>";
 	}
 	?>
