@@ -425,7 +425,7 @@ $terms = get_terms( 'org-type', array(
 						$log_value = ($value == 1) ? log(2,1.6)/2 : log($value,1.6);
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo $log_value*4.3; ?>%;background-color:#ccc;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Inlinks">
+						<div class="progress-bar" style="width:<?php echo $log_value*4.3; ?>%;background-color:#ccc;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Inlinks (' .$key. ')'; ?>">
 							<span title="<?php echo $value; ?>">
 								<?php echo $value; ?>
 							</span>
@@ -497,12 +497,31 @@ $terms = get_terms( 'org-type', array(
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
+	<h3>Alexa Page Rank <small>Escala logar&iacute;tmica (base 1.1)</small></h3>
+	<?php
+	foreach ($posts_array as $value) {
+		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
+		$last_url_item = end($url_info); //last item of the array TODO It should be the last item that has as url $main_url
+		if (isset($last_url_item['alexa_page_rank'])) {
+			$alexa_page_rank = $last_url_item['alexa_page_rank'] ;
+		}
+		//$alexa_page_rank = $alexa_page_rank < 60000 ? 60000 :  $alexa_page_rank;
+		$alexa_page_rank_log = log( $alexa_page_rank, 1.1 );
+		echo "<a href='" .$value->guid. "' title=\"Alexa Page Rank ";
+		//echo $alexa_page_rank == 60000 ? "valor minorado, tamaño real" : number_format($alexa_page_rank, 0, ',', '.');
+		echo number_format($alexa_page_rank, 0, ',', '.');
+		echo " (".$value->post_title.")\"><span style='font-size:". ((3000/$alexa_page_rank_log)-13)*2 ."px;'>".$value->post_title. " </span></a> | ";
+	}
+	?>
+	<hr style="border-width:20px;margin-top:40px;">
 	<h3>Alexa Page Rank</h3>
 	<?php
 	foreach ($posts_array as $value) {
 		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
 		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
-		$alexa_page_rank = ($last_url_item['alexa_page_rank'] == 0) || ($alexa_page_rank == '') ? 8000000 : $last_url_item['alexa_page_rank'] ;
+		if (isset($last_url_item['alexa_page_rank'])) {
+			$alexa_page_rank = ($last_url_item['alexa_page_rank'] == 0) || ($alexa_page_rank == '') ? 8000000 : $last_url_item['alexa_page_rank'] ;
+		}
 		$alexa_page_rank = $alexa_page_rank < 60000 ? 60000 :  $alexa_page_rank;
 		echo "<a href='" .$value->guid. "' title=\"Alexa Page Rank ";
 		echo $alexa_page_rank == 60000 ? "valor minorado, tamaño real" : number_format($alexa_page_rank, 0, ',', '.');
@@ -510,7 +529,7 @@ $terms = get_terms( 'org-type', array(
 	}
 	?>
 	<hr style="border-width:20px;margin-top:40px;">
-	<h3>Alexa Inlinks Logar&iacute;tmico <small>Logartimo en base 1.5</small></h3>
+	<h3>Alexa Inlinks Logar&iacute;tmico <small>Escala logar&iacute;tmica (base 1.6)</small></h3>
 	<?php
 	echo "Valo m&iacute;nimo: 1<br>";
 	echo "Valo m&aacute;ximo: ".$maxAlexaInlinks."<br>";
