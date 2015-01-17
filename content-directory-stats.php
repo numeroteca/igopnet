@@ -109,7 +109,7 @@ $terms = get_terms( 'org-type', array(
 		<div id="tipos-org" class="col-md-12">
 			<h3>Tipos de organizaci&oacute;n <small>nº de organizaciones</small></h3>
 			<div class="row">
-				<div class="col-md-5 text-right">
+				<div class="col-md-5 col-sm-9 col-xs-9 text-right">
 					<?php
 					foreach ($organization_type_total as $key => $value) {
 						echo '<p>'.$key.': </p>';
@@ -120,7 +120,7 @@ $terms = get_terms( 'org-type', array(
 					}
 					?>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-3 col-sm-3 col-xs-3">
 					<?php
 					foreach ($organization_type_total as $key => $value) {
 						?>
@@ -140,14 +140,14 @@ $terms = get_terms( 'org-type', array(
 		<div id="fecha-inicio" class="col-md-4">
 			<h3>Fecha de inicio <small>nº de organizaciones</small></h3>
 			<div class="row">
-				<div class="col-md-3 text-right">
+				<div class="col-md-3 col-sm-3 col-xs-3 text-right">
 					<?php
 					foreach ($years_total as $year => $value) {
 						echo '<p>'.$year.'</p>';
 					}
 					?>
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-8 col-sm-5 col-xs-5">
 					<?php
 					$max=0;
 					foreach ($years_total as $year => $value) {
@@ -169,7 +169,7 @@ $terms = get_terms( 'org-type', array(
 		<div id="google-page-rank" class="col-md-4">
 			<h3>Google Page Rank de la web principal (1-10) <small>nº de organizaciones con cada valor (histograma)</small></h3>
 			<div class="row">
-				<div class="col-md-4 text-right">
+				<div class="col-md-4 col-sm-2 col-xs-2 text-right">
 					<?php
 					foreach ($google_page_rank_total as $key => $value) {
 						if ($key == '0') {
@@ -183,7 +183,7 @@ $terms = get_terms( 'org-type', array(
 					}
 				?>
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-8 col-sm-8 col-xs-8">
 					<?php
 					$max=0;
 					foreach ($google_page_rank_total as $key => $value) {
@@ -244,14 +244,14 @@ $terms = get_terms( 'org-type', array(
 			ksort($rangeValuesAlexaPR);
 			?>
 			<div class="row">
-				<div class="col-md-5 text-right">
+				<div class="col-md-5 col-sm-5 col-xs-5 text-right">
 				<?php
 					foreach ($flotHistogram as $key => $value) {
 						echo '<p>'.$key.'</p>';
 					}
 				?>
 				</div>
-				<div class="col-md-7">
+				<div class="col-md-7 col-sm-6 col-xs-6">
 				<?php
 					$maxAlexaPR = 0;
 					foreach ($rangeValuesAlexaPR as $key => $value) {
@@ -363,14 +363,14 @@ $terms = get_terms( 'org-type', array(
 			ksort($rangeValuesAlexaInlinks);
 			?>
 			<div class="row">
-				<div class="col-md-5 text-right">
+				<div class="col-md-5 col-sm-5 col-xs-5 text-right">
 				<?php
 					foreach ($flotHistogramInlinks as $key => $value) {
 						echo '<p>'.$key.'</p>';
 					}
 				?>
 				</div>
-				<div class="col-md-7">
+				<div class="col-md-7 col-sm-6 col-xs-6">
 				<?php
 					$maxAlexaInlinks = 0;
 					foreach ($rangeValuesAlexaInlinks as $key => $value) {
