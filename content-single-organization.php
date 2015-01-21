@@ -42,7 +42,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 				?>
 			</div>
 			<div class="col-md-2">
-				<?php echo "<dt>Ecosistema</dt><dd>". get_the_term_list( $post_id, 'org-ecosystem', ' ', ', ', '' ). "</dd>"; ?>
+				<?php echo "<dt>Ecosistema</dt><dd>".display_tax_link_with_ecosystem($post_id, 'org-ecosystem')."</dd>"; ?>
 			</div>
 		</div>
 	</header><!-- .entry-header -->
