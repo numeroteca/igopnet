@@ -42,7 +42,7 @@
 	</li>
 	<li role="presentation" class="dropdown">
 	<a class="dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-expanded="false">
-	  Ecolog&iacute;a Independencia Catalu&ntilde;a <span class="caret"></span>
+	  Ecolog&iacute;a Independentista-soberanista catalana <span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu" role="menu">
 		<li role="presentation"><a href="/es/directory/?ecosystem=independencia-cataluna">
