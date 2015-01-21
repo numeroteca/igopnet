@@ -35,7 +35,7 @@ $orders = array(
 			<?php if ( ! is_page_template( 'page-templates/front-page.php' ) ) : ?>
 			<?php the_post_thumbnail(); ?>
 			<?php endif; ?>
-			<h1 class="entry-title"><?php the_title(); echo $active_ecosystem== '15m' ? ' 15M' : ' Independencia Catalu&ntilde;a';?></h1>
+			<h1 class="entry-title"><?php the_title(); echo $active_ecosystem== '15m' ? ' 15M' : ' Independentismo-soberanismo catal&aacute;n';?></h1>
 		</header>
 
 		<div class="entry-content">
@@ -137,7 +137,7 @@ $orders = array(
 								</div>
 							</div>							
 						</td>
-						<td>
+						<td class='text-right'>
 							<!--<div class="progress"> TODO how to represent graphicaly alexa page rank
 								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width:
 								<?php echo 100-(100*$alexa_page_rank/5000000); ?>%;">
@@ -149,12 +149,12 @@ $orders = array(
 						</td>
 						<td>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo 100*$alexa_inlinks/1600; ?>%;color:#000;">
+								<div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" title="<?php echo $alexa_inlinks; ?> Alexa Inlins" style="width:<?php echo 100*$alexa_inlinks/1600; //TODO it can't be fixed value of 1600, must be max value ?>%;color:#000;">
 									<?php echo $alexa_inlinks; ?>
 								</div>
 							</div>
 						</td>
-						<td>
+						<td class='text-right'>
 							<small>
 							<?php
 							if (!empty($twitter_info)) { //if twitter in time info is not empty
