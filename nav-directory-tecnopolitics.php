@@ -25,7 +25,6 @@
 ?>
 <!--	</div>
 </nav>-->
-
 <ul class="nav nav-tabs" role="tablist">
 	<li role="presentation"><a href="/es/sobre-el-directorio/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Sobre el directorio</a></li>
 	<li role="presentation" class="dropdown">
@@ -51,5 +50,5 @@
 		<li role="presentation"><a href="/es/boxes-independencia-cataluna/"><span class="glyphicon glyphicon glyphicon-th" aria-hidden="true"></span> Cajas</a>
 		<li role="presentation"><a href="/es/estadisticas/"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Estad&iacute;sticas</a></li>
 	</ul>
-	</li>
+	<li role="presentation"><a href="/es/anadir-organizacion/">A&ntilde;adir organizaci&oacute;n</a></li>
 </ul>

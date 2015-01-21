@@ -9,9 +9,14 @@ add_filter( 'cmb2_meta_boxes', 'igopnet_metaboxes' );
 add_action( 'wp_enqueue_scripts', 'igopnet_load_css' );
 // Register Custom Navigation Walker from https://github.com/twittem/wp-bootstrap-navwalker
 require_once('wp_bootstrap_navwalker.php');
+
 // Loads Custom Meta Boxes
-require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'
-//require_once  '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php';
+$url = $_SERVER[ 'SERVER_NAME' ];
+if (strpos($url,'igopnet.cc') !== false) {
+		require_once '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php';
+} else {
+		require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'
+}
 
 //register nave menu for Directory
 add_action( 'after_setup_theme', 'register_directory_menu' );
@@ -660,6 +665,12 @@ function igopnet_metaboxes( $meta_boxes ) {
 				'date_format' => 'j/m/Y',
 			),
 			array(
+				'name' => 'Email (del formulario) de quien aporta los datos',
+				'desc' => 'Este apartado no se publica en la web',
+				'id' => $prefix . 'email_informant',
+				'type' => 'text',
+			),
+			array(
 				'name' => 'Fuente de los datos',
 				'id' => $prefix . 'info_source',
 				'type' => 'group',
@@ -896,3 +907,224 @@ function stats_values($array) {
 	<abbr title='Desviación típica'>σ</abbr> = ".  number_format(stats_standard_deviation ( $array ), 1, ',', '.') ."<br>";
 	return $text;
 }
+
+//Submit organization form
+function creates_form() {
+
+	$action = get_permalink();
+
+	//Stores terms for taxonomies
+	$ecosystem_terms = get_terms( 'org-ecosystem' );
+	$type_terms = get_terms( 'org-type' );
+	$scope_terms = get_terms( 'org-scope' );
+	
+	//Creates array
+	foreach ($ecosystem_terms as $key) {
+		$ecosystems[$key->name] = $key->name;
+	}
+	foreach ($type_terms as $key) {
+		$types[$key->name] = $key->name;
+	}
+	foreach ($scope_terms as $key) {
+		$scopes[$key->name] = $key->name;
+	}
+	$scopes= array_merge(array_flip(array('Local','Autonómico','Nacional')), $scopes);
+	
+	//Creates options for multicheck in html
+	$options_ecosystems = "";
+	while ( $ecosystem = current($ecosystems) ) {
+		$options_ecosystems .= "<div class='checkbox'><label><input type='checkbox' name='ecosystem_list[]' value='" .key($ecosystems). "'>" .ucfirst(key($ecosystems)). "</label></div>";
+		next($ecosystems);
+	}
+	
+	$options_types = "";
+	while ( $type = current($types) ) {
+		$options_types .= "<div class='checkbox'><label><input type='checkbox' name='type_list[]'' value='" .key($types). "'>" .ucfirst(key($types)). "</label></div>";
+		next($types);
+	}
+
+	$options_scopes = "";
+	while ( $scope = current($scopes) ) {
+		$options_scopes .= "<div class='checkbox'><label><input type='checkbox' name='scopes_list[]'' value='" .key($scopes). "'>" .ucfirst(key($scopes)). "</label></div>";
+		next($scopes);
+	}
+	
+	$form_out = "
+<form id='directory-form-content' method='post' action='" .$action. "' enctype='multipart/form-data'>
+<div class='row'>
+	<div class='form-horizontal col-md-10'>
+		<legend>Informaci&oacute;n b&aacute;sica</legend>
+		<div class='form-group'>
+			<label for='org-name' class='col-sm-4 control-label'>Nombre de organizaci&oacute;n</label>
+			<div class='col-sm-6'>
+				<input class='form-control req' type='text' value='' name='org-name' />
+			</div>
+		</div>
+		<div class='form-group'>
+			<label for='org-website' class='col-sm-4 control-label'>P&aacutegina web principal</label>
+			<div class='col-sm-6'>
+				<input class='form-control req' type='text' value='' name='org-website' />
+				<p class='help-block'><small>URL de la organizaci&oacute;n. Ej.: http://example.org</small></p>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-sm-4 control-label'>Ecosistema</label>
+			<div class='col-sm-6'>
+				" .$options_ecosystems. "
+			</div>
+		</div>
+		<!--<div class='form-group'>
+			<label for='org-avatar' class='col-sm-4 control-label'>Image or Logo</label>
+			<div class='col-sm-6'>
+				<input type='file' name='org-avatar' />
+				<input type='hidden' name='MAX_FILE_SIZE' value='4000000' />
+			<p class='help-block'><small>Image or logotype of the organization. Not bigger than<strong> 4MB</strong> and <strong>must be JPG, PNG or GIF</strong>.</small></p>
+			</div>
+		</div>-->
+
+		<legend>Primary Information</legend>
+		<div class='form-group'>
+			<label class='col-sm-4 control-label'>Tipo de organizaci&oacute;n</label>
+			<div class='col-sm-6'>
+				" .$options_types. "
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-sm-4 control-label'>Alcance</label>
+			<div class='col-sm-6'>
+				". $options_scopes ."
+			</div>
+		</div>
+		<div class='form-group'>
+			<label for='org-website' class='col-sm-4 control-label'>Email informador</label>
+			<div class='col-sm-6'>
+				<input class='form-control req' type='text' value='' name='email-informant' />
+				<p class='help-block'><small>Danos tu email si quieres ampliar la informaci&oacute;n sobre esta organizaci&oacute;n.</small></p>
+			</div>
+		</div>
+		<div class='form-group'>
+		  <div class='col-sm-offset-4 col-sm-6'>
+		  	<input class='btn btn-default' type='submit' value='Enviar' name='org-form-submit' />
+				<span class='help-block'><small><strong></strong>.</small></span>
+		  </div>
+  	</div>
+	</div>
+</div>
+</form>
+";
+	echo $form_out;
+
+} // end add WPG
+
+// insert wpg data in database
+function inserts_form() {
+
+	// messages and locations for redirection
+	$perma = get_permalink();
+	$location_form = $perma."?form=success";
+	$error = "<div class='alert alert-danger'>
+		<p>Uno o varios campos están vacíos o no tienen un formato válido.</p>
+		<p>En cualquier caso el formulario no se envió correctamente. Por favor, inténtalo de nuevo.</p>
+	</div>";
+	$success = "<div class='alert alert-success'>El formulario ha sido enviado correctamente: hemos recibido tus datos. Vamos a revisarlos y nos pondremos en contacto con el email que nos has proporcionado.</div> ";
+
+	if ( array_key_exists('form', $_GET) ) {
+		if ( sanitize_text_field( $_GET['form']) == 'success' ){
+			echo "<strong>" .$success. "</strong>";
+			return;
+		}
+	}
+
+	if ( !array_key_exists('org-form-submit', $_POST) ) {
+		creates_form();
+		return;
+
+	} elseif ( sanitize_text_field( $_POST['org-form-submit'] ) != 'Enviar' ) {
+		creates_form();
+		echo "har";
+		return;
+	}
+
+	// check if all fields have been filled
+	// sanitize them all
+	$org_name = sanitize_text_field( $_POST['org-name'] );
+	$main_website = sanitize_text_field( $_POST['org-website'] );
+	$email_informant = sanitize_text_field( $_POST['email-informant'] );
+	$ecosystem = $_POST['ecosystem_list'];
+	$org_type = $_POST['type_list'];
+	$org_scope = $_POST['scopes_list'];
+	
+	// check that all required fields were filled
+	$fields = array(
+		//'title' => $wpg_name, TODO how to check name exists and not include it in this array (used for custom field inserts)
+		'_ig_main_url' => $main_website,
+		'_ig_email_informant' => $email_informant,
+	);
+	
+	$terms = array(
+		'org-ecosystem' => $ecosystem,
+		'org-type' => $org_type,
+		'org-scope' => $org_scope,
+	);
+	//print_r($fields);
+	foreach ( $fields as $name => $field ) {
+		//echo $name.' is: '. $field. '<br>';
+		//echo $name;
+		if ( $field == '' ) {
+			echo $error;
+			echo '<p>El campo <strong>';
+			if ($name == '_ig_main_url') {
+				echo 'Pagina Web principal';
+			} elseif ($name == '_ig_email_informant') {
+				echo 'Email';
+			} else {
+				echo $name;
+			}
+			echo '</strong> est&aacute; vac&iacute;o.</p>';
+			}
+		if ($name == '_ig_email_informant') {
+			creates_form();
+			return;
+		}
+	}
+	
+	// end checking
+
+	// if everything ok, do insert
+
+	// insert waste picker group
+	$org_id = wp_insert_post(array(
+		'post_type' => 'organization',
+		'post_status' => 'draft',
+		'post_author' => 1,
+		'post_title' => $org_name,
+	));
+
+	if ( $org_id == 0 ) {
+		echo $error;
+		creates_form();
+		return;
+	}
+
+	// insert custom fields
+	reset($fields);
+	while ( $field = current($fields) ) {//TODO do not use current, becasue it is the title, and it is not a custom field
+		add_post_meta($org_id, key($fields), $field, TRUE);
+		next($fields);
+	}
+	
+	////echo "the id is " .$org_id. ".<br>";
+	//echo $permalink;
+	
+	// insert taxonomies
+	foreach ( $terms as $key => $value ) {
+		//echo "insert: ".$value." in" . $key .".<br>";
+		wp_set_object_terms( $org_id, $value, $key);
+	}
+	
+	echo "<div class='alert alert-success' role='alert'>Gracias, nos pondremos en contacto contigo si hace falta m&aacute; informaci&oacute;n.</div>";
+	//wp_redirect( $location_form ); TODO wp_redirect gives Warning: Cannot modify header information - headers already sent by
+	//exit;
+
+} // end insert wpg data in database
+?>
