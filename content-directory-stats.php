@@ -2,15 +2,6 @@
 // The template used for displaying stats of directory in page.php
 $prefix = '_ig_';
 $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true );
-
-$prefix = '_ig_';
-$terms = get_terms( 'org-type', array(
-	'orderby'    => 'count',
-	'hide_empty' => 1,
-	'order' => 'DESC'
-	)
-);
-
 ?>
 
 <?php get_template_part( 'nav', 'directory-tecnopolitics' ); ?>
@@ -76,9 +67,9 @@ $terms = get_terms( 'org-type', array(
 		$facebook_info[$value->post_title] = get_post_meta( $value->ID , $prefix . 'facebook_info', true );
 	}
 	
-	$google_page_rank_total = array_count_values($google_page_rank_total); //counts values of gogle page rank
+	$google_page_rank_count = array_count_values($google_page_rank_total); //counts values of gogle page rank
 	asort($alexa_page_rank_total); //orders array by value
-	ksort($google_page_rank_total); //orders array by key
+	ksort($google_page_rank_count); //orders array by key
 	arsort($alexa_inlinks_total); //orders array by value
 	
 	//Twiter info
@@ -171,7 +162,7 @@ $terms = get_terms( 'org-type', array(
 			<div class="row">
 				<div class="col-md-4 col-sm-2 col-xs-2 text-right">
 					<?php
-					foreach ($google_page_rank_total as $key => $value) {
+					foreach ($google_page_rank_count as $key => $value) {
 						if ($key == '0') {
 							$key = '0';
 						} elseif ($key == '') {
@@ -182,14 +173,17 @@ $terms = get_terms( 'org-type', array(
 						echo '<p>'.$key.'</p>';
 					}
 				?>
+					<div class="text-right">
+						<small><?php	echo stats_values( $google_page_rank_total );	?></small>
+					</div>
 				</div>
 				<div class="col-md-8 col-sm-8 col-xs-8">
 					<?php
 					$max=0;
-					foreach ($google_page_rank_total as $key => $value) {
+					foreach ($google_page_rank_count as $key => $value) {
 						$max = max( array( $max, $value) ); //calculates max value
 					}
-					foreach ($google_page_rank_total as $key => $value) {
+					foreach ($google_page_rank_count as $key => $value) {
 						?>
 					<div class="progress">
 						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
@@ -250,6 +244,9 @@ $terms = get_terms( 'org-type', array(
 						echo '<p>'.$key.'</p>';
 					}
 				?>
+					<div class="text-right">
+						<small><?php	echo stats_values( $flattenedAlexa );	?></small>
+					</div>
 				</div>
 				<div class="col-md-7 col-sm-6 col-xs-6">
 				<?php
@@ -267,7 +264,7 @@ $terms = get_terms( 'org-type', array(
 						</div>
 					</div>
 					<?php } ?>
-					Valores de Alexa Page Rank inexistentes o por encima de 26.000.000 se incluyen en el &uacute;ltimo rango.
+				<small>Valores de Alexa Page Rank inexistentes o por encima de 26.000.000 se incluyen en el &uacute;ltimo rango.</small>
 				</div>
 			</div>
 		</div>
@@ -369,6 +366,9 @@ $terms = get_terms( 'org-type', array(
 						echo '<p>'.$key.'</p>';
 					}
 				?>
+					<div class="text-right">
+						<small><?php	echo stats_values( $flattenedAlexaInlinks ); ?></small>
+					</div>
 				</div>
 				<div class="col-md-7 col-sm-6 col-xs-6">
 				<?php
@@ -456,6 +456,9 @@ $terms = get_terms( 'org-type', array(
 						</div>
 					</div>
 					<?php } ?>
+					<div class="text-right">
+						<small><?php	echo stats_values( $twitter_followers );	?></small>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -480,6 +483,9 @@ $terms = get_terms( 'org-type', array(
 						</div>
 					</div>
 					<?php } ?>
+					<div class="text-right">
+						<small><?php	echo stats_values( $facebook_likes );	?></small>
+					</div>
 				</div>
 			</div>
 		</div>

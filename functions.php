@@ -11,7 +11,7 @@ add_action( 'wp_enqueue_scripts', 'igopnet_load_css' );
 require_once('wp_bootstrap_navwalker.php');
 // Loads Custom Meta Boxes
 require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'
-//require_once  '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'; 
+//require_once  '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php';
 
 //register nave menu for Directory
 add_action( 'after_setup_theme', 'register_directory_menu' );
@@ -839,4 +839,60 @@ function display_tax_link_with_ecosystem($post_id, $tax) {
 	$tax_data = wp_get_post_terms($post_id, $tax, array("fields" => "all"));
 	$ecosystem = wp_get_post_terms($post_id, 'org-ecosystem', array("fields" => "all"));
 	return "<a href='/". $tax_data[0]->taxonomy ."/". $tax_data[0]->slug ."/?ecosystem=". $ecosystem[0]->slug ."'>". $tax_data[0]->name ."</a>";
+}
+
+//Calculates median of an array of values via http://codereview.stackexchange.com/questions/220/calculate-a-median
+function array_median($array) {
+  // perhaps all non numeric values should filtered out of $array here?
+  $iCount = count($array);
+  if ($iCount == 0) {
+    throw new DomainException('Median of an empty array is undefined');
+  }
+  // if we're down here it must mean $array
+  // has at least 1 item in the array.
+  $middle_index = floor($iCount / 2);
+  sort($array, SORT_NUMERIC);
+  $median = $array[$middle_index]; // assume an odd # of items
+  // Handle the even case by averaging the middle 2 items
+  if ($iCount % 2 == 0) {
+    $median = ($median + $array[$middle_index - 1]) / 2;
+  }
+  return $median;
+}
+
+//Calculates Average
+function array_average($array) {
+	return array_sum($array)/count($array);
+}
+
+//Calculates standard deviation
+function stats_standard_deviation(array $a, $sample = false) {
+  $n = count($a);
+  if ($n === 0) {
+      trigger_error("The array has zero elements", E_USER_WARNING);
+      return false;
+  }
+  if ($sample && $n === 1) {
+      trigger_error("The array has only 1 element", E_USER_WARNING);
+      return false;
+  }
+  $mean = array_sum($a) / $n;
+  $carry = 0.0;
+  foreach ($a as $val) {
+      $d = ((double) $val) - $mean;
+      $carry += $d * $d;
+  };
+  if ($sample) {
+     --$n;
+  }
+  return sqrt($carry / $n);
+}
+
+//Calculates stats values
+function stats_values($array) {
+	$text =	"<bbr title='Número de elementos'>n</abbr> = ". count( $array ) ."<br>
+	<bbr title='Mediana'>M</abbr> = ". array_median( $array ) ."<br>
+	<bbr title='Media'>μ</abbr> = ". number_format(array_average( $array ), 1, ',', '.') ."<br>
+	<abbr title='Desviación típica'>σ</abbr> = ".  number_format(stats_standard_deviation ( $array ), 1, ',', '.') ."<br>";
+	return $text;
 }
