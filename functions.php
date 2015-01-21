@@ -891,7 +891,7 @@ function stats_standard_deviation(array $a, $sample = false) {
 //Calculates stats values
 function stats_values($array) {
 	$text =	"<bbr title='Número de elementos'>n</abbr> = ". count( $array ) ."<br>
-	<bbr title='Mediana'>M</abbr> = ". array_median( $array ) ."<br>
+	<bbr title='Mediana'>M</abbr> = ". number_format( array_median( $array ), 0, ',', '.') ."<br>
 	<bbr title='Media'>μ</abbr> = ". number_format(array_average( $array ), 1, ',', '.') ."<br>
 	<abbr title='Desviación típica'>σ</abbr> = ".  number_format(stats_standard_deviation ( $array ), 1, ',', '.') ."<br>";
 	return $text;
