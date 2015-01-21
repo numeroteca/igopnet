@@ -50,15 +50,15 @@ function create_post_type() {
 //Creates Taxonomies
 function build_taxonomies() {
 	register_taxonomy( 'org-ecosystem', 'organization', array(
-		'label' => __( 'Ecosystem' ),
+		'label' => __( 'Ecosistema' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-ecosystem' ) ) );
 	register_taxonomy( 'org-type', 'organization', array(
-		'label' => __( 'Type' ),
+		'label' => __( 'Tipo' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-type' ) ) );
 	register_taxonomy( 'org-scope', 'organization', array(
-		'label' => __( 'Scope' ),
+		'label' => __( 'Alcance' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-scope' ) ) );
 	register_taxonomy( 'org-whom', 'organization', array(
@@ -70,15 +70,15 @@ function build_taxonomies() {
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-validation' ) ) );*/
 	register_taxonomy( 'org-city', 'organization', array(
-		'label' => __( 'City' ),
+		'label' => __( 'Ciudad' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-city' ) ) );
 	register_taxonomy( 'org-region', 'organization', array(
-		'label' => __( 'Region' ),
+		'label' => __( 'Región' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-region' ) ) );
 	register_taxonomy( 'org-country', 'organization', array(
-		'label' => __( 'Country' ),
+		'label' => __( 'País' ),
 		'hierarchical' => true,
 		'rewrite' => array( 'slug' => 'org-country' ) ) );
 }
