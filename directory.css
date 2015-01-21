@@ -25,6 +25,14 @@ body {
 	margin-top:8px;
 }
 
+/* Progress bars in boxes */
+.directory-box .progress {
+	margin-bottom: 10px;
+}
+.directory-box .col-md-4 {
+	padding-right:0px;
+}
+
 /* Progress bars in stats */
 #directory-stats .progress {
 	margin-bottom: 10px;
