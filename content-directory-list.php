@@ -71,6 +71,7 @@ $orders = array(
 					<th>Alexa <abbr title="Page Rank">PR</abbr></th>
 					<th>Alexa inlinks</th>
 					<th>Twitter Followers</th>
+					<th>Facebook Likes</th>
 				</tr>
 			</thead>
 				<tbody>
@@ -95,6 +96,7 @@ $orders = array(
 				$url_info = get_post_meta( $post_id, $prefix.'url_info', true );
 				$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
 				$twitter_info = get_post_meta( $post_id, $prefix.'twitter_info', true );
+				$facebook_info = get_post_meta( $post_id, $prefix.'facebook_info', true );
 				$alexa_page_rank = $last_url_item['alexa_page_rank'];
 				$google_page_rank = $last_url_item['google_page_rank'];
 				$alexa_inlinks = $last_url_item['alexa_inlinks'];
@@ -120,7 +122,11 @@ $orders = array(
 						<td>
 							<?php
 								$term_list = wp_get_post_terms($post_id, 'org-type', array("fields" => "all"));
-								echo "<a href='/org-type/".$term_list[0]->slug."/?ecosystem=". $active_ecosystem ."'>".$term_list[0]->name."</a>";
+								$term_name = $term_list[0]->name;
+								$term_name_legnth = strlen( $term_name );
+								$max_length = 45;
+								echo "<a href='/org-type/".$term_list[0]->slug."/?ecosystem=". $active_ecosystem ."' title='".$term_name."'>";
+								echo $term_name_legnth > $max_length ? substr($term_name,0,45)."...</a>" : $term_name;
 							?>
 						</td>
 						<td>
@@ -145,7 +151,7 @@ $orders = array(
 								</div>
 							</div>-->
 							<?php //echo 100-(100*$alexa_page_rank/5000000); ?>
-							<?php echo "<small>".number_format($alexa_page_rank, 0, ',', '.')."</small>"; ?>
+							<?php echo !empty($alexa_page_rank) ? "<small>".number_format($alexa_page_rank, 0, ',', '.')."</small>" : ''; ?>
 						</td>
 						<td>
 							<div class="progress">
@@ -160,6 +166,16 @@ $orders = array(
 							if (!empty($twitter_info)) { //if twitter in time info is not empty
 								if ($twitter_info[0]['followers'] != '') { //if the number of followers is available
 									echo number_format($twitter_info[0]['followers'], 0, ',', '.');
+								}
+							} ?>
+							</small>
+						</td>
+						<td class='text-right'>
+							<small>
+							<?php
+							if (!empty($facebook_info)) { //if facebook in time info is not empty
+								if ($facebook_info[0]['likes'] != '') { //if the number of likes is available
+									echo number_format($facebook_info[0]['likes'], 0, ',', '.');
 								}
 							} ?>
 							</small>
