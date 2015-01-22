@@ -60,13 +60,13 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 	foreach ($posts_array as $key => $value) {
 		$url_info = get_post_meta( $value->ID, $prefix.'url_info', true );
 		$last_url_item = end($url_info); //last item of the arrar TODO It should be the last item that has as url $main_url
-		$google_page_rank_total[$value->post_title] = $last_url_item['google_page_rank'];
+		$google_page_rank_total[$value->post_title] = isset($last_url_item['google_page_rank']) ? $last_url_item['google_page_rank'] : '';
 		$alexa_page_rank_total[$value->post_title] = isset($last_url_item['alexa_page_rank']) ? $last_url_item['alexa_page_rank']	: '' ;
 		$alexa_inlinks_total[$value->post_title] = $last_url_item['alexa_inlinks'];
 		$twitter_info[$value->post_title] = get_post_meta( $value->ID , $prefix . 'twitter_info', true );
 		$facebook_info[$value->post_title] = get_post_meta( $value->ID , $prefix . 'facebook_info', true );
 	}
-	
+
 	$google_page_rank_count = array_count_values($google_page_rank_total); //counts values of gogle page rank
 	asort($alexa_page_rank_total); //orders array by value
 	ksort($google_page_rank_count); //orders array by key
@@ -129,70 +129,67 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 	</div>
 	<div class="row">
 		<div id="fecha-inicio" class="col-md-4">
-			<h3>Fecha de inicio <small>nº de organizaciones</small></h3>
-			<div class="row">
-				<div class="col-md-3 col-sm-3 col-xs-3 text-right">
-					<?php
-					foreach ($years_total as $year => $value) {
-						echo '<p>'.$year.'</p>';
-					}
-					?>
-				</div>
-				<div class="col-md-8 col-sm-5 col-xs-5">
-					<?php
+			<h3>Fecha de inicio <small>nº de organizaciones por a&ntilde;o</small></h3>
+			<div class="row years">
+				<?php
 					$max=0;
 					foreach ($years_total as $year => $value) {
 						$max = max( array( $max, $value) ); //calculates max value
 					}
 					foreach ($years_total as $year => $value) {
-						?>
-					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> organizations formed">
-								<?php echo $value; ?>
-							</span>
-						</div>
-					</div>
-					<?php } ?>
-				</div>
+						echo '<div class="row"><div class="col-md-2 col-sm-2 col-xs-2 text-right">';
+						echo '<p>'. $year .'</p>';
+						echo '</div>';
+						echo '<div class="col-md-7 col-sm-4 col-xs-4">
+									<div class="progress">
+						 			<div class="progress-bar" style="width:'. 100*$value/$max. '%;background-color:#999;color:black">
+									<span title="'. $value .'organizations formed">';
+						echo $value;
+						echo '</span></div></div>';
+						//for ($i = 1; $i <= $value; $i++ ) {
+						//	echo '|';
+						//}
+						echo '</div></div>	';
+					}
+				?>
 			</div>
 		</div>
 		<div id="google-page-rank" class="col-md-4">
 			<h3>Google Page Rank de la web principal (1-10) <small>nº de organizaciones con cada valor (histograma)</small></h3>
 			<div class="row">
-				<div class="col-md-4 col-sm-2 col-xs-2 text-right">
-					<?php
-					foreach ($google_page_rank_count as $key => $value) {
+				<?php
+				$max = 0;
+				foreach ($google_page_rank_count as $key => $value) {
+					$max = max( array( $max, $value) ); //calculates max value
+				}
+				foreach ($google_page_rank_count as $key => $value) {
+					echo '<div class="row"><div class="col-md-4 col-sm-2 col-xs-2 text-right">';
 						if ($key == '0') {
-							$key = '0';
-						} elseif ($key == '') {
-							$key = '-';
-						} else {
-							$key = $key;
-						}
-						echo '<p>'.$key.'</p>';
+						$key = '0';
+					} elseif ($key == '') {
+						$key = '-';
+					} else {
+						$key = $key;
 					}
+					echo '<p>'.$key.'</p>';
+					echo '</div>';
+					echo '<div class="col-md-8 col-sm-8 col-xs-8">
+									<div class="progress">
+					 					<div class="progress-bar" style="width:'. 100*$value/$max. '%;background-color:#999;color:black">
+											<span title="'. $value .'organizaciones con Google Page Rank">'. $value .'
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>';
+				}
 				?>
-					<div class="text-right">
-						<small><?php	echo stats_values( $google_page_rank_total );	?></small>
-					</div>
-				</div>
-				<div class="col-md-8 col-sm-8 col-xs-8">
-					<?php
-					$max=0;
-					foreach ($google_page_rank_count as $key => $value) {
-						$max = max( array( $max, $value) ); //calculates max value
-					}
-					foreach ($google_page_rank_count as $key => $value) {
-						?>
-					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black">
-							<span title="<?php echo $value; ?> organizaciones con Google Page Rank">
-								<?php echo $value; ?>
-							</span>
+				<div class="row">
+					<div class="col-md-4 col-sm-2 col-xs-2 text-right">
+						<div class="text-right">
+							<small><?php	echo stats_values( $google_page_rank_total );	?></small>
 						</div>
 					</div>
-					<?php } ?>
 				</div>
 			</div>
 		</div>
@@ -264,7 +261,7 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 						</div>
 					</div>
 					<?php } ?>
-				<small>Valores de Alexa Page Rank inexistentes o por encima de 26.000.000 se incluyen en el &uacute;ltimo rango.</small>
+					<small>Valores de Alexa Page Rank inexistentes o por encima de 26.000.000 se incluyen en el &uacute;ltimo rango.</small>
 				</div>
 			</div>
 		</div>
@@ -273,15 +270,15 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
-					$max = 0;
+					$maxAlexaPR = 0;
 					foreach ($alexa_page_rank_total as $key => $value) {
-						$max = max( array( $max, $value) ); //calculates max value
+						$maxAlexaPR = max( array( $maxAlexaPR, $value) ); //calculates max value
 					}
 					$alexa_page_rank_total = array_filter($alexa_page_rank_total); //removes organizations with no value for alexa page rank
 					foreach ($alexa_page_rank_total as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Page Rank ('. $key .')'; ?>">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$maxAlexaPR; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Page Rank ('. $key .')'; ?>">
 							<span title="<?php echo number_format($value, 0, ',', '.'); ?> Alexa Page Rank">
 								<?php echo $value; ?>
 							</span>
@@ -290,6 +287,14 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 					<?php
 					}
 					?>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="text-left"><small>0</small></div>
+						</div>
+						<div class="col-md-6">
+							<div class="text-right"><small><?php echo number_format($maxAlexaPR, 0, ',', '.'); ?></small></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -398,7 +403,16 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 					$maxAlexaInlinks = 0; //can not start with o, otherwise it deosn't work
 					foreach ($alexa_inlinks_total as $key => $value) {
 						$maxAlexaInlinks = max( array( $maxAlexaInlinks , $value) ); //calculates max value
-					}
+					} ?>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="text-left"><small>0</small></div>
+						</div>
+						<div class="col-md-6">
+							<div class="text-right"><small><?php echo number_format($maxAlexaInlinks, 0, ',', '.'); ?></small></div>
+						</div>
+					</div>
+					<?php
 					foreach ($alexa_inlinks_total as $key => $value) {
 					?>
 						<div class="progress">
@@ -420,7 +434,7 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 				<div class="col-md-12 just-bars">
 					<?php
 					foreach ($alexa_inlinks_total as $key => $value) {
-						$log_value = ($value == 1) ? log(2,1.6)/2 : log($value,1.6);
+						$log_value = ($value == 1) ? log(2,1.6)/2 : log($value,1.6); //TODO clarify
 						?>
 					<div class="progress">
 						<div class="progress-bar" style="width:<?php echo $log_value*4.3; ?>%;background-color:#ccc;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Alexa Inlinks (' .$key. ')'; ?>">
@@ -442,14 +456,23 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 			<div class="row">
 				<div class="col-md-12 just-bars">
 					<?php
-					$max=0;
+					$max_twitter = 0;
 					foreach ($twitter_followers as $key => $value) {
-						$max = max( array( $max, $value) ); //calculates max value
-					}
+						$max_twitter = max( array( $max_twitter, $value) ); //calculates max value
+					} ?>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="text-left"><small>0</small></div>
+						</div>
+						<div class="col-md-6">
+							<div class="text-right"><small><?php echo number_format($max_twitter, 0, ',', '.'); ?></small></div>
+						</div>
+					</div>
+					<?php
 					foreach ($twitter_followers as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Twitter Followers (' .$key. ')'; ?>">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max_twitter; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Twitter Followers (' .$key. ')'; ?>">
 							<span title="<?php echo $value; ?> Twitter Followers">
 								<?php echo $value; ?>
 							</span>
@@ -472,11 +495,20 @@ $active_ecosytem = get_post_meta( $post->ID, $prefix . 'active_ecosystem' , true
 					$max=0;
 					foreach ($facebook_likes as $key => $value) {
 						$max = max( array( $max, $value) ); //calculates max value
-					}
+					} ?>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="text-left"><small>0</small></div>
+						</div>
+						<div class="col-md-6">
+							<div class="text-right"><small><?php echo number_format($max_twitter, 0, ',', '.'); ?></small></div>
+						</div>
+					</div>
+					<?php
 					foreach ($facebook_likes as $key => $value) {
 						?>
 					<div class="progress">
-						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); ?> Facebook Likes">
+						<div class="progress-bar" style="width:<?php echo 100*$value/$max; ?>%;background-color:#999;color:black" title="<?php echo number_format($value, 0, ',', '.'); echo ' Facebook Likes (' .$key. ')'; ?>">
 							<span title="<?php echo $value; ?> Facebook Likes">
 								<?php echo $value; ?>
 							</span>
