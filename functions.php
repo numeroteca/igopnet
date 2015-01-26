@@ -917,6 +917,7 @@ function creates_form() {
 	$ecosystem_terms = get_terms( 'org-ecosystem' );
 	$type_terms = get_terms( 'org-type' );
 	$scope_terms = get_terms( 'org-scope' );
+	$city_terms = get_terms( 'org-city' );
 	
 	//Creates array
 	foreach ($ecosystem_terms as $key) {
@@ -929,6 +930,9 @@ function creates_form() {
 		$scopes[$key->name] = $key->name;
 	}
 	$scopes= array_merge(array_flip(array('Local','Autonómico','Nacional')), $scopes);
+	foreach ($city_terms as $key) {
+		$cities[$key->name] = $key->name;
+	}
 	
 	//Creates options for multicheck in html
 	$options_ecosystems = "";
@@ -948,6 +952,11 @@ function creates_form() {
 		$options_scopes .= "<div class='checkbox'><label><input type='checkbox' name='scopes_list[]'' value='" .key($scopes). "'>" .ucfirst(key($scopes)). "</label></div>";
 		next($scopes);
 	}
+	$options_cities = "";
+	while ( $city = current($cities) ) {
+		$options_cities .= "<div class='checkbox'><label><input type='checkbox' name='cities_list[]'' value='" .key($cities). "'>" .ucfirst(key($cities)). "</label></div>";
+		next($cities);
+	}
 	
 	$form_out = "
 <form id='directory-form-content' method='post' action='" .$action. "' enctype='multipart/form-data'>
@@ -955,16 +964,37 @@ function creates_form() {
 	<div class='form-horizontal col-md-10'>
 		<legend>Informaci&oacute;n b&aacute;sica</legend>
 		<div class='form-group'>
-			<label for='org-name' class='col-sm-4 control-label'>Nombre de organizaci&oacute;n</label>
+			<label for='org-name' class='col-sm-4 control-label'>Nombre de organizaci&oacute;n*</label>
 			<div class='col-sm-6'>
 				<input class='form-control req' type='text' value='' name='org-name' />
 			</div>
 		</div>
 		<div class='form-group'>
-			<label for='org-website' class='col-sm-4 control-label'>P&aacutegina web principal</label>
+			<label for='org-website' class='col-sm-4 control-label'>P&aacutegina web principal*</label>
 			<div class='col-sm-6'>
 				<input class='form-control req' type='text' value='' name='org-website' />
 				<p class='help-block'><small>URL de la organizaci&oacute;n. Ej.: http://example.org</small></p>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label for='org-website' class='col-sm-4 control-label'>Facebook</label>
+			<div class='col-sm-6'>
+				<input class='form-control req' type='text' value='' name='facebook' />
+				<p class='help-block'><small>Si la url es 'https://www.facebook.com/democraciarealya' pon solo lo que va detrás de 'facebook.com/'. Ej.: 'democraciarealya' </small></p>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label for='org-website' class='col-sm-4 control-label'>Youtube</label>
+			<div class='col-sm-6'>
+				<input class='form-control req' type='text' value='' name='youtube' />
+				<p class='help-block'><small>Si la url es 'https://www.youtube.com/user/15MpaRato' pon solo lo que va detrás de 'youtube.com/'. Ej.: '15MpaRato' </small></p>
+			</div>
+		</div>
+		<div class='form-group'>
+			<label for='org-website' class='col-sm-4 control-label'>Twitter</label>
+			<div class='col-sm-6'>
+				<input class='form-control req' type='text' value='' name='twitter' />
+				<p class='help-block'><small>Si la url es 'https://twitter.com/juventudsin' pon solo lo que va detrás de 'twitter.com/'. Ej.: 'juventudsin' </small></p>
 			</div>
 		</div>
 		<div class='form-group'>
@@ -993,6 +1023,12 @@ function creates_form() {
 			<label class='col-sm-4 control-label'>Alcance</label>
 			<div class='col-sm-6'>
 				". $options_scopes ."
+			</div>
+		</div>
+		<div class='form-group'>
+			<label class='col-sm-4 control-label'>Ciudad</label>
+			<div class='col-sm-6'>
+				". $options_cities ."
 			</div>
 		</div>
 		<div class='form-group'>
@@ -1050,21 +1086,30 @@ function inserts_form() {
 	$org_name = sanitize_text_field( $_POST['org-name'] );
 	$main_website = sanitize_text_field( $_POST['org-website'] );
 	$email_informant = sanitize_text_field( $_POST['email-informant'] );
+	$facebook = sanitize_text_field( $_POST['facebook'] );
+	$youtube = sanitize_text_field( $_POST['youtube'] );
+	$twitter = sanitize_text_field( $_POST['twitter'] );
+		//terms
 	$ecosystem = $_POST['ecosystem_list'];
 	$org_type = $_POST['type_list'];
 	$org_scope = $_POST['scopes_list'];
+	$org_city = $_POST['cities_list'];
 	
 	// check that all required fields were filled
 	$fields = array(
 		//'title' => $wpg_name, TODO how to check name exists and not include it in this array (used for custom field inserts)
 		'_ig_main_url' => $main_website,
 		'_ig_email_informant' => $email_informant,
+		'_ig_facebook_site' => $facebook,
+		'_ig_youtube_account' => $youtube,
+		'_ig_twitter_account' => $twitter,
 	);
 	
 	$terms = array(
 		'org-ecosystem' => $ecosystem,
 		'org-type' => $org_type,
 		'org-scope' => $org_scope,
+		'org-city' => $org_city,
 	);
 	//print_r($fields);
 	foreach ( $fields as $name => $field ) {
@@ -1073,19 +1118,17 @@ function inserts_form() {
 		if ( $field == '' ) {
 			echo $error;
 			echo '<p>El campo <strong>';
-			if ($name == '_ig_main_url') {
-				echo 'Pagina Web principal';
-			} elseif ($name == '_ig_email_informant') {
-				echo 'Email';
-			} else {
-				echo $name;
-			}
+				if ($name == '_ig_main_url') {
+					echo 'Pagina Web principal';
+				} elseif ($name == '_ig_email_informant') {
+					echo 'Email';
+				} else {
+					echo $name;
+				}
 			echo '</strong> est&aacute; vac&iacute;o.</p>';
-			}
-		if ($name == '_ig_email_informant') {
 			creates_form();
 			return;
-		}
+			}
 	}
 	
 	// end checking
