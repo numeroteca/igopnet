@@ -510,7 +510,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'id'   => 'date',
 						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
-						'date_format' => 'j/m/Y',
+						//'date_format' => 'j/m/Y',
 					),
 					array(
 						'name' => 'URL',
@@ -567,7 +567,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'id'   => 'date',
 						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
-						'date_format' => 'j/m/Y',
+						//'date_format' => 'j/m/Y',
 					),
 					array(
 						'name' => 'Cuenta de Twitter',
@@ -624,7 +624,7 @@ function igopnet_metaboxes( $meta_boxes ) {
 						'id'   => 'date',
 						'desc' => __( 'Select date when date where obtained' ),
 						'type' => 'text_date_timestamp',
-						'date_format' => 'j/m/Y',
+						//'date_format' => 'j/m/Y',
 					),
 					array(
 						'name' => 'Cuenta de Facebook',
