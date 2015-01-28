@@ -37,7 +37,7 @@ $base_url = get_permalink();
 							
 							<?php //single_cat_title(); ?>
 							<?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); echo $term->name; ?>
-								<small><?php echo $active_ecosystem== '15m' ? ' 15M' : ' Independencia Catalu&ntilde;a'; ?></small>
+								<small><?php echo $active_ecosystem== '15m' ? ' 15M' : ' Independentista-soberanista catalana'; ?></small>
 						<?php else : ?>
 							<?php _e( 'Blog Archives', 'twentyeleven' ); ?>
 						<?php endif; ?>
