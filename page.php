@@ -10,11 +10,11 @@ $page_belongs_to = get_post_meta( $post_id, $prefix.'belongs_to' , true );
 		<?php while ( have_posts() ) : the_post(); ?>
 			<?php echo '<!-- ' . basename( get_page_template() ) . ' -->'; ?>
 			<?php
-				if (is_page('directory') || is_page('listado-indepencia-cataluna')) {
+				if (is_page('directory') || is_page('listado')) {
 					get_template_part( 'content','directory-list' );
-				} else if (is_page('Boxes 15M') || is_page('Boxes Independencia Cataluña')) {
+				} else if (is_page('Boxes 15M') || is_page('Boxes Independencia Cataluña') || is_page('Mosaico 15M') || is_page('Mosaico Independentista-soberanista catalana') || is_page('mosaico-cat')) {
 					get_template_part( 'content','directory-boxes' );
-				} else if (is_page('Estadísticas Cat') || is_page('Estadísticas 15M') ) {
+				} else if (is_page('estadisticas-cat') || is_page('estadisticas-15m') ) {
 					get_template_part( 'content','directory-stats' );
 				} else if (is_page('Añadir organización')) {
 					get_template_part( 'content','directory-form' );
