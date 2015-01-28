@@ -196,7 +196,7 @@ $sources = get_post_meta( $post_id, $prefix.'info_source', true );
 								<th>Fecha</th>
 								<th>Twitter</th>
 								<th>Seguidores</th>
-								<th>Le siguen</th>
+								<th>Siguen a</th>
 								<th>Favoritos</th>
 								<th>nº Tuits</th>
 							</tr>
