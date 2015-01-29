@@ -914,10 +914,10 @@ function creates_form() {
 	$action = get_permalink();
 
 	//Stores terms for taxonomies
-	$ecosystem_terms = get_terms( 'org-ecosystem' );
-	$type_terms = get_terms( 'org-type' );
-	$scope_terms = get_terms( 'org-scope' );
-	$city_terms = get_terms( 'org-city' );
+	$ecosystem_terms = get_terms( 'org-ecosystem', 'hide_empty=0' );
+	$type_terms = get_terms( 'org-type', 'hide_empty=0' );
+	$scope_terms = get_terms( 'org-scope', 'hide_empty=0'  );
+	$city_terms = get_terms( 'org-city', 'hide_empty=0'  );
 	
 	//Creates array
 	foreach ($ecosystem_terms as $key) {
