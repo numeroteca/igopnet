@@ -88,7 +88,7 @@
 						$header_image_width = HEADER_IMAGE_WIDTH;
 					}
 					?>
-			<a href="<?php echo (($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) ? '/directory' : esc_url( home_url( '/' ) ); ?>">
+			<a href="<?php echo (($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) ? '/ecologias-tecnopoliticas' : esc_url( home_url( '/' ) ); ?>">
 				<?php
 					// The header image
 					// Check if this is a post or page, if it has a thumbnail, and if it's a big one
@@ -99,7 +99,7 @@
 						echo get_the_post_thumbnail( $post->ID, 'post-thumbnail' );
 					} elseif (($page_belongs_to == 'directory tecnopolitics') || (get_post_type() == 'organization')) {//if it is directory page
 						//echo "<img src='".get_stylesheet_directory_uri()."/img/banner-directory.png' alt='Directorio Movimientos tecnopolitica' title='Directorio Movimientos tecnopolitica' width='1000' height='50' />";
-						echo "<h1>Directorio Movimientos Tecnopol&iacute;tica</h1>";
+						echo "<h1>Ecolog&iacute;as tecno-pol&iacute;ticas. Un directorio</h1>";
 					} else {
 						// Compatibility with versions of WordPress prior to 3.4.
 						if ( function_exists( 'get_custom_header' ) ) {
