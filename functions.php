@@ -17,11 +17,6 @@ if (strpos($url,'igopnet.cc') !== false) {
 } else {
 		require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'
 }
-//register nave menu for Directory
-add_action( 'after_setup_theme', 'register_directory_menu' );
-function register_directory_menu() {
-  register_nav_menu( 'directory-tecnopol', 'Directorio Teconpolitics' );
-}
 
 //Creates Custom Post Types
 function create_post_type() {
