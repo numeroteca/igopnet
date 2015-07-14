@@ -13,11 +13,10 @@ require_once('wp_bootstrap_navwalker.php');
 // Loads Custom Meta Boxes
 $url = $_SERVER[ 'SERVER_NAME' ];
 if (strpos($url,'igopnet.cc') !== false) {
-		require_once '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php';
+		require_once '/home/info_euromovements/webapps/igop/wp-content/themes/igopnet-child/CMB2/init.php';
 } else {
 		require_once  __DIR__ . '/CMB2/init.php';  //for some enviroments __DIR__ won't work. Use the home path '/home/pangea/info_euromovements/public_html/igop/wp-content/themes/igopnet-child/CMB2/init.php'
 }
-
 //register nave menu for Directory
 add_action( 'after_setup_theme', 'register_directory_menu' );
 function register_directory_menu() {
@@ -917,7 +916,7 @@ function creates_form() {
 	$ecosystem_terms = get_terms( 'org-ecosystem', 'hide_empty=0' );
 	$type_terms = get_terms( 'org-type', 'hide_empty=0' );
 	$scope_terms = get_terms( 'org-scope', 'hide_empty=0'  );
-	$city_terms = get_terms( 'org-city', 'hide_empty=0'  );
+	$city_terms = get_terms( 'org-city', 'hide_empty=0' );
 	
 	//Creates array
 	foreach ($ecosystem_terms as $key) {
